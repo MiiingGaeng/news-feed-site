@@ -48,6 +48,7 @@ const StHeader = styled.header`
   }
 `;
 
+// Header 내부 영역
 const StNav = styled.nav`
   max-width: 1200px;
   width: 100%;
@@ -66,6 +67,7 @@ const StNav = styled.nav`
   }
 `;
 
+// Header 로고 영역
 const StLogo = styled(Link)`
   font-size: 40px;
   font-weight: 800;
@@ -77,8 +79,9 @@ const StLogo = styled(Link)`
   padding: 0 1.2rem;
 `;
 
+// Header Sub Menu 영역
 const StNavLink = styled.div`
-  display: ${({ $isOpen }) => ($isOpen ? "flex" : "flex")};
+  display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
@@ -104,6 +107,7 @@ const StNavLink = styled.div`
   }
 `;
 
+// Header Sub Menu Item
 const StSubLink = styled(Link)`
   text-decoration: none;
   color: ${({ $isJoin }) => ($isJoin ? "#504BA1" : "#343434")};
@@ -128,6 +132,7 @@ const StSubLink = styled(Link)`
   }
 `;
 
+// Header Mobile Sub Menu - Hamburger Menu
 const StMenuToggle = styled.div`
   display: none;
   cursor: pointer;

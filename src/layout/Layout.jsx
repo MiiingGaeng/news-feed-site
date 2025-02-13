@@ -3,6 +3,20 @@ import styled, { keyframes } from "styled-components";
 import Footer from "./Footer";
 import Header from "./Header";
 
+const Layout = () => {
+  return (
+    <>
+      <Header/>
+      <StMain>
+        <StContent>
+          <Outlet />
+        </StContent>
+      </StMain>
+      <Footer/>
+    </>
+  );
+};
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -27,20 +41,8 @@ const StMain = styled.main`
 
 const StContent = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
 `;
-
-const Layout = () => {
-  return (
-    <>
-      <Header>Header</Header>
-      <StMain>
-        <StContent>
-          <Outlet />
-        </StContent>
-      </StMain>
-      <Footer/>
-    </>
-  );
-};
 
 export default Layout;
