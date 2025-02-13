@@ -8,7 +8,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalWrapper = createGlobalStyle`
   body{
-    width: 100%;
+    width: 100vw;
     background: #504BA1;
   }
 

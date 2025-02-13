@@ -62,7 +62,7 @@ const Detail = () => {
 //전체 레이아웃
 const StDetailWrapper = styled.div`
   width: 1200px;
-  height: 100%;
+  height: calc(100vh - 61px);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
