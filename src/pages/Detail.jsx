@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import Button from '../common/Button';
+import CloseButton from '../components/feed/CloseButton';
+import { useNavigate } from 'react-router-dom';
 
 const Detail = () => {
   //context로 데이터 가져오기
+  //CloseButton 클릭시 Feed로 이동 로직
+  const navigate = useNavigate();
+
   return (
     <StDetailBox>
-      <button className="close_btn">X</button>
+      <CloseButton onClick={() => navigate('/feed')} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
           <img src="/" alt="user_profile_img" />
