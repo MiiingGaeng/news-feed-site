@@ -5,6 +5,7 @@ const FeedCard = ({ post }) => {
     <li>
       <div>
         <img src={post.img_url} />
+
         <h2>
           {post.title}
           <Like />
