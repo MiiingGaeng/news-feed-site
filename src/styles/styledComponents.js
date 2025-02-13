@@ -9,7 +9,10 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalWrapper = createGlobalStyle`
   body{
     width: 100%;
-    height: 100vh;
     background: #504BA1;
+  }
+
+  ul, li{
+    list-style: none;
   }
 `;
