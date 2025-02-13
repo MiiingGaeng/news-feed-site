@@ -25,7 +25,6 @@ const StFooter = styled.footer`
   line-height: 1.6;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
-  bottom: 0;
   word-wrap: break-word;
 
   .footer-wrapper {

@@ -16,9 +16,10 @@ const StMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 1200px;
-  min-height: 100vh;
+  min-height: calc(100vh - 61px - 150px);
   margin: 0 auto;
   padding: 2rem;
   box-sizing: border-box;
@@ -27,6 +28,8 @@ const StMain = styled.main`
 
 const StContent = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const Layout = () => {

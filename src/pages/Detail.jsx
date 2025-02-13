@@ -1,78 +1,68 @@
 import styled from 'styled-components';
+import Button from '../common/Button';
 
 const Detail = () => {
+  //context로 데이터 가져오기
   return (
-    <StDetailWrapper>
-      <StDetailBox>
-        <button className="edit_btn">EDIT</button>
-        <button className="close_btn">X</button>
-        <StDetailUserContentsWrapper>
-          <StDetailUserWrapper>
-            <img src="/" alt="user_profile_img" />
-            <h3>user</h3>
-          </StDetailUserWrapper>
-          <h1>title</h1>
+    <StDetailBox>
+      <button className="close_btn">X</button>
+      <StDetailUserContentsWrapper>
+        <StDetailUserWrapper>
+          <img src="/" alt="user_profile_img" />
+          <h3>user</h3>
+        </StDetailUserWrapper>
+
+        <h1>title</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
+          totam unde itaque voluptates reiciendis iste vero in exercitationem,
+          quam iusto possimus corporis consectetur suscipit minima. Deserunt
+          quia quidem velit suscipit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Molestias totam unde itaque voluptates reiciendis
+          iste vero in exercitationem, quam iusto possimus corporis consectetur
+          suscipit minima. Deserunt quia quidem velit suscipit. Lorem ipsum
+          dolor sit amet consectetur adipisicing elit. Molestias totam unde
+          itaque voluptates reiciendis iste vero in exercitationem, quam iusto
+          possimus corporis consectetur suscipit minima. Deserunt quia quidem
+          velit suscipit.
+        </p>
+        <Button type="type">EDIT</Button>
+      </StDetailUserContentsWrapper>
+
+      <StDetailCommentsWrapper>
+        <h1>Comments</h1>
+        {/* map돌려서 넣기 */}
+        {/* 예시 */}
+        <StDetailComment>
+          <img src="/" alt="user_profile_img" />
+          <h3>user</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-            totam unde itaque voluptates reiciendis iste vero in exercitationem,
-            quam iusto possimus corporis consectetur suscipit minima. Deserunt
-            quia quidem velit suscipit. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Molestias totam unde itaque voluptates reiciendis
-            iste vero in exercitationem, quam iusto possimus corporis
-            consectetur suscipit minima. Deserunt quia quidem velit suscipit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-            totam unde itaque voluptates reiciendis iste vero in exercitationem,
-            quam iusto possimus corporis consectetur suscipit minima. Deserunt
-            quia quidem velit suscipit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
+            labore nostrum corporis commodi laudantium vero quasi omnis enim
+            saepe, nobis voluptate beatae quidem ipsa nulla atque sequi,
+            aspernatur facere delectus.
           </p>
-        </StDetailUserContentsWrapper>
+          <Button type="button">EDIT</Button>
+        </StDetailComment>
+        <StDetailComment>
+          <img src="/" alt="user_profile_img" />
+          <h3>sample456</h3>
+          <p>Loremslkdjflsdlkfjsdlfjsldksj</p>
+        </StDetailComment>
+      </StDetailCommentsWrapper>
 
-        <StDetailCommentsWrapper>
-          <h1>Comments</h1>
-          {/* map돌려서 넣기 */}
-          {/* 예시 */}
-          <StDetailComment>
-            <img src="/" alt="user_profile_img" />
-            <h3>user</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-              labore nostrum corporis commodi laudantium vero quasi omnis enim
-              saepe, nobis voluptate beatae quidem ipsa nulla atque sequi,
-              aspernatur facere delectus.
-            </p>
-            <button>EDIT</button>
-          </StDetailComment>
-          <StDetailComment>
-            <img src="/" alt="user_profile_img" />
-            <h3>sample456</h3>
-            <p>Lorem</p>
-          </StDetailComment>
-        </StDetailCommentsWrapper>
-
-        <StCommentForm>
-          <StCommentInput type="text" placeholder="댓글을 작성해주세요" />
-          <button>SUBMIT</button>
-        </StCommentForm>
-      </StDetailBox>
-    </StDetailWrapper>
+      <StCommentForm>
+        <StCommentInput type="text" placeholder="댓글을 작성해주세요" />
+        <Button type="submit">SUBMIT</Button>
+      </StCommentForm>
+    </StDetailBox>
   );
 };
 
 //-----styled-components-----
 //전체 레이아웃
-const StDetailWrapper = styled.div`
-  width: 1200px;
-  height: calc(100vh - 61px);
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const StDetailBox = styled.div`
-  width: 900px;
+  width: 80%;
   border-radius: 30px;
   background-color: #f7f6ff;
   padding: 30px;
@@ -97,24 +87,6 @@ const StDetailBox = styled.div`
       color: #504ba1;
     }
   }
-
-  .edit_btn {
-    position: absolute;
-    top: 30px;
-    right: 70px;
-    width: 120px;
-    height: 30px;
-    background: #4f4ba1a6;
-    color: #f7f6ff;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      background: #504ba1;
-    }
-  }
 `;
 
 //user + 본문 영역
@@ -122,7 +94,7 @@ const StDetailUserContentsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #504ba1;
+  justify-content: center;
   gap: 20px;
 
   h1 {
@@ -131,7 +103,7 @@ const StDetailUserContentsWrapper = styled.div`
   }
 
   p {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     padding: 0 5px;
   }
 `;
@@ -166,11 +138,12 @@ const StDetailCommentsWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border-top: 1px solid #504ba1;
 
   h1 {
     font-size: 20px;
     padding: 0 5px;
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 `;
 
@@ -188,28 +161,14 @@ const StDetailComment = styled.li`
   }
 
   h3 {
+    width: auto;
     font-size: 17px;
     margin-right: 20px;
   }
 
   p {
-    width: 1fr;
+    width: 100%;
     font-size: 12px;
-  }
-
-  & > button {
-    width: 120px;
-    height: 30px;
-    background: #4f4ba1a6;
-    color: #f7f6ff;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      background: #504ba1;
-    }
   }
 `;
 
@@ -221,21 +180,6 @@ const StCommentForm = styled.form`
   justify-content: center;
   align-items: center;
   gap: 20px;
-
-  & > button {
-    width: 120px;
-    height: 30px;
-    background: #4f4ba1a6;
-    color: #f7f6ff;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      background: #504ba1;
-    }
-  }
 `;
 
 const StCommentInput = styled.input`
