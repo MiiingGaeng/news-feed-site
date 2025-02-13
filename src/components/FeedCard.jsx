@@ -1,6 +1,6 @@
 const FeedCard = () => {
   return (
-    <div>FeedCard</div>
+    <div></div>
   )
 }
 
