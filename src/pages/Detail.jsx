@@ -93,22 +93,6 @@ const StDetailBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-
-  .close_btn {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    background: none;
-    border: none;
-    font-size: 25px;
-    color: #4f4ba1a6;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      color: #504ba1;
-    }
-  }
 `;
 
 //user + 본문 영역
