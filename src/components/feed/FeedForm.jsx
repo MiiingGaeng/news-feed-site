@@ -3,7 +3,7 @@ import Button from "../../common/Button";
 
 const FeedForm = () => {
   return (
-    <form>
+    <StForm>
       {/* 타이틀 인풋 영역 */}
       <StFormTitleWrapper>
         <h1>Title</h1>
@@ -16,14 +16,23 @@ const FeedForm = () => {
       </StFormContentsWrapper>
       {/* SUBMIT 버튼 영역 */}
       <Button>SUBMIT</Button>
-    </form>
+    </StForm>
   );
 };
 
 //-----styled-components-----
+//전체 레이아웃
+const StForm = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 //타이틀 인풋 영역
 const StFormTitleWrapper = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -37,7 +46,8 @@ const StFormTitleWrapper = styled.div`
 const StFormTitleInput = styled.input`
   width: 90%;
   height: 30px;
-  border: 1px solid #504ba1;
+  background: #4f4ba164;
+  border: none;
   border-radius: 20px;
   padding: 0 20px;
   font-size: 15px;
@@ -47,7 +57,7 @@ const StFormTitleInput = styled.input`
 
 //본문 인풋 영역
 const StFormContentsWrapper = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -61,7 +71,8 @@ const StFormContentsWrapper = styled.div`
 const StFormContentsInput = styled.textarea`
   width: 90%;
   height: 300px;
-  border: 1px solid #504ba1;
+  background: #4f4ba164;
+  border: none;
   border-radius: 20px;
   padding: 20px;
   font-size: 12px;
