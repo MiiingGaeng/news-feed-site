@@ -1,18 +1,18 @@
-import { Outlet } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import Footer from "./Footer";
-import Header from "./Header";
+import { Outlet } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import Footer from './Footer';
+import Header from './Header';
 
 const Layout = () => {
   return (
     <>
-      <Header/>
+      <Header />
       <StMain>
         <StContent>
           <Outlet />
         </StContent>
       </StMain>
-      <Footer/>
+      <Footer />
     </>
   );
 };
@@ -30,6 +30,7 @@ const StMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 1200px;
   min-height: calc(100vh - 61px - 150px);

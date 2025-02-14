@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Footer = () => {
   return (
@@ -6,12 +6,15 @@ const Footer = () => {
       <div className="footer-wrapper">
         <h3>King’s Ear Is 👂</h3>
         <p>자사의 약관 및 개인정보처리방침의 적용을 받습니다.</p>
-        <p>(주) 리액트기엽조 팀장 Kim Ming gaeng, 민경 김 | 서울 강남구 테헤란로 152 강남파이낸스센터 30층 | 2025-02-12 Team Project Start </p>
+        <p>
+          (주) 리액트기엽조 팀장 Kim Ming gaeng, 민경 김 | 서울 강남구 테헤란로
+          152 강남파이낸스센터 30층 | 2025-02-12 Team Project Start{' '}
+        </p>
         <p>© 2025 Tutor’s Year is. All Rights Reserved</p>
       </div>
     </StFooter>
-  )
-}
+  );
+};
 
 const StFooter = styled.footer`
   background: #292929;
@@ -62,4 +65,4 @@ const StFooter = styled.footer`
     }
   }
 `;
-export default Footer
+export default Footer;
