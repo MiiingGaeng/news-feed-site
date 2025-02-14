@@ -40,7 +40,7 @@ const Login = () => {
             <button>Finding ID</button>
           </Link>
         </div>
-        {/* 소셜 로그인 버튼 */}
+        {/* 소셜 로그인 버튼 ✅ sign up 페이지의 아이콘과 다를 수 있음, 확인 요망 */}
         <div>
           <button>
             <FaGithub />
