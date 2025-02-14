@@ -1,7 +1,21 @@
-import { Outlet } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import Footer from "./Footer";
-import Header from "./Header";
+import { Outlet } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import Footer from './Footer';
+import Header from './Header';
+
+const Layout = () => {
+  return (
+    <>
+      <Header/>
+      <StMain>
+        <StContent>
+          <Outlet />
+        </StContent>
+      </StMain>
+      <Footer/>
+    </>
+  );
+};
 
 const fadeIn = keyframes`
   from {
@@ -16,6 +30,7 @@ const StMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 1200px;
   min-height: calc(100vh - 61px - 150px);
@@ -27,20 +42,8 @@ const StMain = styled.main`
 
 const StContent = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
 `;
-
-const Layout = () => {
-  return (
-    <>
-      <Header>Header</Header>
-      <StMain>
-        <StContent>
-          <Outlet />
-        </StContent>
-      </StMain>
-      <Footer/>
-    </>
-  );
-};
 
 export default Layout;
