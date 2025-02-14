@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedList from "../components/feed/FeedList";
-import MOCK_DATA from "../constants/MOCK_DATA";
+import { fetchData } from "../api/fetchData";
 
 const Feed = () => {
 
-  const [posts, setPosts] = useState(MOCK_DATA);
+  const [feedsData, setFeedsData] = useState([]);
+
+  useEffect(() => {
+    async function fetchFeeds() {
+      const newFeedsData = await fetchData("feeds");
+      setFeedsData(newFeedsData);
+    }
+
+    fetchFeeds();
+  }, []);
+
+  console.log("feedsData", feedsData);
+
   return (
     <>
-      <FeedList posts={posts} />
+      {
+        feedsData.length && <FeedList posts={feedsData} />
+      }
+
     </>
 
   );

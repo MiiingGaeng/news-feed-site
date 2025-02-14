@@ -4,17 +4,15 @@ import styled from "styled-components";
 
 const FeedList = ({ posts }) => {
   return (
-    <>
-      <StFeedList>
-        {posts.map((post) => {
-          return (
-            <Link to={`/detail`} key={post.id}>
-              <FeedCard post={post} />
-            </Link>
-          );
-        })}
-      </StFeedList>
-    </>
+    <StFeedList>
+      {posts.map((post) => {
+        return (
+          <Link to={`/detail?id=${post.feed_id}`} key={post.id}>
+            <FeedCard post={post} />
+          </Link>
+        );
+      })}
+    </StFeedList>
   );
 };
 
