@@ -1,13 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import supabase from "../supabase/client";
 
 const SignUp = () => {
-  const handleSignup = () => {};
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
+  const navigate = useNavigate();
+
+  // 회원가입 로직
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    try {
+      await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name, // name 저장
+            nickname, // nickname 저장
+          },
+        },
+      });
+
+      alert(`KEI 회원이 되신것을 환영합니다.`);
+
+      // 회원가입 후 기본은 홈으로 랜딩
+      navigate("/");
+    } catch (error) {
+      alert(error.massage);
+      console.log("⛔️회원가입 오류", error);
+    }
+  };
 
   return (
+    // 기본 회원가입 로직만 완성되어 있습니다.
+    // 테스트용으로 먼저 업로드하오니 참고 부탁드립니다.
     <StSignUpWrapper>
       <h1>SignUp</h1>
       <StContainer>
@@ -28,29 +61,29 @@ const SignUp = () => {
           <input
             type="email"
             placeholder="이메일"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
             placeholder="비밀번호"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           <input
             type="text"
             placeholder="이름"
-            // value={userName}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <input
             type="text"
             placeholder="닉네임"
-            // value={nickName}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
             required
           />
           <button type="submit">Sign Up</button>
