@@ -68,7 +68,6 @@ const StFormContentsInput = styled.textarea`
   line-height: 30px;
   margin-left: 5px;
   overflow-wrap: break-word;
-  overflow-y: scroll;
 `;
 
 export default FeedForm;
