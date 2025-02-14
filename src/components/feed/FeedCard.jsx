@@ -5,16 +5,16 @@ const FeedCard = ({ post }) => {
   return (
     <StFeedCard>
       <StFeedCardHeader>
-        <StProfileImage src={post.img_url} />
-
-        <StCardTitle>
-          {post.title}
+        <StProfileImage src={""} />
+        <StCardId>
+          {post.writer_id}
           <Like />
-        </StCardTitle>
+        </StCardId>
       </StFeedCardHeader>
 
       <StFeedCardContent>
-        {post.content}
+        {post.title}
+        {post.contents}
       </StFeedCardContent>
     </StFeedCard>
   )
@@ -48,7 +48,7 @@ const StProfileImage = styled.img`
   flex-shrink: 0;
 `;
 
-const StCardTitle = styled.h2`
+const StCardId = styled.h2`
   font-size: 18px;
   font-weight: bold;
   display: flex;
