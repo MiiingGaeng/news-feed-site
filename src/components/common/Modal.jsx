@@ -5,7 +5,7 @@ import CloseButton from '../feed/CloseButton';
 const Modal = ({onShowModal, children}) => {
   return (
     <StModalWrapper>
-      <StDim/>
+      <StDim onClick={onShowModal}/>
       <StModalArea>
         <CloseButton onClick={onShowModal}/>
         <StModalBox>
@@ -43,7 +43,7 @@ const StModalArea = styled.div`
   border: none;
   border-radius: 10px;
   background-color: #FFF;
-  width: 580px;
+  width: 700px;
   max-width: calc(100% - 48px);
 `
 
