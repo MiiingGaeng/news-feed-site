@@ -36,6 +36,10 @@ const Detail = () => {
   //CloseButton 클릭시 Feed로 이동 로직
   const navigate = useNavigate();
 
+  const handleNavigateToEdit = () => {
+    navigate(`/edit?id=${feedId}`);
+  };
+
   return (
     <StDetailBox>
       <CloseButton onClick={() => navigate("/feed")} />
@@ -47,7 +51,9 @@ const Detail = () => {
 
         <h1>{selectedFeedData?.title}</h1>
         <p>{selectedFeedData?.contents}</p>
-        <Button type="type">EDIT</Button>
+        <Button type="type" onClick={() => handleNavigateToEdit()}>
+          EDIT
+        </Button>
       </StDetailUserContentsWrapper>
 
       <Comments feedId={feedId} />
