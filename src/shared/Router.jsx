@@ -1,12 +1,12 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from '../pages/Home';
-import Feed from '../pages/Feed';
-import Login from '../pages/Login';
-import SignUp from '../pages/SignUp';
-import Mypage from '../pages/Mypage';
-import FindIdPw from '../pages/FindIdPw';
-import Detail from '../pages/Detail';
-import Layout from '../layout/Layout';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import Feed from "../pages/Feed";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import Mypage from "../pages/Mypage";
+import FindIdPw from "../pages/FindIdPw";
+import Detail from "../pages/Detail";
+import Layout from "../layout/Layout";
 
 const Router = () => {
   return (

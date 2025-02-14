@@ -1,16 +1,33 @@
-import styled from 'styled-components';
-import Button from '../common/Button';
-import CloseButton from '../components/feed/CloseButton';
-import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
+import Button from "../common/Button";
+import CloseButton from "../components/feed/CloseButton";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchData } from "../api/fetchData";
+import { useState } from "react";
 
 const Detail = () => {
   //context로 데이터 가져오기
   //CloseButton 클릭시 Feed로 이동 로직
   const navigate = useNavigate();
 
+  //feeds 테이블 Data 가져오기
+  const [feedsData, setFeedsData] = useState([]);
+
+  useEffect(() => {
+    async function fetchFeeds() {
+      const newFeedsData = await fetchData("feeds");
+      setFeedsData(newFeedsData);
+    }
+
+    fetchFeeds();
+  }, []);
+
+  console.log("feedsData", feedsData);
+
   return (
     <StDetailBox>
-      <CloseButton onClick={() => navigate('/feed')} />
+      <CloseButton onClick={() => navigate("/feed")} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
           <img src="/" alt="user_profile_img" />
