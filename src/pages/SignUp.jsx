@@ -102,6 +102,7 @@ const SignUp = () => {
 
 export default SignUp;
 
+// 전체 화면 wrapping
 const StSignUpWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -117,6 +118,7 @@ const StSignUpWrapper = styled.div`
   }
 `;
 
+// SNS 연동 버튼 + form 태그 영역 + Sign Up 버튼
 const StContainer = styled.div`
   width: 350px;
   height: 460px;
@@ -128,10 +130,14 @@ const StContainer = styled.div`
   align-items: center;
   padding: 40px;
   margin-bottom: 20px;
+
+  // SNS 연동 버튼 아래 line
   hr {
     width: 350px;
     opacity: 0.7;
   }
+
+  // email, pw, name, nickname 입력창
   form {
     width: 100%;
     height: 300px;
@@ -146,6 +152,8 @@ const StContainer = styled.div`
       border-radius: 20px;
       padding-left: 15px;
     }
+
+    // Sign Up 버튼
     button {
       width: 200px;
       height: 40px;
@@ -163,6 +171,7 @@ const StContainer = styled.div`
   }
 `;
 
+// SNS 연동 버튼 UI
 const StSNSBtn = styled.div`
   width: 100%;
   height: 100px;
@@ -194,6 +203,7 @@ const StSNSBtn = styled.div`
   }
 `;
 
+// 계정이 이미 있으신가요? -> Login
 const StGoToLogin = styled.div`
   width: 410px;
   height: 60px;
