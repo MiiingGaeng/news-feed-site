@@ -4,10 +4,15 @@ import CloseButton from '../feed/CloseButton';
 
 const Modal = ({onShowModal, children}) => {
   return (
+    // Modal 전체 Wrapper
     <StModalWrapper>
+      {/* Modal Overlay */}
       <StDim onClick={onShowModal}/>
+      {/* Modal 창 실제 사용영역 */}
       <StModalArea>
+        {/* 닫기 버튼 (컴포넌트 사용) */}
         <CloseButton onClick={onShowModal}/>
+        {/* Modal 창 내부 영역 */}
         <StModalBox>
           {children}
         </StModalBox>
