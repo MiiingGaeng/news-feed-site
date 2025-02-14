@@ -1,29 +1,40 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import CloseButton from "../components/feed/CloseButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchData } from "../api/fetchData";
 import { useState } from "react";
 
 const Detail = () => {
-  //context로 데이터 가져오기
-  //CloseButton 클릭시 Feed로 이동 로직
-  const navigate = useNavigate();
+  //-----url에서 게시글 id 추출-----
+  //query param으로 feed_id 값 가져오기
+  const [searchParams] = useSearchParams();
+  const feedId = searchParams.get("id");
 
-  //feeds 테이블 Data 가져오기
+  //-----data fetch-----
+  //feeds, comments 테이블 Data 가져오기
   const [feedsData, setFeedsData] = useState([]);
+  const [commentsData, setCommentsData] = useState([]);
 
   useEffect(() => {
     async function fetchFeeds() {
-      const newFeedsData = await fetchData("feeds");
+      const newFeedsData = await fetchData("feeds", "users");
+
       setFeedsData(newFeedsData);
     }
 
     fetchFeeds();
   }, []);
 
-  console.log("feedsData", feedsData);
+  //-----해당 게시글 데이터 가져오기-----
+  //게시글 정보
+  const selectedFeedData = feedsData.find((feed) => feed.feed_id === feedId);
+  //작성자 정보
+  const writerData = selectedFeedData?.users;
+
+  //CloseButton 클릭시 Feed로 이동 로직
+  const navigate = useNavigate();
 
   return (
     <StDetailBox>
@@ -31,23 +42,11 @@ const Detail = () => {
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
           <img src="/" alt="user_profile_img" />
-          <h3>user</h3>
+          <h3>{writerData?.nickname}</h3>
         </StDetailUserWrapper>
 
-        <h1>title</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          totam unde itaque voluptates reiciendis iste vero in exercitationem,
-          quam iusto possimus corporis consectetur suscipit minima. Deserunt
-          quia quidem velit suscipit. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Molestias totam unde itaque voluptates reiciendis
-          iste vero in exercitationem, quam iusto possimus corporis consectetur
-          suscipit minima. Deserunt quia quidem velit suscipit. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Molestias totam unde
-          itaque voluptates reiciendis iste vero in exercitationem, quam iusto
-          possimus corporis consectetur suscipit minima. Deserunt quia quidem
-          velit suscipit.
-        </p>
+        <h1>{selectedFeedData?.title}</h1>
+        <p>{selectedFeedData?.contents}</p>
         <Button type="type">EDIT</Button>
       </StDetailUserContentsWrapper>
 
