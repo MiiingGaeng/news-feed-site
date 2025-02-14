@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import CloseButton from '../feed/CloseButton';
 
-const Modal = ({isOpen, onClose, children}) => {
+const Modal = ({onShowModal, children}) => {
   return (
     <StModalWrapper>
       <StDim/>
       <StModalArea>
-        {/* Button 삭제 컴포넌트 추가 예정 */}
+        <CloseButton onClick={onShowModal}/>
         <StModalBox>
           {children}
         </StModalBox>
@@ -48,14 +49,14 @@ const StModalArea = styled.div`
 
 const StModalBox = styled.div`
   max-height: calc(100vh - 122px);
+  min-height: 200px;
   padding: 24px;
   position: relative;
   overflow-y: auto;
 `
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  onShowModal: PropTypes.func.isRequired,
   children: PropTypes.node
 };
 
