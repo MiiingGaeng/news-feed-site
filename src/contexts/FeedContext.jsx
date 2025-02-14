@@ -1,4 +1,3 @@
-import { createClient } from "@supabase/supabase-js";
 import { createContext } from "react";
 
 export const FeedContext = createContext();
