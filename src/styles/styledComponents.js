@@ -8,8 +8,11 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalWrapper = createGlobalStyle`
   body{
-    width: 100%;
-    height: 100vh;
+    width: 100vw;
     background: #504BA1;
+  }
+
+  ul, li{
+    list-style: none;
   }
 `;
