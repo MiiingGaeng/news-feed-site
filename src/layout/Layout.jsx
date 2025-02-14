@@ -6,13 +6,13 @@ import Header from './Header';
 const Layout = () => {
   return (
     <>
-      <Header/>
+      <Header />
       <StMain>
         <StContent>
           <Outlet />
         </StContent>
       </StMain>
-      <Footer/>
+      <Footer />
     </>
   );
 };
