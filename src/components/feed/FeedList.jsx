@@ -7,7 +7,7 @@ const FeedList = ({ posts }) => {
     <StFeedList>
       {posts.map((post) => {
         return (
-          <Link to={`/detail`} key={post.id}>
+          <Link to={`/detail?id=${post.feed_id}`} key={post.id}>
             <FeedCard post={post} />
           </Link>
         );
