@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchData } from "../api/fetchData";
 import { useState } from "react";
+import Comments from "../components/feed/Comments";
 
 const Detail = () => {
   //-----url에서 게시글 id 추출-----
@@ -15,7 +16,6 @@ const Detail = () => {
   //-----data fetch-----
   //feeds, comments 테이블 Data 가져오기
   const [feedsData, setFeedsData] = useState([]);
-  const [commentsData, setCommentsData] = useState([]);
 
   useEffect(() => {
     async function fetchFeeds() {
@@ -50,32 +50,7 @@ const Detail = () => {
         <Button type="type">EDIT</Button>
       </StDetailUserContentsWrapper>
 
-      <StDetailCommentsWrapper>
-        <h1>Comments</h1>
-        {/* map돌려서 넣기 */}
-        {/* 예시 */}
-        <StDetailComment>
-          <img src="/" alt="user_profile_img" />
-          <h3>user</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-            labore nostrum corporis commodi laudantium vero quasi omnis enim
-            saepe, nobis voluptate beatae quidem ipsa nulla atque sequi,
-            aspernatur facere delectus.
-          </p>
-          <Button type="button">EDIT</Button>
-        </StDetailComment>
-        <StDetailComment>
-          <img src="/" alt="user_profile_img" />
-          <h3>sample456</h3>
-          <p>Loremslkdjflsdlkfjsdlfjsldksj</p>
-        </StDetailComment>
-      </StDetailCommentsWrapper>
-
-      <StCommentForm>
-        <StCommentInput type="text" placeholder="댓글을 작성해주세요" />
-        <Button type="submit">SUBMIT</Button>
-      </StCommentForm>
+      <Comments feedId={feedId} />
     </StDetailBox>
   );
 };
@@ -135,65 +110,4 @@ const StDetailUserWrapper = styled.div`
     font-size: 17px;
   }
 `;
-
-//댓글 영역
-const StDetailCommentsWrapper = styled.ul`
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-top: 1px solid #504ba1;
-
-  h1 {
-    font-size: 20px;
-    padding: 0 5px;
-    margin: 20px 0;
-  }
-`;
-
-const StDetailComment = styled.li`
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffa600;
-    margin-right: 10px;
-  }
-
-  h3 {
-    width: auto;
-    font-size: 17px;
-    margin-right: 20px;
-  }
-
-  p {
-    width: 100%;
-    font-size: 12px;
-  }
-`;
-
-//댓글 입력 영역
-const StCommentForm = styled.form`
-  width: 100%;
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;
-
-const StCommentInput = styled.input`
-  width: 500px;
-  height: 30px;
-  border-radius: 30px;
-  border: 1px solid #504ba1;
-  font-size: 12px;
-  padding: 0 20px;
-`;
-
 export default Detail;
