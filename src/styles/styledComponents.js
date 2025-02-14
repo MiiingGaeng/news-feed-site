@@ -11,8 +11,4 @@ export const GlobalWrapper = createGlobalStyle`
     width: 100vw;
     background: #504BA1;
   }
-
-  ul, li{
-    list-style: none;
-  }
 `;

@@ -5,21 +5,24 @@ const FeedCard = ({ post }) => {
   return (
     <StFeedCard>
       <StFeedCardHeader>
-        <StProfileImage src={post.img_url} />
-
-        <StCardTitle>
-          {post.title}
+        <StProfileImage src={post.users.profile_img} />
+        <StCardId>
+          {post.users.nickname}
           <Like />
-        </StCardTitle>
+        </StCardId>
       </StFeedCardHeader>
 
       <StFeedCardContent>
-        {post.content}
+        {post.title}
+        {post.contents}
       </StFeedCardContent>
     </StFeedCard>
   )
 }
 
+//-----styled-components-----
+
+// Feed카드
 const StFeedCard = styled.li`
   width: 400px;
   max-width: 600px;
@@ -36,10 +39,13 @@ const StFeedCard = styled.li`
     transform: translateY(-3px);
   }
 `
+
+// 카드 header
 const StFeedCardHeader = styled.div`
   display: flex;
 `
 
+// 프로필 이미지
 const StProfileImage = styled.img`
   width: 40px;
   height: 40px;
@@ -48,13 +54,15 @@ const StProfileImage = styled.img`
   flex-shrink: 0;
 `;
 
-const StCardTitle = styled.h2`
+// 게시글 작성자 ID
+const StCardId = styled.h2`
   font-size: 18px;
   font-weight: bold;
   display: flex;
   align-items: center;
 `;
 
+// 게시글 내용
 const StFeedCardContent = styled.p`
   font-size: 16px;
   color: #333;
