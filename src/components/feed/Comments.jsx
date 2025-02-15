@@ -40,6 +40,13 @@ const Comments = ({ feedId }) => {
   //추가 함수
   const handleAddComment = async (e) => {
     e.preventDefault();
+
+    //예외처리: 빈칸의 경우 return
+    if (!inputValue.trim()) {
+      alert("댓글을 입력해주세요!");
+      return;
+    }
+
     //새로운 댓글 객체 생성
     const newComment = {
       comment: inputValue,
@@ -51,9 +58,10 @@ const Comments = ({ feedId }) => {
     try {
       //supabase에 추가
       await insertOrUpdateData(newComment, "comments");
-      alert("댓글이 추가 되었습니다!");
       //input 초기화
       setInputValue("");
+      //사용자 알림
+      alert("댓글이 추가 되었습니다!");
 
       //댓글 목록을 새롭게 fetch해서 즉시 반영하기
       const comments = await fetchData("comments", "users");
@@ -63,6 +71,8 @@ const Comments = ({ feedId }) => {
       setCommentsData(newComments);
     } catch (error) {
       console.log("add comment error => ", error);
+      //사용자 알림
+      alert("앗! 댓글을 추가하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
     }
   };
 
@@ -81,8 +91,12 @@ const Comments = ({ feedId }) => {
       setCommentsData(newComments);
     } catch (error) {
       console.log("delete comment error => ", error);
+      //사용자 알림
+      alert("앗! 댓글을 삭제하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
     }
   };
+
+  //-----댓글 수정 기능-----
 
   return (
     <>
@@ -97,9 +111,15 @@ const Comments = ({ feedId }) => {
                 <img src={comment.users.profile_img} alt="user_profile_img" />
                 <h3>{comment.users.nickname}</h3>
                 <p>{comment.comment}</p>
-                <Button onClick={() => handleDeleteComment(comment.comment_id)}>
-                  DELETE
-                </Button>
+
+                <StCommentButtonWrapper>
+                  <Button>EDIT</Button>
+                  <Button
+                    onClick={() => handleDeleteComment(comment.comment_id)}
+                  >
+                    DELETE
+                  </Button>
+                </StCommentButtonWrapper>
               </StDetailComment>
             );
           })
@@ -158,7 +178,13 @@ const StDetailComment = styled.li`
   p {
     width: 70%;
     font-size: 12px;
+    padding: 10px;
   }
+`;
+
+const StCommentButtonWrapper = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 //댓글 입력 영역
