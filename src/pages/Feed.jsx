@@ -12,7 +12,7 @@ const Feed = () => {
     <>
       <FeedList posts={posts} />
       {/* <button onClick={toggleModal}>모달창 열기</button> */}
-      { isModalOpen && <Modal onShowModal={toggleModal}><FeedForm/></Modal>}
+      { isModalOpen && <Modal onShowModal={toggleModal}><FeedForm isMode="addFeedMode"/></Modal>}
     </>
 
   );
