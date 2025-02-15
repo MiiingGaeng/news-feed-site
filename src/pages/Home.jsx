@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MainButton from '../components/common/MainButton';
+import NavigationButton from '../components/common/NavigationButton';
 
 const Home = () => {
   return (
@@ -52,7 +52,7 @@ const Home = () => {
           <p>수강생 커뮤니티 “King’s Ear Is”로 오세요!</p>
           <p>튜터님 귀는 당나귀 귀!!!</p>
         </div>
-        <MainButton>가입하기</MainButton>
+        <NavigationButton to="/signup">가입하기</NavigationButton>
       </StHomeSubContainer>
       <StHomeSubContainer>
         <div className="home-sub-wrapper">
