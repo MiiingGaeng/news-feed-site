@@ -22,11 +22,7 @@ const Feed = () => {
     <>
       <FeedList posts={feedsData} />
       {/* <button onClick={toggleModal}>모달창 열기</button> */}
-      {isModalOpen && (
-        <Modal onShowModal={toggleModal}>
-          <FeedForm />
-        </Modal>
-      )}
+      {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
     </>
   );
 };
