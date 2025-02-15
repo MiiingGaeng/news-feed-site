@@ -30,8 +30,7 @@ const Comments = ({ feedId }) => {
     <>
       <StDetailCommentsWrapper>
         <h1>Comments</h1>
-        {/* map돌려서 넣기 */}
-        {!commentsData ? (
+        {commentsData.length === 0 ? (
           <p>아직 댓글이 없습니다</p>
         ) : (
           commentsData.map((comment) => {
