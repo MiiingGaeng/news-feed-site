@@ -24,7 +24,7 @@ const Feed = () => {
       {/* <button onClick={toggleModal}>모달창 열기</button> */}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
-          <FeedForm />
+          <FeedForm isMode="addFeedMode" />
         </Modal>
       )}
     </>
