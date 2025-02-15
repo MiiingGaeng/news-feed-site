@@ -3,10 +3,53 @@ import Button from "../../common/Button";
 import { useState } from "react";
 import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";
+import { insertOrUpdateData } from "../../api/insertOrUpdateData.js";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
   const [commentsData, setCommentsData] = useState([]);
+
+  //-----댓글 추가 기능-----
+  const INITIAL_ADD_COMMENT_DATA = {
+    comment: "",
+  };
+
+  const [commentData, setCommentData] = useState(INITIAL_ADD_COMMENT_DATA);
+  const [inputValue, setInputValue] = useState("");
+
+  //input값
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  //추가 로직
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    //새로운 댓글 객체 생성
+    const newComment = {
+      comment: inputValue,
+      feed_id: feedId,
+      //writer_id는 임시 데이터값입니다!!
+      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+    };
+
+    try {
+      //supabase에 추가
+      await insertOrUpdateData(newComment, "comments");
+      alert("댓글이 추가 되었습니다!");
+      // input 초기화
+      setInputValue("");
+
+      // 새로운 댓글을 fetch해서 즉시 반영하기
+      const comments = await fetchData("comments", "users");
+      const newComments = comments.filter(
+        (comment) => comment.feed_id === feedId
+      );
+      setCommentsData(newComments);
+    } catch (error) {
+      console.log("add comment error => ", error);
+    }
+  };
 
   useEffect(() => {
     async function fetchComments() {
@@ -45,8 +88,13 @@ const Comments = ({ feedId }) => {
         )}
       </StDetailCommentsWrapper>
 
-      <StCommentForm>
-        <StCommentInput type="text" placeholder="댓글을 작성해주세요" />
+      <StCommentForm onSubmit={handleAddComment}>
+        <StCommentInput
+          type="text"
+          placeholder="댓글을 작성해주세요"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
         <Button type="submit">SUBMIT</Button>
       </StCommentForm>
     </>
