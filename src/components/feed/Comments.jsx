@@ -4,53 +4,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData.js";
+import { deleteData } from "../../api/deleteData.js";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
   const [commentsData, setCommentsData] = useState([]);
 
-  //-----댓글 추가 기능-----
-  const INITIAL_ADD_COMMENT_DATA = {
-    comment: "",
-  };
-
-  const [commentData, setCommentData] = useState(INITIAL_ADD_COMMENT_DATA);
-  const [inputValue, setInputValue] = useState("");
-
-  //input값
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  //추가 로직
-  const handleAddComment = async (e) => {
-    e.preventDefault();
-    //새로운 댓글 객체 생성
-    const newComment = {
-      comment: inputValue,
-      feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
-    };
-
-    try {
-      //supabase에 추가
-      await insertOrUpdateData(newComment, "comments");
-      alert("댓글이 추가 되었습니다!");
-      // input 초기화
-      setInputValue("");
-
-      // 새로운 댓글을 fetch해서 즉시 반영하기
-      const comments = await fetchData("comments", "users");
-      const newComments = comments.filter(
-        (comment) => comment.feed_id === feedId
-      );
-      setCommentsData(newComments);
-    } catch (error) {
-      console.log("add comment error => ", error);
-    }
-  };
-
+  //-----init-----
   useEffect(() => {
     async function fetchComments() {
       try {
@@ -69,6 +29,61 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
+  //-----댓글 추가 기능-----
+  //input값
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  //추가 함수
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    //새로운 댓글 객체 생성
+    const newComment = {
+      comment: inputValue,
+      feed_id: feedId,
+      //writer_id는 임시 데이터값입니다!!
+      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+    };
+
+    try {
+      //supabase에 추가
+      await insertOrUpdateData(newComment, "comments");
+      alert("댓글이 추가 되었습니다!");
+      //input 초기화
+      setInputValue("");
+
+      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+      const comments = await fetchData("comments", "users");
+      const newComments = comments.filter(
+        (comment) => comment.feed_id === feedId
+      );
+      setCommentsData(newComments);
+    } catch (error) {
+      console.log("add comment error => ", error);
+    }
+  };
+
+  //-----댓글 삭제 기능-----
+  const handleDeleteComment = async (comment_id) => {
+    try {
+      //supabase에 삭제
+      await deleteData("comments", "comment_id", comment_id);
+      alert("댓글이 삭제 되었습니다!");
+
+      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+      const comments = await fetchData("comments", "users");
+      const newComments = comments.filter(
+        (comment) => comment.feed_id === feedId
+      );
+      setCommentsData(newComments);
+    } catch (error) {
+      console.log("delete comment error => ", error);
+    }
+  };
+
   return (
     <>
       <StDetailCommentsWrapper>
@@ -82,6 +97,9 @@ const Comments = ({ feedId }) => {
                 <img src={comment.users.profile_img} alt="user_profile_img" />
                 <h3>{comment.users.nickname}</h3>
                 <p>{comment.comment}</p>
+                <Button onClick={() => handleDeleteComment(comment.comment_id)}>
+                  DELETE
+                </Button>
               </StDetailComment>
             );
           })
