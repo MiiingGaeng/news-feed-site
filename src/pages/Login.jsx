@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const handleLogin = () => {};
@@ -43,11 +43,11 @@ const Login = () => {
         {/* 소셜 로그인 버튼 */}
         <div>
           <button>
-            <FaGithub />
+            {/* <FaGithub /> */}
             Sign up with Github
           </button>
           <button>
-            <FaGoogle />
+            {/* <FaGoogle /> */}
             Sign up with Google
           </button>
         </div>
