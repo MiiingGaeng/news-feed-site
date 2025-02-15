@@ -1,7 +1,20 @@
 import styled from "styled-components"
 import Like from "./Like"
+import { deleteData } from "../../api/deleteData";
 
-const FeedCard = ({ post }) => {
+const FeedCard = ({ post, setPosts }) => {
+
+  // 게시글 삭제 함수
+  const handleDeletePost = async (e, id) => {
+    e.preventDefault();
+    const isConfirm = window.confirm("정말 삭제하시겠습니까?");
+    if (isConfirm) {
+      await deleteData("feeds", "feed_id", id);
+      setPosts((prev) => prev.filter((p) => p.feed_id !== post.feed_id));
+
+    }
+  }
+
   return (
     <StFeedCard>
       <StFeedCardHeader>
@@ -16,6 +29,11 @@ const FeedCard = ({ post }) => {
         {post.title}
         {post.contents}
       </StFeedCardContent>
+      {post.writer_id === post.users.user_id && (
+        <button onClick={(e) => handleDeletePost(e, post.feed_id)}>
+          Delete
+        </button>
+      )}
     </StFeedCard>
   )
 }
