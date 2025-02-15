@@ -6,8 +6,8 @@ import { FeedContext } from "../../contexts/FeedContext";
 
 const INITIAL_ADD_FEED_DATA = {
   title: "",
-  contents: ""
-}
+  contents: "",
+};
 
 // Feed 추가 Form 별도 분리
 const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
@@ -31,7 +31,9 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
       />
     </StFormContentsWrapper>
     {/* SUBMIT 버튼 영역 */}
-    <Button type="submit" onClick={(e) => handleAddFeed(e)}>글 업로드</Button>
+    <Button type="submit" onClick={(e) => handleAddFeed(e)}>
+      글 업로드
+    </Button>
   </form>
 );
 
@@ -46,27 +48,27 @@ const FeedForm = ({ isMode }) => {
       insertOrUpdateData(addFeedData, "feeds")
       setAddFeedData(INITIAL_ADD_FEED_DATA)
       toggleModal();
-      alert('새로운 피드가 추가되었습니다.')
+      alert("새로운 피드가 추가되었습니다.");
     }
-  }, [addFeedData, toggleModal])
+  }, [addFeedData, toggleModal]);
 
   // onChange시에 event와 field 객체를 받아, input value 추가
   const handleInputChange = (e, field) => {
     const { value } = e.target;
     setAddFeedData(state => ({
       ...state,
-      [field]: value
-    }))
-  }
+      [field]: value,
+    }));
+  };
 
   // 실제 테이블에 feed 데이터 추가
   const handleAddFeed = async (e) => {
     e.preventDefault();
-    setAddFeedData(feed => ({
+    setAddFeedData((feed) => ({
       ...feed,
-      writer_id: '1d4b5722-6a09-4256-9b9d-461903075838'
-    }))
-  }
+      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+    }));
+  };
 
   return (
     <>
