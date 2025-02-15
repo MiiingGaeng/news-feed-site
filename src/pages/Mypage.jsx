@@ -51,7 +51,7 @@ const MyPage = () => {
         <div></div>
       </StContentsHeader>
       <StContentBoxWrapper>
-        {" "}
+        //지금은 기본 UI 이기때문에 예시 데이터로 여러개 만들어둠. 추후 supabase로 데이터 가져와서 map사용할예정정
         <StContentBox>
           <h2>팀 프로젝트 발제</h2>
           <p>
