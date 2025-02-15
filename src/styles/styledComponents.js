@@ -4,15 +4,11 @@
 
 //main color - #504BA1
 
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalWrapper = createGlobalStyle`
   body{
     width: 100vw;
     background: #504BA1;
-  }
-
-  ul, li{
-    list-style: none;
   }
 `;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const CloseButton = ({ onClick }) => {
   return (
@@ -18,6 +18,7 @@ const StCloseButton = styled.button`
   color: #4f4ba1a6;
   cursor: pointer;
   transition: all 0.3s;
+  z-index: 50;
 
   &:hover {
     color: #504ba1;
