@@ -3,16 +3,17 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import supabase from "../supabase/client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { error } = supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -48,13 +49,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <SignInButton>
+            <button type="submit">Login</button>
+            <Link to="/signup">
+              <button>Sign Up</button>
+            </Link>
+          </SignInButton>
         </form>
-        <SignInButton>
-          <button type="submit">Login</button>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
-        </SignInButton>
 
         <hr />
         {/* id/pw 찾기 버튼 */}
