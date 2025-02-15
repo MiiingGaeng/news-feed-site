@@ -11,7 +11,9 @@ const AuthProvider = ({ children }) => {
   console.log("isLogin", isLogin);
 
   useEffect(() => {
-    const { data: { subscription }, } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("✅check", event, session);
 
       if (session) {
@@ -22,7 +24,6 @@ const AuthProvider = ({ children }) => {
         setUser(null);
       }
     });
-
   }, []);
 
   return (

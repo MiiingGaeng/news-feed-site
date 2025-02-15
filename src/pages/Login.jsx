@@ -31,24 +31,25 @@ const Login = () => {
   return (
     <StLoginWrapper>
       <h1>Login</h1>
-      {/* 제목을 제외한 반투명 컨테이너 div */}
       <StContainer>
-        {/* 로그인 폼 영역 */}
+        {/* 로그인 폼 */}
         <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <section>
+            <input
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </section>
           <SignInButton>
             <button type="submit">Login</button>
             <Link to="/signup">
@@ -58,18 +59,20 @@ const Login = () => {
         </form>
 
         <hr />
-        {/* id/pw 찾기 버튼 */}
+
+        {/* 아이디/비밀번호 찾기 */}
         <StFindPassword>
           <p>비밀번호를 잊으셨나요?</p>
           <Link to="/findidpw">
-            <button>Finding PW</button>
+            <button>Finding ID</button>
           </Link>
           /
           <Link to="/findidpw">
-            <button>Finding ID</button>
+            <button>Finding PW</button>
           </Link>
         </StFindPassword>
-        {/* 소셜 로그인 버튼 */}
+
+        {/* SNS로 로그인 */}
         <StSNSBtn>
           <button>
             <FaGithub />
@@ -87,6 +90,7 @@ const Login = () => {
 
 export default Login;
 
+// 전체 화면 wrapping
 const StLoginWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -102,9 +106,10 @@ const StLoginWrapper = styled.div`
   }
 `;
 
+// form 태그 영역 + Sign Up 버튼 + ID/PW찾기 + SNS 연동 버튼
 const StContainer = styled.div`
   width: 350px;
-  height: 400px;
+  height: 390px;
   background: #a7a5d0;
   border-radius: 50px;
   display: flex;
@@ -112,55 +117,40 @@ const StContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+
+  // Login / Signup 버튼 아래 line
   hr {
     width: 350px;
     opacity: 0.7;
-    margin-bottom: -5px;
+    margin-bottom: 15px;
   }
+
   form {
     width: 100%;
-    height: 100px;
+    height: 210px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    input {
-      width: 280px;
-      height: 40px;
-      border: none;
-      border-radius: 20px;
-      padding-left: 15px;
+    section {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      input {
+        width: 280px;
+        height: 40px;
+        border: none;
+        border-radius: 20px;
+        padding-left: 15px;
+      }
     }
   }
 `;
 
-const StFindPassword = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-  p {
-    font-size: 14px;
-    color: #fff;
-  }
-  button {
-    width: 90px;
-    height: 20px;
-    border: none;
-    border-radius: 10px;
-    background: #a7a5d0;
-    color: #fff;
-    font-size: 13px;
-    transition: all 0.3s;
-    &:hover {
-      background: #ffffff;
-      color: #504ba1;
-    }
-  }
-`;
-
+// Login / Signup 버튼
 const SignInButton = styled.div`
   width: 100%;
   height: 90px;
@@ -168,7 +158,6 @@ const SignInButton = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-top: -10px;
   button {
     width: 260px;
     height: 40px;
@@ -191,6 +180,35 @@ const SignInButton = styled.div`
   }
 `;
 
+// ID/PW 찾기
+const StFindPassword = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  margin-top: -15px;
+  p {
+    font-size: 14px;
+    color: #fff;
+  }
+  button {
+    width: 90px;
+    height: 20px;
+    border: none;
+    border-radius: 10px;
+    background: #a7a5d0;
+    color: #fff;
+    font-size: 12px;
+    transition: all 0.3s;
+    &:hover {
+      background: #ffffff;
+      color: #504ba1;
+    }
+  }
+`;
+
+// SNS 로 로그인
 const StSNSBtn = styled.div`
   width: 100%;
   height: 90px;

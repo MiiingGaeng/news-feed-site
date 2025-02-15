@@ -17,7 +17,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -27,6 +27,8 @@ const SignUp = () => {
           },
         },
       });
+
+      if (error) throw error;
 
       alert(`KEI 회원이 되신것을 환영합니다.`);
 
