@@ -4,6 +4,7 @@ import { useContext} from "react";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData";
 import { FeedContext } from "../../contexts/FeedContext";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthContext";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
@@ -15,7 +16,7 @@ const INITIAL_ADD_FEED_DATA = {
 const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"]
 
 // Feed 추가 Form 별도 분리
-const AddFeedForm = () => {
+const AddFeedForm = ({userId}) => {
   // FeedContext에서 toggleModal 함수를 가져옴 (모달을 열거나 닫을 때 사용)
   const { toggleModal } = useContext(FeedContext);
 
@@ -46,7 +47,7 @@ const AddFeedForm = () => {
     // feed 데이터를 확장 (writer_id 추가)
     const feedData = {
       ...data,
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",// 예시로 writer_id 값 하드코딩
+      writer_id: userId,
     }
 
      // 데이터 삽입 또는 업데이트 함수 호출
@@ -130,11 +131,12 @@ const AddFeedForm = () => {
 };
 
 const FeedForm = ({ isMode }) => {
+  const {userId} = useContext(AuthContext)
 
   return (
     <>
       {isMode === "addFeedMode" ? 
-        <AddFeedForm/> : 
+        <AddFeedForm userId={userId}/> : 
       (
         <StForm>
           {/* 타이틀 인풋 영역 */}
