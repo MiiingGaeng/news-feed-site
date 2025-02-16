@@ -11,7 +11,7 @@ const Detail = () => {
   //-----url에서 게시글 id 추출-----
   //query param으로 feed_id 값 가져오기
   const [searchParams] = useSearchParams();
-  const feedId = searchParams.get("id");
+  const feedId = searchParams.get("feed_id");
 
   //-----data fetch-----
   //feeds, comments 테이블 Data 가져오기
@@ -37,7 +37,7 @@ const Detail = () => {
   const navigate = useNavigate();
 
   const handleNavigateToEdit = () => {
-    navigate(`/edit?id=${feedId}`);
+    navigate(`/edit?feed_id=${feedId}`);
   };
 
   return (
