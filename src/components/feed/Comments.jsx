@@ -155,7 +155,7 @@ const Comments = ({ feedId }) => {
   return (
     <>
       <StDetailCommentsWrapper>
-        <h1>Comments</h1>
+        <h2>Comments</h2>
         {commentsData.length === 0 ? (
           <StDetailNoCommentsText>
             아직 댓글이 없습니다 🥲
@@ -167,7 +167,7 @@ const Comments = ({ feedId }) => {
                 <img src={comment.users.profile_img} alt="user_profile_img" />
                 <h3>{comment.users.nickname}</h3>
                 {editingCommentId === comment.comment_id ? (
-                  <input
+                  <StCommentEditInput
                     type="text"
                     value={editInputValue}
                     onChange={handleEditValueChange}
@@ -227,7 +227,8 @@ const StDetailCommentsWrapper = styled.ul`
   gap: 20px;
   border-top: 1px solid #504ba1;
 
-  h1 {
+  //Comments 타이틀
+  h2 {
     font-size: 20px;
     padding: 0 5px;
     margin: 20px 0;
@@ -243,11 +244,13 @@ const StDetailNoCommentsText = styled.p`
   font-size: 15px;
 `;
 
+//댓글 표시 UI 부분
 const StDetailComment = styled.li`
   width: 100%;
   display: flex;
   align-items: center;
 
+  //유저 프로필 이미지
   img {
     width: 50px;
     height: 50px;
@@ -256,22 +259,35 @@ const StDetailComment = styled.li`
     margin-right: 10px;
   }
 
+  //유저 닉네임
   h3 {
     width: 10%;
     font-size: 17px;
     margin-right: 20px;
   }
 
+  //댓글 본문
   p {
     width: 70%;
     font-size: 12px;
     padding: 10px;
   }
 `;
+//댓글 수정 입력창
+const StCommentEditInput = styled.input`
+  width: 100%;
+  height: 30px;
+  border: 1px solid #504ba1;
+  border-radius: 30px;
+  font-size: 12px;
+  padding: 0 20px;
+`;
 
+//EDIT/DELETE 버튼 wrapper
 const StCommentButtonWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-left: 10px;
 `;
 
 //댓글 입력 영역
@@ -284,6 +300,7 @@ const StCommentForm = styled.form`
   gap: 20px;
 `;
 
+//댓글 입력창
 const StCommentInput = styled.input`
   width: 500px;
   height: 30px;
