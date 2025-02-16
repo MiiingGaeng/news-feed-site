@@ -22,6 +22,7 @@ const StFeedList = styled.ul`
   flex-direction: column;
   align-items: center;
   gap: 50px;
+  flex:1;
 `;
 
 export default FeedList;
