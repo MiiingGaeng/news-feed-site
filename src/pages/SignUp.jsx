@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import supabase from "../supabase/client";
-import { AlertFail } from "../common/Alert";
+import { AlertError, AlertInfo, AlertSorry } from "../common/Alert";
+import { AuthContext } from "../contexts/AuthContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -14,13 +15,16 @@ const SignUp = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const navigate = useNavigate();
 
+  // 나중에 삭제할 임포트
+  const { isLogin, setIsLogin, user, setUser } = useContext(AuthContext);
+
   // 회원가입 로직
   const handleSignup = async (e) => {
     e.preventDefault();
 
     // 비밀번호 일치여부 확인
     if (password !== passwordCheck) {
-      AlertFail(`비밀번호가 일치하지 않습니다.`);
+      AlertError(`비밀번호가 일치하지 않습니다.`);
       return;
     }
 
@@ -40,19 +44,19 @@ const SignUp = () => {
       if (error) {
         switch (error.code) {
           case "email_exists":
-            alert(`이미 존재하는 이메일입니다.`);
+            AlertInfo("잠깐!", "이미 존재하는 이메일입니다.");
             return;
           case "user_already_exists":
-            alert(`이미 존재하는 이메일입니다.`);
+            AlertInfo("잠깐!", "이미 사용 중인 이메일입니다.");
             return;
           case "weak_password":
-            alert(`보안에 취약한 비밀번호입니다.`);
+            AlertError("경고", "보안에 취약한 비밀번호입니다.");
             return;
           default:
-            alert(`🚨에러발생🚨 : ${error.code}`);
+            AlertError(`🚨에러발생🚨 : ${error.code}`);
         }
       } else {
-        alert(`KEI 회원이 되신것을 환영합니다.`);
+        AlertSuccess("성공!", "KEI 회원이 되신것을 환영합니다.");
         // 회원가입 후 홈으로 랜딩
         navigate("/");
       }
@@ -63,17 +67,28 @@ const SignUp = () => {
     }
   };
 
+  // login
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  // logout
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsLogin(false);
+  };
+
   return (
     <StSignUpWrapper>
       <h1>SignUp</h1>
       <StContainer>
         {/* 타 SNS 계정으로 로그인 */}
         <StSNSBtn>
-          <button>
+          <button onClick={AlertSorry}>
             <FaGithub />
             Sign up with Github
           </button>
-          <button>
+          <button onClick={AlertSorry}>
             <FcGoogle />
             Sign up with Google
           </button>
@@ -122,6 +137,16 @@ const SignUp = () => {
         </form>
       </StContainer>
 
+      {/* 테스트용 */}
+      <h3>{isLogin ? "로그인 되었습니다." : "로그인이 필요합니다."}</h3>
+
+      {/* 로그인 버튼 조건부 렌더링 테스트용 */}
+      {isLogin ? (
+        <button onClick={handleLogout}>🫥Log Out</button>
+      ) : (
+        <button onClick={handleLogin}>😀Log in</button>
+      )}
+
       {/* 기존 가입자 => Login 페이지로 이동 */}
       <StGoToLogin>
         <span>계정이 이미 있으신가요?</span>
@@ -153,8 +178,8 @@ const StSignUpWrapper = styled.div`
 
 // form 태그 전체 wrapper
 const StContainer = styled.div`
-  width: 350px;
-  height: 460px;
+  width: 430px;
+  height: 540px;
   background: #a7a5d0;
   border-radius: 50px;
   display: flex;
@@ -173,7 +198,7 @@ const StContainer = styled.div`
   // 가입자 정보 입력 창 + signup 버튼
   form {
     width: 100%;
-    height: 300px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

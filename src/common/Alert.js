@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import AlertAlternative from "../assets/image/AlertAlternative.png";
+import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
 
 /**
  * Success
@@ -7,10 +7,15 @@ import AlertAlternative from "../assets/image/AlertAlternative.png";
  * @param {string} text -> 알림 내용 (선택)
  */
 
-export const AlertSuccess = (title) => {
+export const AlertSuccess = (title = "Success", text = "") => {
   Swal.fire({
     icon: "success",
-    title: "Success",
+    title,
+    text,
+    customClass: {
+      popup: "swal-custom", // 팝업 스타일링
+      icon: "swal-icon", // 아이콘 스타일링
+    },
   });
 };
 
@@ -20,11 +25,15 @@ export const AlertSuccess = (title) => {
  * @param {string} text -> 경고 내용
  */
 
-export const AlertFail = (title, text) => {
+export const AlertError = (title = "Error", text = "") => {
   Swal.fire({
     icon: "error",
-    title: "Fail",
-    text: "비밀번호가 일치하지 않습니다.",
+    title,
+    text,
+    customClass: {
+      popup: "swal-custom", // 팝업 스타일링
+      icon: "swal-icon", // 아이콘 스타일링
+    },
   });
 };
 
@@ -34,11 +43,11 @@ export const AlertFail = (title, text) => {
  * @param {string} text -> 안내 내용
  */
 
-export const AlertInfo = (title, text) => {
+export const AlertInfo = (title = "Info", text = "") => {
   Swal.fire({
     icon: "info",
-    title: "잠깐!",
-    text: "이미 존재하는 이메일입니다.",
+    title,
+    text,
   });
 };
 
@@ -48,11 +57,14 @@ export const AlertInfo = (title, text) => {
  * @param {string} text -> 경고 내용
  */
 
-export const AlertCheck = (title, text) => {
+export const AlertCheck = (
+  title = "Warning",
+  text = "이 작업은 되돌릴 수 없습니다!"
+) => {
   Swal.fire({
-    title: "삭제할까요?",
-    text: "이 작업은 되돌릴 수 없습니다!",
     icon: "warning",
+    title,
+    text,
     showCancelButton: true,
     confirmButtonColor: "#504ba1",
     cancelButtonColor: "#CD2E57",
@@ -78,7 +90,7 @@ export const AlertSorry = (title, text) => {
   Swal.fire({
     title: "미안해!",
     text: "구현하지 못했어.",
-    imageUrl: AlertAlternative,
+    imageUrl: alertalt,
     imageWidth: 400,
     imageHeight: 200,
     imageAlt: "Custom image",
