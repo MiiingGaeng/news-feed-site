@@ -26,7 +26,7 @@ export default StickyMenu;
 const StStickyMenu = styled.div`
   position: relative;
   display: flex;
-  width: 82px;
+  width: 66px;
   flex-direction: column;
   gap: 1rem;
   margin: 0 2rem;
