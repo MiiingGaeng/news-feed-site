@@ -7,6 +7,7 @@ import Mypage from "../pages/Mypage";
 import FindIdPw from "../pages/FindIdPw";
 import Detail from "../pages/Detail";
 import Layout from "../layout/Layout";
+import FeedEdit from "../pages/FeedEdit";
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/findidpw" element={<FindIdPw />} />
           <Route path="/detail" element={<Detail />} />
+          <Route path="/edit" element={<FeedEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>

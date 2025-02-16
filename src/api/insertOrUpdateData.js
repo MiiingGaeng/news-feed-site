@@ -10,11 +10,11 @@ import supabase from "../supabase/client";
  */
 export const insertOrUpdateData = async (upsertData, tableName) => {
   if (!upsertData) {
-    console.error("upsertData값은 필수입니다.");
+    console.error("upsertData 값은 필수입니다.");
     return;
   }
   if (!tableName) {
-    console.error("tableName은 필수입니다.");
+    console.error("tableName 값은 필수입니다.");
     return;
   }
   try {
