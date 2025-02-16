@@ -10,22 +10,26 @@ const Feed = () => {
   const [feedsData, setFeedsData] = useState([]);
   const { toggleModal, isModalOpen } = useContext(FeedContext);
 
+  async function fetchFeeds() {
+    const newFeedsData = await fetchData("feeds", "users");
+    setFeedsData(newFeedsData);
+  }
+
   useEffect(() => {
-    async function fetchFeeds() {
-      const newFeedsData = await fetchData("feeds", "users");
-      setFeedsData(newFeedsData);
-    }
     fetchFeeds();
   }, []);
+
+  const onHandleAddFeed = () => {
+    fetchFeeds();
+  }
 
   return (
     <>
       <StickyMenu/>
       <FeedList posts={feedsData} setPosts={setFeedsData} />
-      {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
-          <FeedForm isMode="addFeedMode" />
+          <FeedForm isMode="addFeedMode" onAddFeed={onHandleAddFeed} />
         </Modal>
       )}
     </>
