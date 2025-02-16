@@ -38,12 +38,14 @@ const StMain = styled.main`
   padding: 2rem;
   box-sizing: border-box;
   animation: ${fadeIn} 0.5s ease-out;
+  position: relative;
 `;
 
 const StContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 export default Layout;
