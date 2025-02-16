@@ -51,7 +51,6 @@ const AddFeedForm = () => {
 
      // 데이터 삽입 또는 업데이트 함수 호출
     insertOrUpdateData(feedData, "feeds");
-
     // 모달 닫기
     toggleModal();
 
@@ -150,8 +149,9 @@ const FeedForm = ({ isMode }) => {
           </StFormContentsWrapper>
           {/* SUBMIT 버튼 영역 */}
           <Button>SUBMIT</Button>
-        </StForm>
-      )}
+        </form>
+
+      }
     </>
   );
 };
