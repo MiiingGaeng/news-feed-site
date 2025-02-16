@@ -63,11 +63,10 @@ const SignUp = () => {
   };
 
   return (
-    // 기본 회원가입 로직만 완성되어 있습니다.
-    // 테스트용으로 먼저 업로드하오니 참고 부탁드립니다.
     <StSignUpWrapper>
       <h1>SignUp</h1>
       <StContainer>
+        {/* 타 SNS 계정으로 로그인 */}
         <StSNSBtn>
           <button>
             <FaGithub />
@@ -81,6 +80,7 @@ const SignUp = () => {
 
         <hr />
 
+        {/* 가입자 정보 입력창 */}
         <form onSubmit={handleSignup}>
           <input
             type="email"
@@ -121,6 +121,7 @@ const SignUp = () => {
         </form>
       </StContainer>
 
+      {/* 기존 가입자 => Login 페이지로 이동 */}
       <StGoToLogin>
         <span>계정이 이미 있으신가요?</span>
         <Link to="/login">
@@ -133,6 +134,7 @@ const SignUp = () => {
 
 export default SignUp;
 
+// 전체 화면 wrapping
 const StSignUpWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -148,6 +150,7 @@ const StSignUpWrapper = styled.div`
   }
 `;
 
+// form 태그 전체 wrapper
 const StContainer = styled.div`
   width: 350px;
   height: 460px;
@@ -159,10 +162,14 @@ const StContainer = styled.div`
   align-items: center;
   padding: 40px;
   margin-bottom: 20px;
+
+  // SNS 로 로그인 버튼 아래 라인
   hr {
     width: 350px;
     opacity: 0.7;
   }
+
+  // 가입자 정보 입력 창 + signup 버튼
   form {
     width: 100%;
     height: 300px;
@@ -177,6 +184,8 @@ const StContainer = styled.div`
       border-radius: 20px;
       padding-left: 15px;
     }
+
+    // Signup 버튼
     button {
       width: 200px;
       height: 40px;
@@ -194,6 +203,7 @@ const StContainer = styled.div`
   }
 `;
 
+// SNS 로 로그인 버튼
 const StSNSBtn = styled.div`
   width: 100%;
   height: 100px;
@@ -225,6 +235,7 @@ const StSNSBtn = styled.div`
   }
 `;
 
+// 계정이 이미 있으신가요? => go to Login 페이지
 const StGoToLogin = styled.div`
   width: 410px;
   height: 60px;
