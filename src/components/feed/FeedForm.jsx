@@ -132,7 +132,7 @@ const EditFeedForm = ({ feedId }) => {
         />
       </StFormContentsWrapper>
       {/* SUBMIT 버튼 영역 */}
-      <Button>SUBMIT</Button>
+      <Button type="submit">SUBMIT</Button>
     </StForm>
   );
 };
