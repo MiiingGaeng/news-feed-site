@@ -4,12 +4,14 @@ import supabase from "../supabase/client";
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  // login state , user state
+  // login state , user state, userId state
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  console.log("isLogin", isLogin);
+  console.log("*isLogin", isLogin);
+  console.log("*userID", userId);
+  console.log("*user", user);
 
   useEffect(() => {
     const {
