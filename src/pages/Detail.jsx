@@ -6,12 +6,18 @@ import { useEffect } from "react";
 import { fetchData } from "../api/fetchData";
 import { useState } from "react";
 import Comments from "../components/feed/Comments";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { deleteData } from "../api/deleteData";
 
 const Detail = () => {
-  //-----url에서 게시글 id 추출-----
-  //query param으로 feed_id 값 가져오기
+  //-----feed_id / user_id 값 가져오기-----
+  //url에서 게시글 id 추출 : query param으로 feed_id 값 가져오기
   const [searchParams] = useSearchParams();
   const feedId = searchParams.get("feed_id");
+
+  //context에서 로그인된 유저의 user_id값 가져오기
+  const { userId } = useContext(AuthContext);
 
   //-----data fetch-----
   //feeds, comments 테이블 Data 가져오기
@@ -40,6 +46,20 @@ const Detail = () => {
     navigate(`/edit?feed_id=${feedId}`);
   };
 
+  //-----해당 게시글 삭제 로직-----
+  const handleDeletePost = async (feedId) => {
+    //사용자 확인 여부
+    const isConfirm = window.confirm("정말 삭제하시겠습니까?");
+
+    if (isConfirm) {
+      //supabase에서 데이터 삭제
+      await deleteData("feeds", "feed_id", feedId);
+
+      //Feed 페이지로 이동
+      navigate("/feed");
+    }
+  };
+
   return (
     <StDetailBox>
       <CloseButton onClick={() => navigate("/feed")} />
@@ -51,9 +71,12 @@ const Detail = () => {
 
         <h1>{selectedFeedData?.title}</h1>
         <p>{selectedFeedData?.contents}</p>
-        <Button type="type" onClick={() => handleNavigateToEdit()}>
-          EDIT
-        </Button>
+        {selectedFeedData?.writer_id === userId && (
+          <StDetailButtonWrapper>
+            <Button onClick={() => handleNavigateToEdit()}>EDIT</Button>
+            <Button onClick={() => handleDeletePost(feedId)}>DELETE</Button>
+          </StDetailButtonWrapper>
+        )}
       </StDetailUserContentsWrapper>
 
       <Comments feedId={feedId} />
@@ -116,4 +139,12 @@ const StDetailUserWrapper = styled.div`
     font-size: 17px;
   }
 `;
+
+const StDetailButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-left: 10px;
+`;
+
 export default Detail;
