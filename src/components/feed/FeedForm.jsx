@@ -6,7 +6,6 @@ import { FeedContext } from "../../contexts/FeedContext";
 import { fetchData } from "../../api/fetchData";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useEffect } from "react";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
@@ -141,16 +140,31 @@ const AddFeedForm = () => {
         )}
       </StFormContentsWrapper>
       {/* SUBMIT 버튼 영역 */}
-      <Button type="submit">글 업로드</Button>
+      <Button type="submit">UPLOAD</Button>
     </form>
   );
 };
 
 //-----editFeedMode 게시글 수정 컴포넌트-----
 const EditFeedForm = ({ feedId }) => {
-  //state
-  const [editTitle, setEditTitle] = useState("");
-  const [editContents, setEditContents] = useState("");
+  //react-hook-form을 사용하여 폼 데이터 관리
+  const INITIAL_EDIT_FEED_DATA = {
+    title: "",
+    contents: "",
+  };
+
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: INITIAL_EDIT_FEED_DATA,
+  });
+
+  // //state
+  // const [editTitle, setEditTitle] = useState("");
+  // const [editContents, setEditContents] = useState("");
 
   //-----data fetch-----
   useEffect(() => {
@@ -160,8 +174,10 @@ const EditFeedForm = ({ feedId }) => {
         //해당 게시글 정보만 가져오기
         const post = feed.find((post) => post.feed_id === feedId);
 
-        setEditTitle(post.title);
-        setEditContents(post.contents);
+        if (post) {
+          setValue("title", post.title);
+          setValue("contents", post.contents);
+        }
       } catch (error) {
         console.log("fetching error => ", error);
       }
@@ -173,29 +189,41 @@ const EditFeedForm = ({ feedId }) => {
   //수정 완료시 Detail로 이동 로직
   const navigate = useNavigate();
 
-  //Edit input 체인지 이벤트 핸들러
-  const handleEditTitleChange = (e) => {
-    setEditTitle(e.target.value);
+  //금칙어 필터링을 위한 boolean 값
+  const checkBannedWords = (text) => {
+    for (let i of BANNED_WORDS) {
+      if (text.includes(i)) {
+        return false;
+      }
+      return true;
+    }
   };
 
-  const handleEditContentChange = (e) => {
-    setEditContents(e.target.value);
-  };
+  //Edit input 체인지 이벤트 핸들러
+  // const handleEditTitleChange = (e) => {
+  //   setEditTitle(e.target.value);
+  // };
+
+  // const handleEditContentChange = (e) => {
+  //   setEditContents(e.target.value);
+  // };
 
   //게시글 수정 함수
-  const handleEditFeedSubmit = async (e) => {
-    e.preventDefault();
-
-    //예외처리: 빈칸의 경우 return
-    if (!editTitle.trim() || !editContents.trim()) {
-      alert("수정된 내용을 입력해주세요!");
+  const handleEditFeedSubmit = async (data) => {
+    //예외처리: 금칙어
+    if (!checkBannedWords(data.title)) {
+      alert("제목에 금칙어가 포함되어 있습니다.");
+      return;
+    }
+    if (!checkBannedWords(data.contents)) {
+      alert("본문에 금칙어가 포함되어 있습니다.");
       return;
     }
 
     const editedFeed = {
       feed_id: feedId,
-      title: editTitle,
-      contents: editContents,
+      title: data.title,
+      contents: data.contents,
       //writer_id는 임시 데이터값입니다!!!
       writer_id: "44319787-433a-4f21-b2dc-309ddfc7e21c",
     };
@@ -219,24 +247,66 @@ const EditFeedForm = ({ feedId }) => {
   };
 
   return (
-    <StForm onSubmit={handleEditFeedSubmit}>
+    <StForm onSubmit={handleSubmit(handleEditFeedSubmit)}>
       {/* 타이틀 인풋 영역 */}
       <StFormTitleWrapper>
         <h1>Title</h1>
         <StFormTitleInput
           type="text"
-          value={editTitle}
-          onChange={handleEditTitleChange}
+          maxLength="50"
+          // onChange={handleEditTitleChange}
+          {...register("title", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 제목은 최소 6자 이상이어야 합니다",
+            },
+            maxLength: {
+              value: 50,
+              message: "※ 제목은 최대 50자를 초과할 수 없습니다",
+            },
+            setValueAs: (value) => value.trim(),
+          })}
         />
+        {errors.title && (
+          <p>
+            {errors.title.type === "required" && "※ 제목은 필수입니다."}
+            {errors.title.type === "minLength" &&
+              "※ 제목은 최소 6자 이상이어야 합니다"}
+            {errors.title.type === "maxLength" &&
+              "※ 제목은 최대 50자를 초과할 수 없습니다"}
+          </p>
+        )}
       </StFormTitleWrapper>
       {/* 본문 인풋 영역 */}
       <StFormContentsWrapper>
         <h1>Contents</h1>
         <StFormContentsInput
           type="text"
-          value={editContents}
-          onChange={handleEditContentChange}
+          maxLength="500"
+          // onChange={handleEditContentChange}
+          {...register("contents", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 본문은 최소 6자 이상이어야 합니다",
+            },
+            maxLength: {
+              value: 500,
+              message: "※ 내용은 500자를 초과할 수 없습니다",
+            },
+            setValueAs: (value) => value.trim(),
+          })}
         />
+        {errors.contents && (
+          <p>
+            {errors.contents.type === "required" && "※ 본문은 필수입니다."}
+            {errors.contents.type === "minLength" &&
+              "※ 본문은 최소 6자 이상이어야 합니다"}
+            {errors.contents.type === "maxLength" &&
+              "※ 본문은 최대 500자를 초과할 수 없습니다"}
+          </p>
+        )}
       </StFormContentsWrapper>
       {/* SUBMIT 버튼 영역 */}
       <Button type="submit">SUBMIT</Button>
