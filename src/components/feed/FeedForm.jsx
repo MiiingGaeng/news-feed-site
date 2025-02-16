@@ -3,13 +3,15 @@ import Button from "../../common/Button";
 import { useContext, useEffect, useState } from "react";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData";
 import { FeedContext } from "../../contexts/FeedContext";
+import { fetchData } from "../../api/fetchData";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_ADD_FEED_DATA = {
   title: "",
   contents: "",
 };
 
-// Feed 추가 Form 별도 분리
+//-----addFeedMode 게시글 추가 컴포넌트------
 const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
   <form>
     {/* 타이틀 인풋 영역 */}
@@ -37,7 +39,105 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
   </form>
 );
 
-const FeedForm = ({ isMode }) => {
+//-----editFeedMode 게시글 수정 컴포넌트-----
+const EditFeedForm = ({ feedId }) => {
+  //state
+  const [editTitle, setEditTitle] = useState("");
+  const [editContents, setEditContents] = useState("");
+
+  //-----data fetch-----
+  useEffect(() => {
+    async function fetchFeeds() {
+      try {
+        const feed = await fetchData("feeds", "users");
+        //해당 게시글 정보만 가져오기
+        const post = feed.find((post) => post.feed_id === feedId);
+
+        setEditTitle(post.title);
+        setEditContents(post.contents);
+      } catch (error) {
+        console.log("fetching error => ", error);
+      }
+    }
+
+    fetchFeeds();
+  }, []);
+
+  //수정 완료시 Detail로 이동 로직
+  const navigate = useNavigate();
+
+  //Edit input 체인지 이벤트 핸들러
+  const handleEditTitleChange = (e) => {
+    setEditTitle(e.target.value);
+  };
+
+  const handleEditContentChange = (e) => {
+    setEditContents(e.target.value);
+  };
+
+  //게시글 수정 함수
+  const handleEditFeedSubmit = async (e) => {
+    e.preventDefault();
+
+    //예외처리: 빈칸의 경우 return
+    if (!editTitle.trim() || !editContents.trim()) {
+      alert("수정된 내용을 입력해주세요!");
+      return;
+    }
+
+    const editedFeed = {
+      feed_id: feedId,
+      title: editTitle,
+      contents: editContents,
+      //writer_id는 임시 데이터값입니다!!!
+      writer_id: "44319787-433a-4f21-b2dc-309ddfc7e21c",
+    };
+
+    try {
+      //사용자 확인 요청
+      const isConfirm = window.confirm("수정하시겠습니까?");
+      if (isConfirm) {
+        //supabase 데이터 업데이트
+        await insertOrUpdateData(editedFeed, "feeds", "feed_id");
+        //사용자 알림
+        alert("글이 수정되었습니다!");
+        //Detail 페이지로 이동
+        navigate(`/detail?feed_id=${feedId}`);
+      }
+    } catch (error) {
+      console.log("edit feed error => ", error);
+      //사용자 알림
+      alert("앗! 글을 수정하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+    }
+  };
+
+  return (
+    <StForm onSubmit={handleEditFeedSubmit}>
+      {/* 타이틀 인풋 영역 */}
+      <StFormTitleWrapper>
+        <h1>Title</h1>
+        <StFormTitleInput
+          type="text"
+          value={editTitle}
+          onChange={handleEditTitleChange}
+        />
+      </StFormTitleWrapper>
+      {/* 본문 인풋 영역 */}
+      <StFormContentsWrapper>
+        <h1>Contents</h1>
+        <StFormContentsInput
+          type="text"
+          value={editContents}
+          onChange={handleEditContentChange}
+        />
+      </StFormContentsWrapper>
+      {/* SUBMIT 버튼 영역 */}
+      <Button>SUBMIT</Button>
+    </StForm>
+  );
+};
+
+const FeedForm = ({ isMode, feedId }) => {
   // 추가할 Feed 상태관리
   const [addFeedData, setAddFeedData] = useState(INITIAL_ADD_FEED_DATA);
   const { toggleModal } = useContext(FeedContext);
@@ -79,20 +179,7 @@ const FeedForm = ({ isMode }) => {
           handleAddFeed={handleAddFeed}
         />
       ) : (
-        <StForm>
-          {/* 타이틀 인풋 영역 */}
-          <StFormTitleWrapper>
-            <h1>Title</h1>
-            <StFormTitleInput type="text" />
-          </StFormTitleWrapper>
-          {/* 본문 인풋 영역 */}
-          <StFormContentsWrapper>
-            <h1>Contents</h1>
-            <StFormContentsInput type="text" />
-          </StFormContentsWrapper>
-          {/* SUBMIT 버튼 영역 */}
-          <Button>SUBMIT</Button>
-        </StForm>
+        <EditFeedForm feedId={feedId} />
       )}
     </>
   );
