@@ -10,14 +10,21 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
   const navigate = useNavigate();
 
   // 회원가입 로직
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    // 비밀번호 일치여부 확인
+    if (password !== passwordCheck) {
+      alert(`비밀번호가 일치하지 않습니다.`);
+      return;
+    }
+
     try {
-      await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -28,22 +35,38 @@ const SignUp = () => {
         },
       });
 
-      alert(`KEI 회원이 되신것을 환영합니다.`);
-
-      // 회원가입 후 기본은 홈으로 랜딩
-      navigate("/");
+      // 회원가입 에러코드별 예외처리
+      if (error) {
+        switch (error.code) {
+          case "email_exists":
+            alert(`이미 존재하는 이메일입니다.`);
+            return;
+          case "user_already_exists":
+            alert(`이미 존재하는 이메일입니다.`);
+            return;
+          case "weak_password":
+            alert(`보안에 취약한 비밀번호입니다.`);
+            return;
+          default:
+            alert(`🚨에러발생🚨 : ${error.code}`);
+        }
+      } else {
+        alert(`KEI 회원이 되신것을 환영합니다.`);
+        // 회원가입 후 홈으로 랜딩
+        navigate("/");
+      }
     } catch (error) {
-      alert(error.massage);
+      alert(`⛔️ 회원가입중 오류가 발생했습니다. 다시 시도해주세요!
+      ⛔️${error.massage}`);
       console.log("⛔️회원가입 오류", error);
     }
   };
 
   return (
-    // 기본 회원가입 로직만 완성되어 있습니다.
-    // 테스트용으로 먼저 업로드하오니 참고 부탁드립니다.
     <StSignUpWrapper>
       <h1>SignUp</h1>
       <StContainer>
+        {/* 타 SNS 계정으로 로그인 */}
         <StSNSBtn>
           <button>
             <FaGithub />
@@ -57,6 +80,7 @@ const SignUp = () => {
 
         <hr />
 
+        {/* 가입자 정보 입력창 */}
         <form onSubmit={handleSignup}>
           <input
             type="email"
@@ -70,6 +94,13 @@ const SignUp = () => {
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="비밀번호를 다시한번 입력해주세요"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
             required
           />
           <input
@@ -90,6 +121,7 @@ const SignUp = () => {
         </form>
       </StContainer>
 
+      {/* 기존 가입자 => Login 페이지로 이동 */}
       <StGoToLogin>
         <span>계정이 이미 있으신가요?</span>
         <Link to="/login">
@@ -102,6 +134,7 @@ const SignUp = () => {
 
 export default SignUp;
 
+// 전체 화면 wrapping
 const StSignUpWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -117,6 +150,7 @@ const StSignUpWrapper = styled.div`
   }
 `;
 
+// form 태그 전체 wrapper
 const StContainer = styled.div`
   width: 350px;
   height: 460px;
@@ -128,10 +162,14 @@ const StContainer = styled.div`
   align-items: center;
   padding: 40px;
   margin-bottom: 20px;
+
+  // SNS 로 로그인 버튼 아래 라인
   hr {
     width: 350px;
     opacity: 0.7;
   }
+
+  // 가입자 정보 입력 창 + signup 버튼
   form {
     width: 100%;
     height: 300px;
@@ -146,6 +184,8 @@ const StContainer = styled.div`
       border-radius: 20px;
       padding-left: 15px;
     }
+
+    // Signup 버튼
     button {
       width: 200px;
       height: 40px;
@@ -163,6 +203,7 @@ const StContainer = styled.div`
   }
 `;
 
+// SNS 로 로그인 버튼
 const StSNSBtn = styled.div`
   width: 100%;
   height: 100px;
@@ -194,6 +235,7 @@ const StSNSBtn = styled.div`
   }
 `;
 
+// 계정이 이미 있으신가요? => go to Login 페이지
 const StGoToLogin = styled.div`
   width: 410px;
   height: 60px;
