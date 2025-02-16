@@ -7,7 +7,7 @@ const FeedList = ({ posts, setPosts }) => {
     <StFeedList>
       {posts.map((post) => {
         return (
-          <Link to={`/detail?id=${post.feed_id}`} key={post.feed_id}>
+          <Link to={`/detail?feed_id=${post.feed_id}`} key={post.feed_id}>
             <FeedCard post={post} setPosts={setPosts} />
           </Link>
         );
@@ -22,6 +22,7 @@ const StFeedList = styled.ul`
   flex-direction: column;
   align-items: center;
   gap: 50px;
+  flex:1;
 `;
 
 export default FeedList;
