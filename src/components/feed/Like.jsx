@@ -12,7 +12,7 @@ const Like = () => {
     setIsLiked(!isLiked);
   }
   return (
-    <StLikeButton onClick={handleLike} isLiked={isLiked}>
+    <StLikeButton onClick={handleLike} $isLiked={isLiked}>
       {isLiked ? "❤️" : "🤍"}
     </StLikeButton>
   )
@@ -25,7 +25,7 @@ const StLikeButton = styled.button`
   font-size: 18px;
   cursor: pointer;
   // 좋아요 상태에 따라 조건부 스타일링을 사용해 색상 변경
-  /* color: ${(props) => (props.$isLiked ? "#ff4500" : "#aaa")}; */
+  color: ${(props) => (props.$isLiked ? "#ff4500" : "#aaa")};
   transition: color 0.2s ease-in-out;
 
   &:hover {
