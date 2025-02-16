@@ -149,9 +149,8 @@ const FeedForm = ({ isMode }) => {
           </StFormContentsWrapper>
           {/* SUBMIT 버튼 영역 */}
           <Button>SUBMIT</Button>
-        </form>
-
-      }
+        </StForm>
+      )}
     </>
   );
 };
