@@ -52,16 +52,19 @@ const Home = () => {
           <p>수강생 커뮤니티 “King’s Ear Is”로 오세요!</p>
           <p>튜터님 귀는 당나귀 귀!!!</p>
         </div>
-        <NavigationButton to="/signup">가입하기</NavigationButton>
+        <div className="home-button-wrapper">
+          <NavigationButton to="/signup">가입하기</NavigationButton>
+          <NavigationButton to="/feed">게시물 보기</NavigationButton>
+        </div>
       </StHomeSubContainer>
-      <StHomeSubContainer>
+      {/* <StHomeSubContainer>
         <div className="home-sub-wrapper">
           <h3>인기 게시글</h3>
         </div>
       </StHomeSubContainer>
       <StHomeContainer>
-        {/* Feed  */}
-      </StHomeContainer>
+      피드
+      </StHomeContainer> */}
     </StHomeWrapper>
   );
 };
@@ -154,8 +157,6 @@ const StCircle = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 25vw;
-    height: 25vw;
 
     .circle-icon-area {
       font-size: 2.5rem;
@@ -203,6 +204,11 @@ const StHomeSubContainer = styled.div`
   }
   p{
     margin: .5rem 0;
+  }
+  .home-button-wrapper{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
   }
 `
 
