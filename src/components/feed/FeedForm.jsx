@@ -42,15 +42,6 @@ const AddFeedForm = ({ userId }) => {
     }
   };
 
-  // // onChange시에 event와 field 객체를 받아, input value 추가
-  // const handleInputChange = (e, field) => {
-  //   const { value } = e.target;
-  //   setAddFeedData((state) => ({
-  //     ...state,
-  //     [field]: value,
-  //   }));
-  // };
-
   // 실제 테이블에 feed 데이터 추가하는 함수
   const handleAddFeed = (data) => {
     if (!data) return;
@@ -147,7 +138,7 @@ const AddFeedForm = ({ userId }) => {
 };
 
 //-----editFeedMode 게시글 수정 컴포넌트-----
-const EditFeedForm = ({ feedId }) => {
+const EditFeedForm = ({ feedId, userId }) => {
   //react-hook-form을 사용하여 폼 데이터 관리
   const INITIAL_EDIT_FEED_DATA = {
     title: "",
@@ -162,10 +153,6 @@ const EditFeedForm = ({ feedId }) => {
   } = useForm({
     defaultValues: INITIAL_EDIT_FEED_DATA
   });
-
-  // //state
-  // const [editTitle, setEditTitle] = useState("");
-  // const [editContents, setEditContents] = useState("");
 
   //-----data fetch-----
   useEffect(() => {
@@ -200,15 +187,6 @@ const EditFeedForm = ({ feedId }) => {
     }
   };
 
-  //Edit input 체인지 이벤트 핸들러
-  // const handleEditTitleChange = (e) => {
-  //   setEditTitle(e.target.value);
-  // };
-
-  // const handleEditContentChange = (e) => {
-  //   setEditContents(e.target.value);
-  // };
-
   //게시글 수정 함수
   const handleEditFeedSubmit = async (data) => {
     //예외처리: 금칙어
@@ -225,8 +203,7 @@ const EditFeedForm = ({ feedId }) => {
       feed_id: feedId,
       title: data.title,
       contents: data.contents,
-      //writer_id는 임시 데이터값입니다!!!
-      writer_id: "44319787-433a-4f21-b2dc-309ddfc7e21c"
+      writer_id: userId
     };
 
     try {
@@ -316,12 +293,14 @@ const EditFeedForm = ({ feedId }) => {
 };
 
 const FeedForm = ({ isMode, feedId }) => {
+  const { userId } = useContext(AuthContext);
+
   return (
     <>
       {isMode === "addFeedMode" ? (
-        <AddFeedForm />
+        <AddFeedForm userId={userId} />
       ) : (
-        <EditFeedForm feedId={feedId} />
+        <EditFeedForm feedId={feedId} userId={userId} />
       )}
     </>
   );
