@@ -33,7 +33,7 @@ const StStickyMenu = styled.div`
   z-index: 50;
 
   .sticky-menu-wrapper{
-    position: absolute;
+    position: sticky;
     top: 50%;
     transform: translateY(-50%);
     left: 0;
@@ -48,7 +48,7 @@ const StStickyMenuItems = styled.nav`
   background-color: #FFFFFF80;
   border-radius:50px;
   border:none;
-  padding: 2rem 1rem;
+  padding: 2rem .5rem;
   display: flex;
   gap: 1rem;
   flex-direction: column;
