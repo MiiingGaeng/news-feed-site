@@ -29,7 +29,7 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
-  //-----댓글 추가 및 수정 기능-----
+  //-----댓글 추가 기능-----
   //state
   //input value
   const [inputValue, setInputValue] = useState("");
@@ -64,11 +64,11 @@ const Comments = ({ feedId }) => {
       alert("댓글이 추가 되었습니다!");
 
       //댓글 목록을 새롭게 fetch해서 즉시 반영하기
-      const comments = await fetchData("comments", "users");
-      const newComments = comments.filter(
+      const commentsData = await fetchData("comments", "users");
+      const newCommentsData = commentsData.filter(
         (comment) => comment.feed_id === feedId
       );
-      setCommentsData(newComments);
+      setCommentsData(newCommentsData);
     } catch (error) {
       console.log("add comment error => ", error);
       //사용자 알림
@@ -76,7 +76,60 @@ const Comments = ({ feedId }) => {
     }
   };
 
+  //-----댓글 수정 기능-----
+  //state
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editInputValue, setEditInputValue] = useState("");
+
   //수정 함수
+  //Edit Button 클릭 이벤트 핸들러
+  // : Edit 버튼 클릭시 해당 댓글의 id값이 넘어가고, 내용이 input 안에 담기는 로직
+  const handleEditButtonClick = (comment) => {
+    setEditingCommentId(comment.comment_id);
+    setEditInputValue(comment.comment);
+  };
+
+  //Edit input 체인지 이벤트 핸들러
+  const handleEditValueChange = (e) => {
+    setEditInputValue(e.target.value);
+  };
+
+  //수정 함수
+  const handleEditComment = async (comment_id) => {
+    //예외처리: 빈칸의 경우 return
+    if (!editInputValue.trim()) {
+      alert("수정된 내용을 입력해주세요!");
+      return;
+    }
+
+    const editedComment = {
+      comment_id,
+      comment: editInputValue,
+      feed_id: feedId,
+      //writer_id는 임시 데이터값입니다!!
+      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+    };
+
+    try {
+      //supabase 데이터 업데이트
+      await insertOrUpdateData(editedComment, "comments", "comment_id");
+      //사용자 알림
+      alert("댓글이 수정되었습니다!");
+      //선택 초기화
+      setEditingCommentId(null);
+
+      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+      const commentsData = await fetchData("comments", "users");
+      const newCommentsData = commentsData.filter(
+        (comment) => comment.feed_id === feedId
+      );
+      setCommentsData(newCommentsData);
+    } catch (error) {
+      console.log("edit comment error => ", error);
+      //사용자 알림
+      alert("앗! 댓글을 수정하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+    }
+  };
 
   //-----댓글 삭제 기능-----
   //삭제 함수
@@ -113,10 +166,32 @@ const Comments = ({ feedId }) => {
               <StDetailComment key={comment.comment_id}>
                 <img src={comment.users.profile_img} alt="user_profile_img" />
                 <h3>{comment.users.nickname}</h3>
-                <p>{comment.comment}</p>
+                {editingCommentId === comment.comment_id ? (
+                  <input
+                    type="text"
+                    value={editInputValue}
+                    onChange={handleEditValueChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter")
+                        handleEditComment(comment.comment_id);
+                    }}
+                  />
+                ) : (
+                  <p>{comment.comment}</p>
+                )}
 
                 <StCommentButtonWrapper>
-                  <Button>EDIT</Button>
+                  {editingCommentId === comment.comment_id ? (
+                    <Button
+                      onClick={() => handleEditComment(comment.comment_id)}
+                    >
+                      SAVE
+                    </Button>
+                  ) : (
+                    <Button onClick={() => handleEditButtonClick(comment)}>
+                      EDIT
+                    </Button>
+                  )}
                   <Button
                     onClick={() => handleDeleteComment(comment.comment_id)}
                   >
