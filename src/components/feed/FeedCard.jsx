@@ -3,7 +3,7 @@ import Like from "./Like";
 import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/TestAuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const FeedCard = ({ post, setPosts }) => {
   const { userId } = useContext(AuthContext);
