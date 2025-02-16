@@ -2,35 +2,6 @@ import styled from "styled-components";
 import NavigationButton from "../components/common/NavigationButton";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { isLogin, setIsLogin, user, setUser } = useContext(AuthContext);
-
-  // login state check
-  useEffect(() => {
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      // session check
-      console.log("✅ session", session);
-
-      setIsLogin(session?.user ?? null);
-      setUser(session?.user || null);
-    };
-    getSession();
-  }, [setIsLogin]);
-
-  // login
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  // logout
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsLogin(false);
-  };
-
   return (
     <StHomeWrapper>
       {/* 화면 전체를 감싸는 컨테이너 */}
