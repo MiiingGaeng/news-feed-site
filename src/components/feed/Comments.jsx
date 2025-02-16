@@ -266,16 +266,17 @@ const StDetailComment = styled.li`
 
   //유저 닉네임
   h3 {
-    width: 10%;
+    width: 80px;
     font-size: 17px;
     margin-right: 20px;
   }
 
   //댓글 본문
   p {
-    width: 70%;
+    width: 50%;
     font-size: 12px;
     padding: 10px;
+    overflow-wrap: break-word;
   }
 `;
 //댓글 수정 입력창
