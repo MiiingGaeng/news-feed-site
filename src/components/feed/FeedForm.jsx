@@ -1,37 +1,80 @@
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData";
 import { FeedContext } from "../../contexts/FeedContext";
+import { useForm } from "react-hook-form";
 
 const INITIAL_ADD_FEED_DATA = {
   title: "",
   contents: "",
 };
 
+const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"]
+
 // Feed 추가 Form 별도 분리
-const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
-  <form>
+const AddFeedForm = ({ handleSubmit, register, errors, handleAddFeed }) => (
+  <form onSubmit={handleSubmit(handleAddFeed)}>
     {/* 타이틀 인풋 영역 */}
     <StFormTitleWrapper>
-      <h1>Title</h1>
+      <h3>Title</h3>
       <StFormTitleInput
         type="text"
-        value={addFeedData.title}
-        onChange={(e) => handleInputChange(e, "title")}
+        placeholder="제목은 최소 6자, 최대 50자를 사용하실 수 있습니다"
+        maxLength="50"
+        {...register("title", {
+          required: true,
+          minLength: {
+            value: 6,
+            message: "※ 제목은 최소 6자 이상이어야 합니다"
+          },
+          maxLength: {
+            value: 50,
+            message: "※ 제목은 최대 50자를 초과할 수 없습니다"
+          },
+          setValueAs: (value) => value.trim()
+        })}
       />
+      {errors.title && (
+        <p>
+          {errors.title.type === "required" && "※ 제목은 필수입니다."}
+          {errors.title.type === "minLength" && "※ 제목은 최소 6자 이상이어야 합니다"}
+          {errors.title.type === "maxLength" && "※ 제목은 최대 50자를 초과할 수 없습니다"}
+        </p>
+      )}
     </StFormTitleWrapper>
     {/* 본문 인풋 영역 */}
     <StFormContentsWrapper>
-      <h1>Contents</h1>
+      <h3>Contents</h3>
       <StFormContentsInput
         type="text"
-        value={addFeedData.contents}
-        onChange={(e) => handleInputChange(e, "contents")}
+        placeholder="내용은 최소 6자, 최대 500자를 사용하실 수 있습니다."
+        maxLength="500"
+        {
+          ...register("contents", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 내용은 최소 6자 이상이어야 합니다"
+            },
+            maxLength: {
+              value: 500,
+              message: "※ 내용은 500자를 초과할 수 없습니다"
+            },
+            setValueAs: (value) => value.trim()
+          })
+        }
       />
+      {errors.contents && (
+        <p>
+          {errors.contents.type === "required" && "※ 내용은 필수입니다."}
+          {errors.contents.type === "minLength" && "※ 내용은 최소 6자 이상이어야 합니다"}
+          {errors.contents.type === "maxLength" && "※ 내용은 최대 500자를 초과할 수 없습니다"}
+        </p>
+      )}
     </StFormContentsWrapper>
     {/* SUBMIT 버튼 영역 */}
-    <Button type="submit" onClick={(e) => handleAddFeed(e)}>
+    <Button type="submit">
       글 업로드
     </Button>
   </form>
@@ -39,55 +82,59 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
 
 const FeedForm = ({ isMode }) => {
   // 추가할 Feed 상태관리
-  const [addFeedData, setAddFeedData] = useState(INITIAL_ADD_FEED_DATA);
   const { toggleModal } = useContext(FeedContext);
+  const {handleSubmit, register, formState: { errors }} = useForm({
+    defaultValues: INITIAL_ADD_FEED_DATA
+  });
 
-  useEffect(() => {
-    // 글 업로드시 insertOrUpdateData 함수를 실행하여 테이블을 업데이트
-    if (addFeedData?.writer_id) {
-      insertOrUpdateData(addFeedData, "feeds");
-      setAddFeedData(INITIAL_ADD_FEED_DATA);
-      toggleModal();
-      alert("새로운 피드가 추가되었습니다.");
+  // 금칙어 필터링
+  const checkBannedWords = (text) =>{
+    for(let i of BANNED_WORDS){
+      if(text.includes(i)){
+        return false;
+      }
+      return true;
     }
-  }, [addFeedData, toggleModal]);
-
-  // onChange시에 event와 field 객체를 받아, input value 추가
-  const handleInputChange = (e, field) => {
-    const { value } = e.target;
-    setAddFeedData((state) => ({
-      ...state,
-      [field]: value,
-    }));
-  };
+  }
 
   // 실제 테이블에 feed 데이터 추가
-  const handleAddFeed = async (e) => {
-    e.preventDefault();
-    setAddFeedData((feed) => ({
-      ...feed,
+  const handleAddFeed = (data) => {
+    if(!data) return;
+    if(!checkBannedWords(data.title)){
+      return alert('제목에 금칙어가 포함되어 있습니다.')
+    }
+    if(!checkBannedWords(data.contents)){
+      return alert('내용에 금칙어가 포함되어 있습니다.')
+    }
+    const feedData = {
+      ...data,
       writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
-    }));
+    }
+
+    insertOrUpdateData(feedData, "feeds");
+    toggleModal();
+    return alert("새로운 피드가 추가되었습니다.");
   };
 
   return (
     <>
       {isMode === "addFeedMode" ? (
         <AddFeedForm
-          addFeedData={addFeedData}
-          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
           handleAddFeed={handleAddFeed}
         />
       ) : (
         <StForm>
           {/* 타이틀 인풋 영역 */}
           <StFormTitleWrapper>
-            <h1>Title</h1>
+            <h3>Title</h3>
             <StFormTitleInput type="text" />
           </StFormTitleWrapper>
           {/* 본문 인풋 영역 */}
           <StFormContentsWrapper>
-            <h1>Contents</h1>
+            <h3>Contents</h3>
             <StFormContentsInput type="text" />
           </StFormContentsWrapper>
           {/* SUBMIT 버튼 영역 */}
@@ -116,8 +163,13 @@ const StFormTitleWrapper = styled.div`
   gap: 5px;
   margin-bottom: 20px;
 
-  h1 {
+  h3 {
     font-size: 20px;
+  }
+
+  p{
+    color: tomato;
+    font-weight: 500;
   }
 `;
 
@@ -141,8 +193,13 @@ const StFormContentsWrapper = styled.div`
   gap: 5px;
   margin-bottom: 10px;
 
-  h1 {
+  h3 {
     font-size: 20px;
+  }
+
+  p{
+    color: tomato;
+    font-weight: 500;
   }
 `;
 

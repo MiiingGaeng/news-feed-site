@@ -21,7 +21,7 @@ const Feed = () => {
   return (
     <>
       <FeedList posts={feedsData} />
-      {/* <button onClick={toggleModal}>모달창 열기</button> */}
+      <button onClick={toggleModal}>모달창 열기</button>
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
           <FeedForm isMode="addFeedMode" />
