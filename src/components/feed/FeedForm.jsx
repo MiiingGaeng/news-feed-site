@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useContext} from "react";
+import { useContext } from "react";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData";
 import { FeedContext } from "../../contexts/FeedContext";
 import { useForm } from "react-hook-form";
@@ -20,14 +20,14 @@ const AddFeedForm = () => {
   const { toggleModal } = useContext(FeedContext);
 
   // react-hook-form을 사용하여 폼 데이터 관리
-  const {handleSubmit, register, formState: { errors }} = useForm({
+  const { handleSubmit, register, formState: { errors } } = useForm({
     defaultValues: INITIAL_ADD_FEED_DATA
   });
 
   // 금칙어 필터링
-  const checkBannedWords = (text) =>{
-    for(let i of BANNED_WORDS){
-      if(text.includes(i)){
+  const checkBannedWords = (text) => {
+    for (let i of BANNED_WORDS) {
+      if (text.includes(i)) {
         return false;
       }
       return true;
@@ -36,11 +36,11 @@ const AddFeedForm = () => {
 
   // 실제 테이블에 feed 데이터 추가하는 함수
   const handleAddFeed = (data) => {
-    if(!data) return;
-    if(!checkBannedWords(data.title)){
+    if (!data) return;
+    if (!checkBannedWords(data.title)) {
       return alert('제목에 금칙어가 포함되어 있습니다.')
     }
-    if(!checkBannedWords(data.contents)){
+    if (!checkBannedWords(data.contents)) {
       return alert('내용에 금칙어가 포함되어 있습니다.')
     }
     // feed 데이터를 확장 (writer_id 추가)
@@ -49,7 +49,7 @@ const AddFeedForm = () => {
       writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",// 예시로 writer_id 값 하드코딩
     }
 
-     // 데이터 삽입 또는 업데이트 함수 호출
+    // 데이터 삽입 또는 업데이트 함수 호출
     insertOrUpdateData(feedData, "feeds");
     // 모달 닫기
     toggleModal();
@@ -57,7 +57,7 @@ const AddFeedForm = () => {
     // 피드 추가 메시지
     return alert("새로운 피드가 추가되었습니다.");
   };
-  return(
+  return (
     <form onSubmit={handleSubmit(handleAddFeed)}>
       {/* 타이틀 인풋 영역 */}
       <StFormTitleWrapper>
@@ -98,18 +98,18 @@ const AddFeedForm = () => {
           maxLength="500"
           // react-hook-form의 register를 통해 폼 값 연결
           {
-            ...register("contents", {
-              required: true,
-              minLength: {
-                value: 6,
-                message: "※ 내용은 최소 6자 이상이어야 합니다"
-              },
-              maxLength: {
-                value: 500,
-                message: "※ 내용은 500자를 초과할 수 없습니다"
-              },
-              setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
-            })
+          ...register("contents", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 내용은 최소 6자 이상이어야 합니다"
+            },
+            maxLength: {
+              value: 500,
+              message: "※ 내용은 500자를 초과할 수 없습니다"
+            },
+            setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
+          })
           }
         />
         {/* 내용 입력시 발생할 수 있는 에러 메시지 */}
@@ -133,24 +133,24 @@ const FeedForm = ({ isMode }) => {
 
   return (
     <>
-      {isMode === "addFeedMode" ? 
-        <AddFeedForm/> : 
-      (
-        <StForm>
-          {/* 타이틀 인풋 영역 */}
-          <StFormTitleWrapper>
-            <h3>Title</h3>
-            <StFormTitleInput type="text" />
-          </StFormTitleWrapper>
-          {/* 본문 인풋 영역 */}
-          <StFormContentsWrapper>
-            <h3>Contents</h3>
-            <StFormContentsInput type="text" />
-          </StFormContentsWrapper>
-          {/* SUBMIT 버튼 영역 */}
-          <Button>SUBMIT</Button>
-        </form>
-
+      {isMode === "addFeedMode" ?
+        <AddFeedForm /> :
+        (
+          <StForm>
+            {/* 타이틀 인풋 영역 */}
+            <StFormTitleWrapper>
+              <h3>Title</h3>
+              <StFormTitleInput type="text" />
+            </StFormTitleWrapper>
+            {/* 본문 인풋 영역 */}
+            <StFormContentsWrapper>
+              <h3>Contents</h3>
+              <StFormContentsInput type="text" />
+            </StFormContentsWrapper>
+            {/* SUBMIT 버튼 영역 */}
+            <Button>SUBMIT</Button>
+          </StForm>
+        )
       }
     </>
   );
