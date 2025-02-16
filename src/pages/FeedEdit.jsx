@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import FeedForm from "../components/feed/FeedForm";
 import CloseButton from "../components/feed/CloseButton";
+import { useSearchParams } from "react-router-dom";
 
 const FeedEdit = () => {
+  //-----url에서 게시글 id 추출-----
+  //query param으로 feed_id 값 가져오기
+  const [searchParams] = useSearchParams();
+  const feedId = searchParams.get("feed_id");
+
   return (
     <StEditBox>
       <CloseButton></CloseButton>
-      <FeedForm />
+      <FeedForm feedId={feedId} />
     </StEditBox>
   );
 };
