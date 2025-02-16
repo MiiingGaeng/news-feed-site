@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData.js";
 import { deleteData } from "../../api/deleteData.js";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext.jsx";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -29,6 +31,9 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
+  //Context로 로그인한 유저의 user_id 값 가져오기
+  const { userId } = useContext(AuthContext);
+
   //-----댓글 추가 기능-----
   //state
   //input value
@@ -51,8 +56,7 @@ const Comments = ({ feedId }) => {
     const newComment = {
       comment: inputValue,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
@@ -106,8 +110,7 @@ const Comments = ({ feedId }) => {
       comment_id,
       comment: editInputValue,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
@@ -180,24 +183,26 @@ const Comments = ({ feedId }) => {
                   <p>{comment.comment}</p>
                 )}
 
-                <StCommentButtonWrapper>
-                  {editingCommentId === comment.comment_id ? (
+                {comment.writer_id === userId && (
+                  <StCommentButtonWrapper>
+                    {editingCommentId === comment.comment_id ? (
+                      <Button
+                        onClick={() => handleEditComment(comment.comment_id)}
+                      >
+                        SAVE
+                      </Button>
+                    ) : (
+                      <Button onClick={() => handleEditButtonClick(comment)}>
+                        EDIT
+                      </Button>
+                    )}
                     <Button
-                      onClick={() => handleEditComment(comment.comment_id)}
+                      onClick={() => handleDeleteComment(comment.comment_id)}
                     >
-                      SAVE
+                      DELETE
                     </Button>
-                  ) : (
-                    <Button onClick={() => handleEditButtonClick(comment)}>
-                      EDIT
-                    </Button>
-                  )}
-                  <Button
-                    onClick={() => handleDeleteComment(comment.comment_id)}
-                  >
-                    DELETE
-                  </Button>
-                </StCommentButtonWrapper>
+                  </StCommentButtonWrapper>
+                )}
               </StDetailComment>
             );
           })
