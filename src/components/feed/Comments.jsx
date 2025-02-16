@@ -138,16 +138,20 @@ const Comments = ({ feedId }) => {
   //삭제 함수
   const handleDeleteComment = async (comment_id) => {
     try {
-      //supabase에 삭제
-      await deleteData("comments", "comment_id", comment_id);
-      alert("댓글이 삭제 되었습니다!");
+      const isConfirm = window.confirm("정말로 삭제하시겠습니까?");
 
-      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
-      const comments = await fetchData("comments", "users");
-      const newComments = comments.filter(
-        (comment) => comment.feed_id === feedId
-      );
-      setCommentsData(newComments);
+      if (isConfirm) {
+        //supabase에 삭제
+        await deleteData("comments", "comment_id", comment_id);
+        alert("댓글이 삭제 되었습니다!");
+
+        //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+        const comments = await fetchData("comments", "users");
+        const newComments = comments.filter(
+          (comment) => comment.feed_id === feedId
+        );
+        setCommentsData(newComments);
+      }
     } catch (error) {
       console.log("delete comment error => ", error);
       //사용자 알림
