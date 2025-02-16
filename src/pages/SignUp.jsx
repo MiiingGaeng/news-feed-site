@@ -4,6 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import supabase from "../supabase/client";
+import { AlertFail } from "../common/Alert";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const SignUp = () => {
 
     // 비밀번호 일치여부 확인
     if (password !== passwordCheck) {
-      alert(`비밀번호가 일치하지 않습니다.`);
+      AlertFail(`비밀번호가 일치하지 않습니다.`);
       return;
     }
 
