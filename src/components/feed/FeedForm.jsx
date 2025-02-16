@@ -18,7 +18,7 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
       <StFormTitleInput
         type="text"
         value={addFeedData.title}
-        onChange={(e) => handleInputChange(e, 'title')}
+        onChange={(e) => handleInputChange(e, "title")}
       />
     </StFormTitleWrapper>
     {/* 본문 인풋 영역 */}
@@ -27,7 +27,7 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
       <StFormContentsInput
         type="text"
         value={addFeedData.contents}
-        onChange={(e) => handleInputChange(e, 'contents')}
+        onChange={(e) => handleInputChange(e, "contents")}
       />
     </StFormContentsWrapper>
     {/* SUBMIT 버튼 영역 */}
@@ -39,14 +39,14 @@ const AddFeedForm = ({ addFeedData, handleInputChange, handleAddFeed }) => (
 
 const FeedForm = ({ isMode }) => {
   // 추가할 Feed 상태관리
-  const [addFeedData, setAddFeedData] = useState(INITIAL_ADD_FEED_DATA)
+  const [addFeedData, setAddFeedData] = useState(INITIAL_ADD_FEED_DATA);
   const { toggleModal } = useContext(FeedContext);
 
   useEffect(() => {
     // 글 업로드시 insertOrUpdateData 함수를 실행하여 테이블을 업데이트
     if (addFeedData?.writer_id) {
-      insertOrUpdateData(addFeedData, "feeds")
-      setAddFeedData(INITIAL_ADD_FEED_DATA)
+      insertOrUpdateData(addFeedData, "feeds");
+      setAddFeedData(INITIAL_ADD_FEED_DATA);
       toggleModal();
       alert("새로운 피드가 추가되었습니다.");
     }
@@ -55,7 +55,7 @@ const FeedForm = ({ isMode }) => {
   // onChange시에 event와 field 객체를 받아, input value 추가
   const handleInputChange = (e, field) => {
     const { value } = e.target;
-    setAddFeedData(state => ({
+    setAddFeedData((state) => ({
       ...state,
       [field]: value,
     }));
@@ -73,9 +73,13 @@ const FeedForm = ({ isMode }) => {
   return (
     <>
       {isMode === "addFeedMode" ? (
-        <AddFeedForm addFeedData={addFeedData} handleInputChange={handleInputChange} handleAddFeed={handleAddFeed} />
-      ) :
-        <form>
+        <AddFeedForm
+          addFeedData={addFeedData}
+          handleInputChange={handleInputChange}
+          handleAddFeed={handleAddFeed}
+        />
+      ) : (
+        <StForm>
           {/* 타이틀 인풋 영역 */}
           <StFormTitleWrapper>
             <h1>Title</h1>
@@ -88,9 +92,8 @@ const FeedForm = ({ isMode }) => {
           </StFormContentsWrapper>
           {/* SUBMIT 버튼 영역 */}
           <Button>SUBMIT</Button>
-        </form>
-
-      }
+        </StForm>
+      )}
     </>
   );
 };
