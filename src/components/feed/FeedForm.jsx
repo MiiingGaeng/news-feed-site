@@ -134,38 +134,6 @@ const AddFeedForm = () => {
 };
 
 const FeedForm = ({ isMode }) => {
-  // 추가할 Feed 상태관리
-  const [addFeedData, setAddFeedData] = useState(INITIAL_ADD_FEED_DATA);
-  const { toggleModal } = useContext(FeedContext);
-
-  useEffect(() => {
-    // 글 업로드시 insertOrUpdateData 함수를 실행하여 테이블을 업데이트
-    if (addFeedData?.writer_id) {
-      insertOrUpdateData(addFeedData, "feeds");
-      setAddFeedData(INITIAL_ADD_FEED_DATA);
-      toggleModal();
-      alert("새로운 피드가 추가되었습니다.");
-    }
-  }, [addFeedData, toggleModal]);
-
-  // onChange시에 event와 field 객체를 받아, input value 추가
-  const handleInputChange = (e, field) => {
-    const { value } = e.target;
-    setAddFeedData((state) => ({
-      ...state,
-      [field]: value,
-    }));
-  };
-
-  // 실제 테이블에 feed 데이터 추가
-  const handleAddFeed = async (e) => {
-    e.preventDefault();
-    setAddFeedData((feed) => ({
-      ...feed,
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
-    }));
-  };
-
   return (
     <>
       {isMode === "addFeedMode" ? (
@@ -209,11 +177,10 @@ const StFormTitleWrapper = styled.div`
   margin-bottom: 20px;
 
   h3 {
-  h3 {
     font-size: 20px;
   }
 
-  p{
+  p {
     color: tomato;
     font-weight: 500;
   }
