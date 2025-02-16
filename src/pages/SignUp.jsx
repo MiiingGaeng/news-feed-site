@@ -52,8 +52,8 @@ const SignUp = () => {
         }
       } else {
         alert(`KEI 회원이 되신것을 환영합니다.`);
-        // 회원가입 후 로그인페이지로 랜딩
-        navigate("/login");
+        // 회원가입 후 홈으로 랜딩
+        navigate("/");
       }
     } catch (error) {
       alert(`⛔️ 회원가입중 오류가 발생했습니다. 다시 시도해주세요!
