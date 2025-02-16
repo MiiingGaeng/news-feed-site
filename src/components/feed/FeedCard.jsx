@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 const FeedCard = ({ post, setPosts }) => {
 
+  console.log("post =>", post);
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const FeedCard = ({ post, setPosts }) => {
           <StProfileImage src={post.users.profile_img} />
           {post.users.nickname}
         </StCardId>
-        <Like />
+        <Like feedId={post.feed_id} user={post.users} />
       </StFeedCardHeader>
 
       <StFeedCardContent>
