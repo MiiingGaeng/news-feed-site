@@ -29,10 +29,10 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
-  //-----댓글 추가 기능-----
-  //input값
+  //-----댓글 추가 및 수정 기능-----
+  //state
+  //input value
   const [inputValue, setInputValue] = useState("");
-
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -76,7 +76,10 @@ const Comments = ({ feedId }) => {
     }
   };
 
+  //수정 함수
+
   //-----댓글 삭제 기능-----
+  //삭제 함수
   const handleDeleteComment = async (comment_id) => {
     try {
       //supabase에 삭제
@@ -96,14 +99,14 @@ const Comments = ({ feedId }) => {
     }
   };
 
-  //-----댓글 수정 기능-----
-
   return (
     <>
       <StDetailCommentsWrapper>
         <h1>Comments</h1>
         {commentsData.length === 0 ? (
-          <p>아직 댓글이 없습니다</p>
+          <StDetailNoCommentsText>
+            아직 댓글이 없습니다 🥲
+          </StDetailNoCommentsText>
         ) : (
           commentsData.map((comment) => {
             return (
@@ -154,6 +157,15 @@ const StDetailCommentsWrapper = styled.ul`
     padding: 0 5px;
     margin: 20px 0;
   }
+`;
+
+//댓글 없음 안내 텍스트
+const StDetailNoCommentsText = styled.p`
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 15px;
 `;
 
 const StDetailComment = styled.li`
