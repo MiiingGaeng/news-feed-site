@@ -14,14 +14,14 @@ const Feed = () => {
       const newFeedsData = await fetchData("feeds", "users");
       setFeedsData(newFeedsData);
     }
-
     fetchFeeds();
   }, []);
 
   return (
     <>
-      <FeedList posts={feedsData} />
+      <FeedList posts={feedsData} setPosts={setFeedsData} />
       {/* <button onClick={toggleModal}>모달창 열기</button> */}
+      {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
           <FeedForm isMode="addFeedMode" />

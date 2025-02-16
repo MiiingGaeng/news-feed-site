@@ -99,3 +99,10 @@ ul,
 li {
   list-style: none;
 }
+
+* {
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+}

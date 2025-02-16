@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import FeedCard from "./FeedCard";
 import styled from "styled-components";
 
-const FeedList = ({ posts }) => {
+const FeedList = ({ posts, setPosts }) => {
   return (
     <StFeedList>
       {posts.map((post) => {
         return (
           <Link to={`/detail?id=${post.feed_id}`} key={post.feed_id}>
-            <FeedCard post={post} />
+            <FeedCard post={post} setPosts={setPosts} />
           </Link>
         );
       })}
@@ -21,7 +21,7 @@ const StFeedList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 50px;
 `;
 
 export default FeedList;
