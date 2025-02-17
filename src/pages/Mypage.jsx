@@ -3,14 +3,15 @@ import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
-import default_img from "../assets/image/profile_default.png";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
+import UserProfileImage from "../components/user/UserProfileImage";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext); //user에 session.user(로그인한 유저정보)가 들어가있음
-  const [data, setData] = useState({
+  const [userData, setUserData] = useState({
+    // public.users에서 해당 유저의 정보를 가져왔음
     id: "",
     name: "",
     email: "",
@@ -52,7 +53,7 @@ const MyPage = () => {
 
           if (error) throw error;
 
-          setData(data); //  상태 업데이트
+          setUserData(data); //  상태 업데이트
           console.log("현재 유저 정보:", data); //  콘솔에 출력
         } catch (error) {
           console.error("유저 정보 가져오기 오류:", error);
@@ -71,7 +72,7 @@ const MyPage = () => {
           if (error) throw error;
 
           setMySelfFeed(data); //  상태 업데이트
-          console.log("현재 유저Feeds 정보:", data); //  콘솔에 출력
+          console.log("현재 유저Feeds 정보:", mySelfFeed); //  콘솔에 출력
         } catch (error) {
           console.error("피드 정보 가져오기 오류:", error);
         }
@@ -84,14 +85,18 @@ const MyPage = () => {
     e.preventDefault();
 
     //예외처리: 빈칸의 경우 return
-    if (!data.email.trim() || !data.name.trim() || !data.nickname.trim()) {
+    if (
+      !userData.email.trim() ||
+      !userData.name.trim() ||
+      !userData.nickname.trim()
+    ) {
       alert("계정 정보를 제대로 입력해주세요 !");
       return;
     }
 
     const newProfileInfo = {
       // 우선 지금은 닉네임만 변경가능 하도록함
-      nickname: data.nickname,
+      nickname: userData.nickname,
     };
 
     //supabase에 추가
@@ -105,7 +110,7 @@ const MyPage = () => {
 
       //사용자 알림
       alert("프로필정보가 변경되었습니다!");
-      console.log("프로필 업데이트 성공:", data);
+      console.log("프로필 업데이트 성공:", userData);
     } catch (error) {
       console.error("프로필 업데이트 오류:", error.message);
       alert("프로필 업데이트에 실패했습니다.");
@@ -115,29 +120,35 @@ const MyPage = () => {
     <StMyPageWrapper>
       <h1>My Page</h1>{" "}
       <StContainer width="500px" height="300px">
-        <StProfileImg src={default_img} alt="사진없음" />
+        <UserProfileImage userData={userData} />
         <Input
           text="이메일"
           type="email"
           placeholder="이메일"
-          value={data.email}
-          onChangeFunc={(e) => setData({ ...data, email: e.target.value })}
+          value={userData.email}
+          onChangeFunc={(e) =>
+            setUserData({ ...userData, email: e.target.value })
+          }
           required
         />
         <Input
           text="이름"
           type="text"
           placeholder="이름"
-          value={data.name}
-          onChangeFunc={(e) => setData({ ...data, name: e.target.value })}
+          value={userData.name}
+          onChangeFunc={(e) =>
+            setUserData({ ...userData, name: e.target.value })
+          }
           required
         />
         <Input
           text="닉네임"
           type="text"
           placeholder="닉네임"
-          value={data.nickname}
-          onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
+          value={userData.nickname}
+          onChangeFunc={(e) =>
+            setUserData({ ...userData, nickname: e.target.value })
+          }
           required
         />
         <Button onClick={handleUpdateProfile}>수정하기</Button>
@@ -261,38 +272,38 @@ const shine = keyframes`
   }
 `;
 
-// 스타일이 적용된 프로필 이미지
-const StProfileImg = styled.img`
-  display: inline-block;
-  max-width: 100%;
-  vertical-align: middle;
-  overflow-clip-margin: content-box;
-  overflow: clip;
-  margin-bottom: 10px;
+// // 스타일이 적용된 프로필 이미지
+// const StProfileImg = styled.img`
+//   display: inline-block;
+//   max-width: 100%;
+//   vertical-align: middle;
+//   overflow-clip-margin: content-box;
+//   overflow: clip;
+//   margin-bottom: 10px;
 
-  /* 프로필 이미지 둥글게 */
-  border-radius: 30%;
+//   /* 프로필 이미지 둥글게 */
+//   border-radius: 30%;
 
-  /* 특정 속성을 가진 이미지 */
-  width: ${(props) => props.width || "100px"};
-  height: ${(props) => props.height || "100px"};
-  aspect-ratio: 1 / 1;
+//   /* 특정 속성을 가진 이미지 */
+//   width: ${(props) => props.width || "100px"};
+//   height: ${(props) => props.height || "100px"};
+//   aspect-ratio: 1 / 1;
 
-  /* 스켈레톤 로딩 효과 */
-  &.skeleton {
-    background-color: #e2e5e7;
-    background-image: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0)
-    );
-    background-size: 40px 100%;
-    background-repeat: no-repeat;
-    background-position: left -40px top 0;
-    animation: ${shine} 1s ease infinite;
-  }
-`;
+//   /* 스켈레톤 로딩 효과 */
+//   &.skeleton {
+//     background-color: #e2e5e7;
+//     background-image: linear-gradient(
+//       90deg,
+//       rgba(255, 255, 255, 0),
+//       rgba(255, 255, 255, 0.5),
+//       rgba(255, 255, 255, 0)
+//     );
+//     background-size: 40px 100%;
+//     background-repeat: no-repeat;
+//     background-position: left -40px top 0;
+//     animation: ${shine} 1s ease infinite;
+//   }
+// `;
 
 const StContentsHeader = styled.div`
   display: flex;
