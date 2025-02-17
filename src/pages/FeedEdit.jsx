@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import FeedForm from "../components/feed/FeedForm";
 import CloseButton from "../components/feed/CloseButton";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import EditFeedForm from "../components/feed/EditFeedForm";
 
 const FeedEdit = () => {
   //-----url에서 게시글 id 추출-----
@@ -9,10 +10,22 @@ const FeedEdit = () => {
   const [searchParams] = useSearchParams();
   const feedId = searchParams.get("feed_id");
 
+  //CloseButton 클릭시 Detail 페이지로 이동
+  const navigate = useNavigate();
+
+  const handleNavigateToDetail = () => {
+    //사용자 확인 여부
+    const isConfirm = window.confirm("수정을 그만두시겠습니까?");
+
+    if (isConfirm) {
+      navigate(`/detail?feed_id=${feedId}`);
+    }
+  };
+
   return (
     <StEditBox>
-      <CloseButton></CloseButton>
-      <FeedForm feedId={feedId} />
+      <CloseButton onClick={handleNavigateToDetail}></CloseButton>
+      <EditFeedForm feedId={feedId} />
     </StEditBox>
   );
 };

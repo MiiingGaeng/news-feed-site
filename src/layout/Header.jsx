@@ -1,11 +1,55 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import supabase from "../supabase/client";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
+  const {isLogin, setIsLogin, setUser, setUserId} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(prevState => !prevState); // 메뉴 토글 함수
+
+  // login state check
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      // session check
+      // console.log("✅ session", session);
+
+      setIsLogin(session?.user ?? null);
+      setUser(session?.user || null);
+    };
+
+    getSession();
+
+    const {
+      data: {subscription}
+    } = supabase.auth.onAuthStateChange(() => {
+      getSession();
+    })
+    return () => {
+      subscription?.unsubscribe()
+    }
+  }, []);
+
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("로그아웃 에러:", error.message);
+    }
+    setIsLogin(false);
+    setUser(null);
+    setUserId(null);
+
+    alert("로그아웃 되셨습니다.");
+    navigate("/")
+  };
+
 
   return (
     <StHeader>
@@ -15,12 +59,25 @@ const Header = () => {
           {isMenuOpen ? "X" : "☰"}
         </StMenuToggle>
         <StNavLink $isOpen={isMenuOpen}>
-          <StSubLink to="/signup" $isJoin>
-            Join
-          </StSubLink>
-          <StSubLink to="/login">
-            Login
-          </StSubLink>
+          {
+            isLogin ? 
+            <StSubLink to="/"
+              onClick={(e) => {
+                e.preventDefault();  // 기본 이동 막기
+                handleLogout();      // 로그아웃 실행
+              }}>
+              Logout
+            </StSubLink>
+            :
+            <>
+              <StSubLink to="/signup" $isJoin>
+                Join
+              </StSubLink>
+              <StSubLink to="/login">
+                Login
+              </StSubLink>
+            </>
+          }
         </StNavLink>
       </StNav>
     </StHeader>
