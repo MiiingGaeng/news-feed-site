@@ -65,6 +65,7 @@ const Like = ({ feedId }) => {
 
     try {
       if (liked) {
+
         // 좋아요 취소
         const { error } = await supabase
           .from("likes")
@@ -77,10 +78,11 @@ const Like = ({ feedId }) => {
         setLikeId(null);
         setLikesCount((prev) => prev - 1);
       } else {
+
         // 좋아요 추가
         const { data, error } = await supabase
           .from("likes")
-          .insert([{ feed_id: feedId, user_id: user.id }]) // feed_id 사용
+          .insert([{ feed_id: feedId, user_id: user.id }])
           .select("like_id")
           .single();
 
