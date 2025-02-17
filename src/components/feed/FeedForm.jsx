@@ -19,7 +19,7 @@ const INITIAL_ADD_FEED_DATA = {
 const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"];
 
 // Feed 추가 Form 별도 분리
-const AddFeedForm = ({ userId }) => {
+const AddFeedForm = ({userId, onAddFeed}) => {
   // FeedContext에서 toggleModal 함수를 가져옴 (모달을 열거나 닫을 때 사용)
   const { toggleModal } = useContext(FeedContext);
 
@@ -43,7 +43,7 @@ const AddFeedForm = ({ userId }) => {
   };
 
   // 실제 테이블에 feed 데이터 추가하는 함수
-  const handleAddFeed = (data) => {
+  const handleAddFeed = async(data) => {
     if (!data) return;
     if (!checkBannedWords(data.title)) {
       return alert("제목에 금칙어가 포함되어 있습니다.");
@@ -58,9 +58,12 @@ const AddFeedForm = ({ userId }) => {
     };
 
     // 데이터 삽입 또는 업데이트 함수 호출
-    insertOrUpdateData(feedData, "feeds");
+    await insertOrUpdateData(feedData, "feeds");
     // 모달 닫기
     toggleModal();
+
+    // 데이터 리스트 조회
+    await onAddFeed();
 
     // 피드 추가 메시지
     return alert("새로운 피드가 추가되었습니다.");
@@ -292,13 +295,12 @@ const EditFeedForm = ({ feedId, userId }) => {
   );
 };
 
-const FeedForm = ({ isMode, feedId }) => {
-  const { userId } = useContext(AuthContext);
-
+const FeedForm = ({ isMode, feedId, onAddFeed }) => {
+  const {userId} = useContext(AuthContext)
   return (
     <>
       {isMode === "addFeedMode" ? (
-        <AddFeedForm userId={userId} />
+        <AddFeedForm userId={userId} onAddFeed={onAddFeed} />
       ) : (
         <EditFeedForm feedId={feedId} userId={userId} />
       )}
