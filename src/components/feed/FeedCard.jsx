@@ -49,9 +49,9 @@ const FeedCard = ({ post, setPosts }) => {
 // Feed카드
 const StFeedCard = styled.li`
   width: 400px;
-  max-width: 600px;
+  max-width: 400px;
   height: 100%;
-  max-height: 800px;
+  max-height: 600px;
   padding: 16px;
   border-radius: 12px;
   background: white;
