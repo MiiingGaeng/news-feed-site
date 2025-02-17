@@ -1,11 +1,9 @@
-import styled from "styled-components"
-import Like from "./Like"
+import styled from "styled-components";
+import Like from "./Like";
 import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const FeedCard = ({ post, setPosts }) => {
-
-  console.log("post =>", post);
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();
@@ -13,9 +11,8 @@ const FeedCard = ({ post, setPosts }) => {
     if (isConfirm) {
       await deleteData("feeds", "feed_id", id);
       setPosts((prev) => prev.filter((p) => p.feed_id !== post.feed_id));
-
     }
-  }
+  };
 
   return (
     <StFeedCard>
@@ -38,8 +35,8 @@ const FeedCard = ({ post, setPosts }) => {
         </StDeleteButton>
       )}
     </StFeedCard>
-  )
-}
+  );
+};
 
 //-----styled-components-----
 

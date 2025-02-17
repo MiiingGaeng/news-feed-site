@@ -3,7 +3,8 @@ import FeedList from "../components/feed/FeedList";
 import { fetchData } from "../api/fetchData";
 import { FeedContext } from "../contexts/FeedContext";
 import FeedForm from "../components/feed/FeedForm";
-import Modal from "../components/common/Modal.jsx";
+import Modal from "../components/feed/Modal.jsx";
+import StickyMenu from "../layout/StickyMenu.jsx";
 
 const Feed = () => {
   const [feedsData, setFeedsData] = useState([]);
@@ -19,8 +20,8 @@ const Feed = () => {
 
   return (
     <>
+      <StickyMenu/>
       <FeedList posts={feedsData} setPosts={setFeedsData} />
-      {/* <button onClick={toggleModal}>모달창 열기</button> */}
       {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>

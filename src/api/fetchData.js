@@ -11,7 +11,10 @@ import supabase from "../supabase/client";
  */
 export const fetchData = async (table1, table2) => {
   try {
-    const { data } = await supabase.from(table1).select(`*, ${table2}(*)`);
+    const { data } = await supabase
+      .from(table1)
+      .select(`*, ${table2}(*)`)
+      .order("created_at", { ascending: true });
 
     return data;
   } catch (error) {
