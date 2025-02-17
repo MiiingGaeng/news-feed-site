@@ -53,8 +53,50 @@ const Like = ({ feedId }) => {
     }
   };
 
+  // 좋아요 추가 또는 삭제
+  const handleToggleLike = async (e) => {
+
+    e.preventDefault();
+
+    if (!user) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
+
+    try {
+      if (liked) {
+        // 좋아요 취소
+        const { error } = await supabase
+          .from("likes")
+          .delete()
+          .eq("like_id", likeId); // like_id를 이용해 삭제
+
+        if (error) throw error;
+
+        setLiked(false);
+        setLikeId(null);
+        setLikesCount((prev) => prev - 1);
+      } else {
+        // 좋아요 추가
+        const { data, error } = await supabase
+          .from("likes")
+          .insert([{ feed_id: feedId, user_id: user.id }]) // feed_id 사용
+          .select("like_id")
+          .single();
+
+        if (error) throw error;
+
+        setLiked(true);
+        setLikeId(data.like_id);
+        setLikesCount((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.error("좋아요 추가/삭제 중 오류 발생:", error);
+    }
+  };
+
   return (
-    <StLikeButton>
+    <StLikeButton onClick={handleToggleLike}>
       {liked ? "❤️" : "🤍"} {likesCount}
     </StLikeButton>
   )
