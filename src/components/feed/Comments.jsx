@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../../common/Button";
+import Button from "../common/Button.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";

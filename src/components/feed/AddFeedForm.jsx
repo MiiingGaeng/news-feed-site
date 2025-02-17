@@ -9,7 +9,7 @@ import {
   StFormTitleInput,
   StFormTitleWrapper
 } from "../../styles/styledComponents";
-import Button from "../../common/Button";
+import Button from "../common/Button";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {

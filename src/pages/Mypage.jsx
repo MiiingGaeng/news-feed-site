@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import  supabase  from "../supabase/client";
+import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
 import default_img from "../assets/image/profile_default.png";
-import Button from "../common/Button";
-import Input from "../common/Input";
+import Button from "../components/common/Button";
+import Input from "../components/common/Input";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const MyPage = () => {
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session },
+        data: { session }
       } = await supabase.auth.getSession();
 
       if (session) {
@@ -100,7 +100,8 @@ const MyPage = () => {
         supabase로 데이터 가져와서 map사용할예정 */}
         <StContentBox>
           <h2>팀 프로젝트 발제</h2>
-          <p>뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
+          <p>
+            뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
           </p>
         </StContentBox>
         <StContentBox>
