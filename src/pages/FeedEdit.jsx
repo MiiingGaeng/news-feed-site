@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import FeedForm from "../components/feed/FeedForm";
 import CloseButton from "../components/feed/CloseButton";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import EditFeedForm from "../components/feed/EditFeedForm";
 
 const FeedEdit = () => {
   //-----url에서 게시글 id 추출-----
@@ -25,7 +25,7 @@ const FeedEdit = () => {
   return (
     <StEditBox>
       <CloseButton onClick={handleNavigateToDetail}></CloseButton>
-      <FeedForm feedId={feedId} />
+      <EditFeedForm feedId={feedId} />
     </StEditBox>
   );
 };
