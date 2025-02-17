@@ -6,9 +6,14 @@ import supabase from "../supabase/client";
  *
  * @param {object} upsertData - 추가/수정 할 데이터 객체
  * @param {string} tableName - 데이터가 삽입되거나 업데이트 될 테이블 명
+ * @param {string} conflictColumn - onConflict에 들어갈 column값
  * @returns {Promise}
  */
-export const insertOrUpdateData = async (upsertData, tableName) => {
+export const insertOrUpdateData = async (
+  upsertData,
+  tableName,
+  conflictColumn = ""
+) => {
   if (!upsertData) {
     console.error("upsertData 값은 필수입니다.");
     return;
@@ -18,7 +23,11 @@ export const insertOrUpdateData = async (upsertData, tableName) => {
     return;
   }
   try {
-    const { error } = await supabase.from(tableName).upsert(upsertData);
+    const { error } = conflictColumn
+      ? await supabase
+          .from(tableName)
+          .upsert(upsertData, { onConflict: conflictColumn })
+      : await supabase.from(tableName).upsert(upsertData);
 
     if (error) {
       console.error("데이터 삽입/업데이트 실패: ", error.message);
