@@ -9,7 +9,8 @@ const UserProfileImage = ({ userData }) => {
   const fileInputRef = useRef(null); // input 담긴 file경로 담기
   const [uploading, setUploading] = useState(false); // 로딩 애니메이션 효과 주기
   const [imageUrl, setImageUrl] = useState(default_img); //imageUrl 담기
-  const handleImageClick = () => { // 프로필 영역을 누르면 파일업로드 모달이 열림
+  const handleImageClick = () => {
+    // 프로필 영역을 누르면 파일업로드 모달이 열림
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -37,13 +38,12 @@ const UserProfileImage = ({ userData }) => {
     if (!file) return;
 
     setUploading(true);
-  
 
     const fileExt = file.name.split(".").pop(); // 이미지확장자 따로 뽑기기
-    const fileName = `profile_${user.user_metadata.nickname}_${Date.now()}.${fileExt}`; // 파일이름 내맘대로 정하기 
+    const fileName = `profile_${userData.user_id}.${fileExt}`; // 파일이름 내맘대로 정하기
     const filePath = `profiles/${fileName}`; // 최종 파일 이름 => users.profile_img 값값
 
-    // storage에 이미지 업로드드
+    // storage에 이미지 업로드
     const { data: uploadStorageData, error: uploadStorageError } =
       await supabase.storage
         .from("images") // 'images'라는 이름의 버킷에 업로드
