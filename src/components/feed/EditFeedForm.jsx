@@ -39,7 +39,7 @@ const EditFeedForm = ({ feedId }) => {
   });
 
   //금칙어 필터링을 위한 boolean 값
-  const checkBANNED_WORDS = (text) => {
+  const checkBannedWords = (text) => {
     return BANNED_WORDS.every((word) => !text.includes(word));
   };
 

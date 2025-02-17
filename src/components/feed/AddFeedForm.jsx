@@ -36,20 +36,20 @@ const AddFeedForm = ({ onAddFeed }) => {
   });
 
   // 금칙어 필터링
-  const checkBANNED_WORDS = (text) => {
+  const checkBannedWords = (text) => {
     return BANNED_WORDS.every((word) => !text.includes(word));
   };
 
   // 실제 테이블에 feed 데이터 추가하는 함수
   const handleAddFeed = async (data) => {
     if (!data) return;
-    if (!checkBANNED_WORDS(data.title)) {
+    if (!checkBannedWords(data.title)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
         "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
       );
     }
-    if (!checkBANNED_WORDS(data.contents)) {
+    if (!checkBannedWords(data.contents)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
         "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
