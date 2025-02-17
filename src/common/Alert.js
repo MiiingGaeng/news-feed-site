@@ -57,22 +57,27 @@ export const AlertCheck = (
   title = "Warning",
   text = "이 작업은 되돌릴 수 없습니다!"
 ) => {
-  Swal.fire({
-    icon: "warning",
-    title,
-    text,
-    showCancelButton: true,
-    confirmButtonColor: "#504ba1",
-    cancelButtonColor: "#CD2E57",
-    confirmButtonText: "삭제",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Deleted",
-        text: "삭제되었습니다.",
-        icon: "success",
-      });
-    }
+  return new Promise((resolve) => {
+    Swal.fire({
+      icon: "warning",
+      title,
+      text,
+      showCancelButton: true,
+      confirmButtonColor: "#504ba1",
+      cancelButtonColor: "#CD2E57",
+      confirmButtonText: "삭제",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted",
+          text: "삭제되었습니다.",
+          icon: "success",
+        });
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
   });
 };
 

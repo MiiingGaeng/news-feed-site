@@ -4,15 +4,19 @@ import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { AlertCheck } from "../../common/Alert";
 
 const FeedCard = ({ post, setPosts }) => {
-
   const { userId } = useContext(AuthContext);
 
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();
-    const isConfirm = window.confirm("정말 삭제하시겠습니까?");
+
+    const isConfirm = AlertCheck(
+      "정말 삭제하시겠습니까?",
+      "이 작업은 되돌릴 수 없습니다!"
+    );
     if (isConfirm) {
       await deleteData("feeds", "feed_id", id);
       setPosts((prev) => prev.filter((p) => p.feed_id !== post.feed_id));
