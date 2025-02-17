@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { AlertCheck } from "../common/Alert";
 import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png"
+import { SUPABASE_STORAGE_URL } from "../../constant/constants";
 
 const FeedCard = ({ post, setPosts }) => {
   const { userId } = useContext(AuthContext);
@@ -27,7 +28,12 @@ const FeedCard = ({ post, setPosts }) => {
     <StFeedCard>
       <StFeedCardHeader>
         <StCardId>
-          <StProfileImage src={post.users.profile_img} />
+          <StProfileImage
+            src={post.users.profile_img
+              ? `${SUPABASE_STORAGE_URL}${post.users.profile_img}`
+              : DEFAULT_PROFILE_IMG
+            }
+          />
           {post.users.nickname}
         </StCardId>
         <Like feedId={post.feed_id} user={post.users} />
@@ -76,9 +82,7 @@ const StFeedCardHeader = styled.div`
 `;
 
 // 프로필 이미지
-const StProfileImage = styled.img.attrs((props) => ({
-  src: props.src || DEFAULT_PROFILE_IMG
-}))`
+const StProfileImage = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
