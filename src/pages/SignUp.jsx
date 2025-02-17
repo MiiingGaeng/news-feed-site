@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate } from "react-router-dom";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
-import { AlertError, AlertInfo, AlertSorry } from "../common/Alert";
+import {
+  AlertError,
+  AlertInfo,
+  AlertSorry,
+  AlertSuccess
+} from "../components/common/Alert";
 import supabase from "../supabase/client";
 
 const SignUp = () => {
@@ -14,7 +19,7 @@ const SignUp = () => {
     password: "",
     checkPassword: "",
     username: "",
-    nickname: "",
+    nickname: ""
   });
   // DB 존재 확인 state
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
@@ -25,7 +30,7 @@ const SignUp = () => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
 
     if (name === "nickname") {
@@ -87,9 +92,9 @@ const SignUp = () => {
         options: {
           data: {
             name: formData.username, // name 저장
-            nickname: formData.nickname, // nickname 저장
-          },
-        },
+            nickname: formData.nickname // nickname 저장
+          }
+        }
       });
 
       // 회원가입 에러코드별 예외처리
