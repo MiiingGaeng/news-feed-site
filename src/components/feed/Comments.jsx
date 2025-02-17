@@ -199,7 +199,10 @@ const Comments = ({ feedId }) => {
           commentsData.map((comment) => {
             return (
               <StDetailComment key={comment.comment_id}>
-                <StUserProfileImage src={comment.users.profile_img} />
+                <StUserProfileImage src={comment.users.profile_img
+                  ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${comment.users.profile_img}`
+                  : DEFAULT_PROFILE_IMG
+                } />
                 <h3>{comment.users.nickname}</h3>
                 {editingCommentId === comment.comment_id ? (
                   <StCommentEditInput
