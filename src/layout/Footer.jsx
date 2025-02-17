@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import logo from "../assets/image/logo.png";
 
 const Footer = () => {
@@ -6,15 +6,15 @@ const Footer = () => {
     <StFooter>
       <div className="footer-wrapper">
         <div className="footer-logo">
-          <h3>King’s Ear Is</h3>
+          <h3>Tutor's Ears Are</h3>
           <img src={logo} alt="logo" />
         </div>
         <p>자사의 약관 및 개인정보처리방침의 적용을 받습니다.</p>
         <p>
-          (주) 리액트기엽조 팀장 Kim Ming gaeng, 민경 김 | 서울 강남구 테헤란로
-          152 강남파이낸스센터 30층 | 2025-02-12 Team Project Start{' '}
+          (주) 팀스파르타 React 9기 기엽조 | 서울특별시 강남구 테헤란로44길 8
+          12층 | 2025-02-12 Team Project Start{" "}
         </p>
-        <p>© 2025 Tutor’s Year is. All Rights Reserved</p>
+        <p>© 2025 Tutor’s Ear Are. All Rights Reserved</p>
       </div>
     </StFooter>
   );
@@ -39,13 +39,13 @@ const StFooter = styled.footer`
     padding: 1rem 0;
   }
 
-  .footer-logo{
+  .footer-logo {
     display: flex;
     margin-bottom: 0.75rem;
     justify-content: center;
     align-items: center;
-    gap: .25rem;
-    
+    gap: 0.25rem;
+
     // footer logo 영역
     h3 {
       height: 30px;
@@ -58,12 +58,11 @@ const StFooter = styled.footer`
       vertical-align: middle;
       padding-top: 2px;
     }
-    img{
+    img {
       width: 30px;
       height: 30px;
     }
   }
-
 
   // footer info 영역
   p {

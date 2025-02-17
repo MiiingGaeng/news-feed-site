@@ -8,7 +8,9 @@ import { deleteData } from "../../api/deleteData.js";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
-import BANNED_WORDS from "../../constant/bannedWords.js";
+import BANNED_WORDS from "../../constant/BANNED_WORDS.js";
+import { AlertCheck, AlertError, AlertSuccess } from "../common/Alert.js";
+import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -34,7 +36,7 @@ const Comments = ({ feedId }) => {
   }, []);
 
   //Context로 로그인한 유저의 user_id 값 가져오기
-  const { userId } = useContext(AuthContext);
+  const { userId, isLogin } = useContext(AuthContext);
 
   //react-hook-form을 사용하여 폼 데이터 관리
   //react-hook-form : ADD
@@ -65,10 +67,16 @@ const Comments = ({ feedId }) => {
   const handleAddComment = async (data) => {
     if (!data) return;
 
-    console.log("check 나쁜말", checkBannedWords(data.comment));
+    //예외처리: 로그아웃 상태시 return
+    if (!isLogin) {
+      return AlertError("로그인이 필요합니다", "로그인 후 이용해주세요!");
+    }
     //예외처리: 금칙어 사용시 return
     if (!checkBannedWords(data.comment)) {
-      return alert("댓글에 금칙어가 포함되어 있습니다.");
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
 
     //새로운 댓글 객체 생성
@@ -82,7 +90,7 @@ const Comments = ({ feedId }) => {
       //supabase에 추가
       await insertOrUpdateData(newComment, "comments");
       //사용자 알림
-      alert("댓글이 추가 되었습니다!");
+      AlertSuccess("추가 완료", "댓글이 추가 되었습니다!");
       //input창 비워주기
       resetAdd();
 
@@ -95,7 +103,7 @@ const Comments = ({ feedId }) => {
     } catch (error) {
       console.log("add comment error => ", error);
       //사용자 알림
-      alert("앗! 댓글을 추가하는데 문제가 발생했습니다. 다시 시도해주세요!");
+      AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
   };
 
@@ -115,12 +123,15 @@ const Comments = ({ feedId }) => {
   const handleEditComment = async (data) => {
     //예외처리: 빈칸의 경우 return
     if (!data) {
-      alert("수정된 내용을 입력해주세요!");
+      AlertError("빈칸입니다", "수정된 내용을 입력해주세요!");
       return;
     }
     //예외처리: 금칙어 사용시 return
     if (!checkBannedWords(data.comment)) {
-      return alert("댓글에 금칙어가 포함되어 있습니다.");
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
 
     const editedComment = {
@@ -134,7 +145,7 @@ const Comments = ({ feedId }) => {
       //supabase 데이터 업데이트
       await insertOrUpdateData(editedComment, "comments", "comment_id");
       //사용자 알림
-      alert("댓글이 수정되었습니다!");
+      AlertSuccess("수정 완료", "댓글이 수정 되었습니다!");
       //선택 초기화
       setEditingCommentId(null);
 
@@ -147,7 +158,7 @@ const Comments = ({ feedId }) => {
     } catch (error) {
       console.log("edit comment error => ", error);
       //사용자 알림
-      alert("앗! 댓글을 수정하는데 문제가 발생했습니다. 다시 시도해주세요!");
+      AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
   };
 
@@ -155,12 +166,14 @@ const Comments = ({ feedId }) => {
   //삭제 함수
   const handleDeleteComment = async (comment_id) => {
     try {
-      const isConfirm = window.confirm("정말로 삭제하시겠습니까?");
+      const isConfirm = await AlertCheck(
+        "정말로 삭제하시겠습니까?",
+        "이 작업은 되돌릴 수 없습니다!"
+      );
 
       if (isConfirm) {
         //supabase에 삭제
         await deleteData("comments", "comment_id", comment_id);
-        alert("댓글이 삭제 되었습니다!");
 
         //댓글 목록을 새롭게 fetch해서 즉시 반영하기
         const comments = await fetchData("comments", "users");
@@ -186,7 +199,7 @@ const Comments = ({ feedId }) => {
           commentsData.map((comment) => {
             return (
               <StDetailComment key={comment.comment_id}>
-                <img src={comment.users.profile_img} alt="user_profile_img" />
+                <StUserProfileImage src={comment.users.profile_img} />
                 <h3>{comment.users.nickname}</h3>
                 {editingCommentId === comment.comment_id ? (
                   <StCommentEditInput
@@ -295,15 +308,6 @@ const StDetailComment = styled.li`
   display: flex;
   align-items: center;
 
-  //유저 프로필 이미지
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffa600;
-    margin-right: 10px;
-  }
-
   //유저 닉네임
   h3 {
     width: 80px;
@@ -319,6 +323,17 @@ const StDetailComment = styled.li`
     overflow-wrap: break-word;
   }
 `;
+
+//user 프로필 이미지
+const StUserProfileImage = styled.img.attrs((props) => ({
+  src: props.src || DEFAULT_PROFILE_IMG
+}))`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
 //댓글 수정 입력창
 const StCommentEditInput = styled.input`
   width: 100%;

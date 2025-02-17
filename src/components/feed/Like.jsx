@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import supabase from "../../supabase/client";
 import { fetchData } from "../../api/fetchData";
 import { AuthContext } from "../../contexts/AuthContext";
+import { IoHeartSharp } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+import { AlertError } from "../common/Alert";
 
 const Like = ({ feedId }) => {
-
   const [liked, setLiked] = useState(false);
   const [likeId, setLikeId] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
@@ -55,17 +57,15 @@ const Like = ({ feedId }) => {
 
   // 좋아요 추가 또는 삭제
   const handleToggleLike = async (e) => {
-
     e.preventDefault();
 
     if (!user) {
-      alert("로그인 후 이용해주세요.");
+      AlertError("로그인이 필요합니다", "로그인 후 이용해주세요!");
       return;
     }
 
     try {
       if (liked) {
-
         // 좋아요 취소
         const { error } = await supabase
           .from("likes")
@@ -78,7 +78,6 @@ const Like = ({ feedId }) => {
         setLikeId(null);
         setLikesCount((prev) => prev - 1);
       } else {
-
         // 좋아요 추가
         const { data, error } = await supabase
           .from("likes")
@@ -99,22 +98,31 @@ const Like = ({ feedId }) => {
 
   return (
     <StLikeButton onClick={handleToggleLike}>
-      {liked ? "❤️" : "🤍"} {likesCount}
+      {liked ? <IoHeartSharp className="purple-heart" /> : <IoHeartOutline />}{" "}
+      {likesCount}
     </StLikeButton>
-  )
-}
+  );
+};
 
 // 좋아요 버튼 styled-components
 const StLikeButton = styled.button`
+  display: flex;
+  gap: 5px;
   background: none;
+  color: #7738c8;
   border: none;
   font-size: 18px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: #ff4500;
+    color: #7738c8;
+    transform: scale(1.1); /* 버튼 전체 크기 확대 */
   }
-`
 
-export default Like
+  &:hover .purple-heart {
+    transform: scale(1.2); /* 하트 아이콘만 더 크게 확대 */
+  }
+`;
+
+export default Like;
