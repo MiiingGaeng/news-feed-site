@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { AlertCheck } from "../common/Alert";
 import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png"
-import { SUPABASE_STORAGE_URL } from "../../constant/constants";
 
 const FeedCard = ({ post, setPosts }) => {
   const { userId } = useContext(AuthContext);
@@ -30,7 +29,7 @@ const FeedCard = ({ post, setPosts }) => {
         <StCardId>
           <StProfileImage
             src={post.users.profile_img
-              ? `${SUPABASE_STORAGE_URL}${post.users.profile_img}`
+              ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${post.users.profile_img}`
               : DEFAULT_PROFILE_IMG
             }
           />
