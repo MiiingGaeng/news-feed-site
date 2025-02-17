@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -49,7 +49,7 @@ const SignUp = () => {
             AlertError("경고", "보안에 취약한 비밀번호입니다.");
             return;
           default:
-            AlertError("Warning", `${error.code}`);
+            AlertError("Error", `${error.code}`);
         }
       } else {
         AlertSuccess("회원가입 완료!", "KEI 회원이 되신것을 환영합니다.");
@@ -57,7 +57,7 @@ const SignUp = () => {
         navigate("/");
       }
     } catch (error) {
-      AlertError(`회원가입중 오류가 발생했습니다. 다시 시도해주세요!
+      AlertError(`회원가입 중 오류가 발생했습니다. 다시 시도해주세요!
       ${error.massage}`);
       console.log("⛔️회원가입 오류", error);
     }
