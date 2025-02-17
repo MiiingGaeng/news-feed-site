@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
 import default_img from "../assets/image/profile_default.png";
-import Button from "../common/Button";
-import Input from "../common/Input";
+import Button from "../components/common/Button";
+import Input from "../components/common/Input";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -15,14 +15,15 @@ const MyPage = () => {
     name: "",
     email: "",
     nickname: "",
-    image: "",
+    image: ""
   });
   const [mySelfFeed, setMySelfFeed] = useState([]);
   // NOTE: 로그인 상태 확인
-  useEffect(() => { //현재 로그인상태 확인하는 로직
+  useEffect(() => {
+    //현재 로그인상태 확인하는 로직
     const getSession = async () => {
       const {
-        data: { session },
+        data: { session }
       } = await supabase.auth.getSession();
 
       if (session) {
@@ -86,8 +87,9 @@ const MyPage = () => {
       return;
     }
 
-    const newProfileInfo = { // 우선 지금은 닉네임만 변경가능 하도록함
-      nickname: data.nickname,
+    const newProfileInfo = {
+      // 우선 지금은 닉네임만 변경가능 하도록함
+      nickname: data.nickname
     };
 
     //supabase에 추가
@@ -110,42 +112,42 @@ const MyPage = () => {
   return (
     <StMyPageWrapper>
       <h1>My Page</h1>{" "}
-        {" "}
-        <StContainer width="500px" height="300px">
-          <StProfileImg src={default_img} alt="사진없음" />
-          <Input
-            text="이메일"
-            type="email"
-            placeholder="이메일"
-            value={data.email}
-            onChangeFunc={(e) => setData({ ...data, email: e.target.value })}
-            required
-          />
-          <Input
-            text="이름"
-            type="text"
-            placeholder="이름"
-            value={data.name}
-            onChangeFunc={(e) => setData({ ...data, name: e.target.value })}
-            required
-          />
-          <Input
-            text="닉네임"
-            type="text"
-            placeholder="닉네임"
-            value={data.nickname}
-            onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
-            required
-          />
-          <Button children="수정하기" onClick={handleUpdateProfile} />
-        </StContainer>
+      <StContainer width="500px" height="300px">
+        <StProfileImg src={default_img} alt="사진없음" />
+        <Input
+          text="이메일"
+          type="email"
+          placeholder="이메일"
+          value={data.email}
+          onChangeFunc={(e) => setData({ ...data, email: e.target.value })}
+          required
+        />
+        <Input
+          text="이름"
+          type="text"
+          placeholder="이름"
+          value={data.name}
+          onChangeFunc={(e) => setData({ ...data, name: e.target.value })}
+          required
+        />
+        <Input
+          text="닉네임"
+          type="text"
+          placeholder="닉네임"
+          value={data.nickname}
+          onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
+          required
+        />
+        <Button onClick={handleUpdateProfile}>수정하기</Button>
+      </StContainer>
       <StContentsHeader>
         <div></div>
         <h2>My Contents</h2>
         <div></div>
       </StContentsHeader>
       <StContentBoxWrapper>
-        {mySelfFeed.map((feed) => { // 해당 유저의 feed만 모아져있는 mySelfFeed에 담긴 list로 화면에 출력
+        {mySelfFeed.map((feed) => {
+          // 해당 유저의 feed만 모아져있는 mySelfFeed에 담긴 list로 화면에 출력
           return (
             <StContentBox key={feed.feed_id}>
               <h2>{feed.title}</h2>
