@@ -10,7 +10,7 @@ import {
   StFormTitleWrapper
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
-import BANNED_WORDS from "../../constant/bannedWords";
+import BANNED_WORDS from "../../constant/BANNED_WORDS";
 import { AlertError, AlertSuccess } from "../common/Alert";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)

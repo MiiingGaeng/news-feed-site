@@ -13,7 +13,7 @@ import {
   StFormTitleWrapper
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
-import BANNED_WORDS from "../../constant/bannedWords";
+import BANNED_WORDS from "../../constant/BANNED_WORDS";
 import { AlertCheck, AlertError } from "../common/Alert";
 
 const EditFeedForm = ({ feedId }) => {
