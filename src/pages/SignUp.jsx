@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
 import {
@@ -190,15 +190,23 @@ const SignUp = () => {
             onChange={handleInputChange}
             required
           />
-          {/* 닉네임 중복 확인 버튼 */}
-          {!!isNicknameChecked ? (
-            <span>사용 가능</span>
-          ) : (
-            <UserAuthButton type="button" onClick={handleNicknameCheck}>
-              중복 확인
-            </UserAuthButton>
-          )}
-          <UserAuthButton type="submit">Sign Up</UserAuthButton>
+
+          <UserAuthButton
+            $buttonWidth="260px"
+            $buttonHeight="40px"
+            type="button"
+            onClick={handleNicknameCheck}
+          >
+            중복 확인
+          </UserAuthButton>
+
+          <UserAuthButton
+            $buttonWidth="260px"
+            $buttonHeight="40px"
+            type="submit"
+          >
+            Sign Up
+          </UserAuthButton>
         </form>
       </StContainer>
 

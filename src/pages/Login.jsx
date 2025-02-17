@@ -8,7 +8,7 @@ import UserAuthButton from "../components/user/UserAuthButton";
 import {
   AlertError,
   AlertSorry,
-  AlertSuccess
+  AlertSuccess,
 } from "../components/common/Alert";
 import supabase from "../supabase/client";
 
@@ -22,7 +22,7 @@ const Login = () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (error) {
@@ -82,9 +82,17 @@ const Login = () => {
             />
           </section>
           <SignInButton>
-            <UserAuthButton type="submit">Login</UserAuthButton>
+            <UserAuthButton
+              $buttonWidth="260px"
+              $buttonHeight="40px"
+              type="submit"
+            >
+              Login
+            </UserAuthButton>
             <Link to="/signup">
-              <UserAuthButton>Sign Up</UserAuthButton>
+              <UserAuthButton $buttonWidth="260px" $buttonHeight="40px">
+                Sign Up
+              </UserAuthButton>
             </Link>
           </SignInButton>
         </form>
@@ -92,7 +100,7 @@ const Login = () => {
         <hr />
 
         {/* 아이디/비밀번호 찾기 */}
-        <StFindPassword>
+        {/* <StFindPassword>
           <p>비밀번호를 잊으셨나요?</p>
           <Link to="/findidpw">
             <button>Finding ID</button>
@@ -101,7 +109,7 @@ const Login = () => {
           <Link to="/findidpw">
             <button>Finding PW</button>
           </Link>
-        </StFindPassword>
+        </StFindPassword> */}
 
         {/* SNS로 로그인 */}
         <StSNSBtn>
