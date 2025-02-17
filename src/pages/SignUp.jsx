@@ -9,7 +9,7 @@ import {
   AlertError,
   AlertInfo,
   AlertSorry,
-  AlertSuccess
+  AlertSuccess,
 } from "../components/common/Alert";
 import supabase from "../supabase/client";
 
@@ -20,7 +20,7 @@ const SignUp = () => {
     password: "",
     checkPassword: "",
     username: "",
-    nickname: ""
+    nickname: "",
   });
   // DB 존재 확인 state
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
@@ -31,7 +31,7 @@ const SignUp = () => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     if (name === "nickname") {
@@ -87,15 +87,15 @@ const SignUp = () => {
 
     // supabase를 통해 회원가입
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           data: {
             name: formData.username, // name 저장
-            nickname: formData.nickname // nickname 저장
-          }
-        }
+            nickname: formData.nickname, // nickname 저장
+          },
+        },
       });
 
       // 회원가입 에러코드별 예외처리
@@ -112,8 +112,11 @@ const SignUp = () => {
             return;
           default:
             AlertError("Error", `${error.message}`);
+            return;
         }
-      } else {
+      }
+
+      if (data) {
         AlertSuccess("회원가입 완료!", "KEI 회원이 되신것을 환영합니다.");
         // 회원가입 후 피드페이지로 랜딩
         navigate("/feed");
