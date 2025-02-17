@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
@@ -15,15 +15,17 @@ const MyPage = () => {
     name: "",
     email: "",
     nickname: "",
-    image: ""
+    image: "",
   });
   const [mySelfFeed, setMySelfFeed] = useState([]);
+
   // NOTE: 로그인 상태 확인
+
   useEffect(() => {
     //현재 로그인상태 확인하는 로직
     const getSession = async () => {
       const {
-        data: { session }
+        data: { session },
       } = await supabase.auth.getSession();
 
       if (session) {
@@ -89,7 +91,7 @@ const MyPage = () => {
 
     const newProfileInfo = {
       // 우선 지금은 닉네임만 변경가능 하도록함
-      nickname: data.nickname
+      nickname: data.nickname,
     };
 
     //supabase에 추가
