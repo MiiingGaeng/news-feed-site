@@ -123,6 +123,10 @@ const Comments = ({ feedId }) => {
       alert("수정된 내용을 입력해주세요!");
       return;
     }
+    //예외처리: 금칙어 사용시 return
+    if (!checkBannedWords(data.comment)) {
+      return alert("댓글에 금칙어가 포함되어 있습니다.");
+    }
 
     const editedComment = {
       comment_id: data.comment_id,
