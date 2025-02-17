@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import supabase from "../supabase/client";
+import UserInput from "../components/user/UserInput";
+import UserAuthButton from "../components/user/UserAuthButton";
 import { AlertError, AlertSorry, AlertSuccess } from "../common/Alert";
+import supabase from "../supabase/client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -49,12 +51,6 @@ const Login = () => {
     }
   };
 
-  // logout
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsLogin(false);
-  };
-
   return (
     <StLoginWrapper>
       <h1>Login</h1>
@@ -62,14 +58,14 @@ const Login = () => {
         {/* 로그인 폼 */}
         <form onSubmit={handleLogin}>
           <section>
-            <input
+            <UserInput
               type="email"
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
+            <UserInput
               type="password"
               placeholder="비밀번호를 입력해주세요"
               value={password}
@@ -78,9 +74,9 @@ const Login = () => {
             />
           </section>
           <SignInButton>
-            <button type="submit">Login</button>
+            <UserAuthButton type="submit">Login</UserAuthButton>
             <Link to="/signup">
-              <button>Sign Up</button>
+              <UserAuthButton>Sign Up</UserAuthButton>
             </Link>
           </SignInButton>
         </form>
@@ -185,7 +181,7 @@ const SignInButton = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  button {
+  /* button {
     width: 260px;
     height: 40px;
     display: flex;
@@ -204,7 +200,7 @@ const SignInButton = styled.div`
       background: #343434;
       color: #fff;
     }
-  }
+  } */
 `;
 
 // ID/PW 찾기
