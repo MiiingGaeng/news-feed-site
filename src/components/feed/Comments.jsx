@@ -8,7 +8,7 @@ import { deleteData } from "../../api/deleteData.js";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
-import bannedWords from "../../constant/BANNED_WORDS.js";
+import BANNED_WORDS from "../../constant/BANNED_WORDS.js";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -56,8 +56,8 @@ const Comments = ({ feedId }) => {
   });
 
   //금칙어 필터링
-  const checkbannedWords = (text) => {
-    return bannedWords.every((word) => !text.includes(word));
+  const checkBANNED_WORDS = (text) => {
+    return BANNED_WORDS.every((word) => !text.includes(word));
   };
 
   //-----댓글 추가 기능-----
@@ -65,9 +65,9 @@ const Comments = ({ feedId }) => {
   const handleAddComment = async (data) => {
     if (!data) return;
 
-    console.log("check 나쁜말", checkbannedWords(data.comment));
+    console.log("check 나쁜말", checkBANNED_WORDS(data.comment));
     //예외처리: 금칙어 사용시 return
-    if (!checkbannedWords(data.comment)) {
+    if (!checkBANNED_WORDS(data.comment)) {
       return alert("댓글에 금칙어가 포함되어 있습니다.");
     }
 
@@ -119,7 +119,7 @@ const Comments = ({ feedId }) => {
       return;
     }
     //예외처리: 금칙어 사용시 return
-    if (!checkbannedWords(data.comment)) {
+    if (!checkBANNED_WORDS(data.comment)) {
       return alert("댓글에 금칙어가 포함되어 있습니다.");
     }
 
