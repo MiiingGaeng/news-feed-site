@@ -9,6 +9,7 @@ import Comments from "../components/feed/Comments";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { deleteData } from "../api/deleteData";
+import DEFAULT_PROFILE_IMG from "../assets/image/user_default.png";
 
 const Detail = () => {
   //-----feed_id / user_id-----
@@ -63,7 +64,7 @@ const Detail = () => {
       <CloseButton onClick={() => navigate("/feed")} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
-          <img src="/" alt="user_profile_img" />
+          <StUserProfileImage src={writerData?.profile_img} />
           <h3>{writerData?.nickname}</h3>
         </StDetailUserWrapper>
 
@@ -122,13 +123,6 @@ const StDetailUserWrapper = styled.div`
   align-items: center;
   gap: 20px;
 
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffa600;
-  }
-
   h3 {
     display: inline-block;
     width: 70px;
@@ -136,6 +130,15 @@ const StDetailUserWrapper = styled.div`
     line-height: 50px;
     font-size: 17px;
   }
+`;
+
+//user 프로필 이미지
+const StUserProfileImage = styled.img.attrs((props) => ({
+  src: props.src || DEFAULT_PROFILE_IMG
+}))`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 `;
 
 //EDIT/DELETE 버튼 wrapper
