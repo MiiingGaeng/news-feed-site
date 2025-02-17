@@ -10,6 +10,7 @@ import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
 import BANNED_WORDS from "../../constant/BANNED_WORDS.js";
 import { AlertCheck, AlertError, AlertSuccess } from "../common/Alert.js";
+import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -35,7 +36,7 @@ const Comments = ({ feedId }) => {
   }, []);
 
   //Context로 로그인한 유저의 user_id 값 가져오기
-  const { userId } = useContext(AuthContext);
+  const { userId, isLogin } = useContext(AuthContext);
 
   //react-hook-form을 사용하여 폼 데이터 관리
   //react-hook-form : ADD
@@ -66,6 +67,10 @@ const Comments = ({ feedId }) => {
   const handleAddComment = async (data) => {
     if (!data) return;
 
+    //예외처리: 로그아웃 상태시 return
+    if (!isLogin) {
+      return AlertError("로그인이 필요합니다", "로그인 후 이용해주세요!");
+    }
     //예외처리: 금칙어 사용시 return
     if (!checkBannedWords(data.comment)) {
       return AlertError(
@@ -194,7 +199,7 @@ const Comments = ({ feedId }) => {
           commentsData.map((comment) => {
             return (
               <StDetailComment key={comment.comment_id}>
-                <img src={comment.users.profile_img} alt="user_profile_img" />
+                <StUserProfileImage src={comment.users.profile_img} />
                 <h3>{comment.users.nickname}</h3>
                 {editingCommentId === comment.comment_id ? (
                   <StCommentEditInput
@@ -303,15 +308,6 @@ const StDetailComment = styled.li`
   display: flex;
   align-items: center;
 
-  //유저 프로필 이미지
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffa600;
-    margin-right: 10px;
-  }
-
   //유저 닉네임
   h3 {
     width: 80px;
@@ -327,6 +323,17 @@ const StDetailComment = styled.li`
     overflow-wrap: break-word;
   }
 `;
+
+//user 프로필 이미지
+const StUserProfileImage = styled.img.attrs((props) => ({
+  src: props.src || DEFAULT_PROFILE_IMG
+}))`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
 //댓글 수정 입력창
 const StCommentEditInput = styled.input`
   width: 100%;
