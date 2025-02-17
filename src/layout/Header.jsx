@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import supabase from "../supabase/client";
+import logo from "../assets/image/logo.png";
+import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
@@ -46,7 +48,9 @@ const Header = () => {
     setUser(null);
     setUserId(null);
 
-    alert("로그아웃 되셨습니다.");
+    // 로그인 성공 메세지 출력
+    AlertSuccess("로그아웃 완료!", "다음에 또 만나요!");
+
     navigate("/")
   };
 
@@ -54,7 +58,10 @@ const Header = () => {
   return (
     <StHeader>
       <StNav>
-        <StLogo to="/">KEI👂</StLogo>
+        <StLogo to="/">
+          <span>KEI</span>
+          <img src={logo} alt="logo" />
+        </StLogo>
         <StMenuToggle onClick={toggleMenu}>
           {isMenuOpen ? "X" : "☰"}
         </StMenuToggle>
@@ -127,6 +134,7 @@ const StNav = styled.nav`
 // Header 로고 영역
 const StLogo = styled(Link)`
   font-size: 40px;
+  line-height: 40px;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -134,6 +142,19 @@ const StLogo = styled(Link)`
   text-decoration: none;
   color: #343434;
   padding: 0 1.2rem;
+  align-content: center;
+  flex-wrap: wrap;
+
+  span{
+    height: 34px;
+    line-height: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    align-self: center;
+  }
+  img{
+    height: 40px;
+  }
 `;
 
 // Header Sub Menu 영역
