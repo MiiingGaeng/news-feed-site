@@ -2,9 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import FeedList from "../components/feed/FeedList";
 import { fetchData } from "../api/fetchData";
 import { FeedContext } from "../contexts/FeedContext";
-import FeedForm from "../components/feed/FeedForm";
 import Modal from "../components/feed/Modal.jsx";
 import StickyMenu from "../layout/StickyMenu.jsx";
+import AddFeedForm from "../components/feed/AddFeedForm.jsx";
 
 const Feed = () => {
   const [feedsData, setFeedsData] = useState([]);
@@ -21,15 +21,15 @@ const Feed = () => {
 
   const onHandleAddFeed = () => {
     fetchFeeds();
-  }
+  };
 
   return (
     <>
-      <StickyMenu/>
+      <StickyMenu />
       <FeedList posts={feedsData} setPosts={setFeedsData} />
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
-          <FeedForm isMode="addFeedMode" onAddFeed={onHandleAddFeed} />
+          <AddFeedForm onAddFeed={onHandleAddFeed} />
         </Modal>
       )}
     </>
