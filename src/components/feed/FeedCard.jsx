@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const FeedCard = ({ post, setPosts }) => {
+
   const { userId } = useContext(AuthContext);
 
   // 게시글 삭제 함수
@@ -25,7 +26,7 @@ const FeedCard = ({ post, setPosts }) => {
           <StProfileImage src={post.users.profile_img} />
           {post.users.nickname}
         </StCardId>
-        <Like />
+        <Like feedId={post.feed_id} user={post.users} />
       </StFeedCardHeader>
 
       <StFeedCardContent>
