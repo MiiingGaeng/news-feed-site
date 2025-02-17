@@ -35,7 +35,7 @@ const Comments = ({ feedId }) => {
   }, []);
 
   //Context로 로그인한 유저의 user_id 값 가져오기
-  const { userId } = useContext(AuthContext);
+  const { userId, isLogin } = useContext(AuthContext);
 
   //react-hook-form을 사용하여 폼 데이터 관리
   //react-hook-form : ADD
@@ -66,6 +66,10 @@ const Comments = ({ feedId }) => {
   const handleAddComment = async (data) => {
     if (!data) return;
 
+    //예외처리: 로그아웃 상태시 return
+    if (!isLogin) {
+      return AlertError("로그인이 필요합니다", "로그인 후 이용해주세요!");
+    }
     //예외처리: 금칙어 사용시 return
     if (!checkBannedWords(data.comment)) {
       return AlertError(
