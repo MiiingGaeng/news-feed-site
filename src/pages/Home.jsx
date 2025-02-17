@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import NavigationButton from "../components/common/NavigationButton";
+import mainIcon01 from "../assets/image/main-icon-01.png";
+import mainIcon02 from "../assets/image/main-icon-02.png";
+import mainIcon03 from "../assets/image/main-icon-03.png";
 
 const Home = () => {
   return (
@@ -13,7 +16,9 @@ const Home = () => {
           {/* 개별 동그란 원 스타일링 */}
           <StCircle>
             <div className="circle-area">
-              <div className="circle-icon-area">🤔</div>
+              <div className="circle-image-area">
+                <img src={mainIcon01} alt="MainIcon01" />
+              </div>
               <div className="circle-text-area">
                 코드짜면서
                 <br />
@@ -23,7 +28,9 @@ const Home = () => {
           </StCircle>
           <StCircle>
             <div className="circle-area">
-              <div className="circle-icon-area">🤴</div>
+              <div className="circle-image-area">
+                <img src={mainIcon02} alt="MainIcon02" />
+              </div>
               <div className="circle-text-area">
                 수강생들끼리
                 <br />
@@ -33,7 +40,9 @@ const Home = () => {
           </StCircle>
           <StCircle>
             <div className="circle-area">
-              <div className="circle-icon-area">🥹</div>
+              <div className="circle-image-area">
+                <img src={mainIcon03} alt="MainIcon03" />
+              </div>
               <div className="circle-text-area">
                 강의보고 궁금한 내용
                 <br />
@@ -109,10 +118,6 @@ const StCircleWrapper = styled.div`
   max-width: 90vw;
 
   @media (max-width: 768px) {
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
     gap: 1rem;
     flex-direction: column;
     align-items: center;
@@ -133,54 +138,51 @@ const StCircle = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem;
 
   .circle-area {
     display: flex;
     gap: 1rem;
     flex-direction: column;
     text-align: center;
-  }
-
-  .circle-icon-area {
-    font-size: 3rem;
-    line-height: 1;
-    transform: scale(2.5);
-    width: fit-content;
-    margin: 0 auto;
     align-items: center;
   }
 
+  .circle-image-area {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    img {
+      /* 이미지가 영역에 맞게 들어가도록 */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   .circle-text-area {
-    margin-top: 2rem;
     font-size: 1.125rem;
     line-height: 1.3;
   }
 
-  @media (max-width: 768px) {
-
-    .circle-icon-area {
-      font-size: 2.5rem;
-      transform: scale(1.75);
-    }
-
-    .circle-text-area {
-      margin-top: 0.75rem;
-      font-size: 0.8rem;
-    }
+  @media (max-width: 1024px) and (min-width: 768px) {
+    width: 50vw;
+    height: 50vw;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     width: 70vw;
     height: 70vw;
-
-    .circle-icon-area {
-      font-size: 4rem;
-      transform: scale(1.5);
-    }
-
     .circle-text-area {
-      margin-top: 0.25rem;
       font-size: 1rem;
     }
   }
@@ -210,6 +212,10 @@ const StHomeSubContainer = styled.div`
     display: flex;
     gap: 1rem;
     justify-content: center;
+
+    @media (max-width: 768px){
+      flex-direction: column;
+    }
   }
 `;
 

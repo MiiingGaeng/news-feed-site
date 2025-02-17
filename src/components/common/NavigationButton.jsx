@@ -13,6 +13,7 @@ const NavigationButton = ({children, to}) => {
 
 const StNavigationButton = styled.button`
   line-height: 46px;
+  min-width: 150px;
   background-color: #FFF;
   border-radius: 50px;
   color: #000;
