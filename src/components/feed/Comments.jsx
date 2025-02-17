@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData.js";
 import { deleteData } from "../../api/deleteData.js";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext.jsx";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -29,6 +31,9 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
+  //Context로 로그인한 유저의 user_id 값 가져오기
+  const { userId } = useContext(AuthContext);
+
   //-----댓글 추가 기능-----
   //state
   //input value
@@ -51,8 +56,7 @@ const Comments = ({ feedId }) => {
     const newComment = {
       comment: inputValue,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
@@ -106,8 +110,7 @@ const Comments = ({ feedId }) => {
       comment_id,
       comment: editInputValue,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
@@ -135,16 +138,20 @@ const Comments = ({ feedId }) => {
   //삭제 함수
   const handleDeleteComment = async (comment_id) => {
     try {
-      //supabase에 삭제
-      await deleteData("comments", "comment_id", comment_id);
-      alert("댓글이 삭제 되었습니다!");
+      const isConfirm = window.confirm("정말로 삭제하시겠습니까?");
 
-      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
-      const comments = await fetchData("comments", "users");
-      const newComments = comments.filter(
-        (comment) => comment.feed_id === feedId
-      );
-      setCommentsData(newComments);
+      if (isConfirm) {
+        //supabase에 삭제
+        await deleteData("comments", "comment_id", comment_id);
+        alert("댓글이 삭제 되었습니다!");
+
+        //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+        const comments = await fetchData("comments", "users");
+        const newComments = comments.filter(
+          (comment) => comment.feed_id === feedId
+        );
+        setCommentsData(newComments);
+      }
     } catch (error) {
       console.log("delete comment error => ", error);
       //사용자 알림
@@ -180,24 +187,26 @@ const Comments = ({ feedId }) => {
                   <p>{comment.comment}</p>
                 )}
 
-                <StCommentButtonWrapper>
-                  {editingCommentId === comment.comment_id ? (
+                {comment.writer_id === userId && (
+                  <StCommentButtonWrapper>
+                    {editingCommentId === comment.comment_id ? (
+                      <Button
+                        onClick={() => handleEditComment(comment.comment_id)}
+                      >
+                        SAVE
+                      </Button>
+                    ) : (
+                      <Button onClick={() => handleEditButtonClick(comment)}>
+                        EDIT
+                      </Button>
+                    )}
                     <Button
-                      onClick={() => handleEditComment(comment.comment_id)}
+                      onClick={() => handleDeleteComment(comment.comment_id)}
                     >
-                      SAVE
+                      DELETE
                     </Button>
-                  ) : (
-                    <Button onClick={() => handleEditButtonClick(comment)}>
-                      EDIT
-                    </Button>
-                  )}
-                  <Button
-                    onClick={() => handleDeleteComment(comment.comment_id)}
-                  >
-                    DELETE
-                  </Button>
-                </StCommentButtonWrapper>
+                  </StCommentButtonWrapper>
+                )}
               </StDetailComment>
             );
           })
@@ -261,16 +270,17 @@ const StDetailComment = styled.li`
 
   //유저 닉네임
   h3 {
-    width: 10%;
+    width: 80px;
     font-size: 17px;
     margin-right: 20px;
   }
 
   //댓글 본문
   p {
-    width: 70%;
+    width: 50%;
     font-size: 12px;
     padding: 10px;
+    overflow-wrap: break-word;
   }
 `;
 //댓글 수정 입력창

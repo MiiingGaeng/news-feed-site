@@ -11,12 +11,12 @@ import { AuthContext } from "../contexts/AuthContext";
 import { deleteData } from "../api/deleteData";
 
 const Detail = () => {
-  //-----feed_id / user_id 값 가져오기-----
+  //-----feed_id / user_id-----
   //url에서 게시글 id 추출 : query param으로 feed_id 값 가져오기
   const [searchParams] = useSearchParams();
   const feedId = searchParams.get("feed_id");
 
-  //context에서 로그인된 유저의 user_id값 가져오기
+  //Context로 로그인한 유저의 user_id 값 가져오기
   const { userId } = useContext(AuthContext);
 
   //-----data fetch-----
@@ -47,15 +47,13 @@ const Detail = () => {
   };
 
   //-----해당 게시글 삭제 로직-----
-  const handleDeletePost = async (feedId) => {
+  const handleDeletePost = async (feed_id) => {
     //사용자 확인 여부
     const isConfirm = window.confirm("정말 삭제하시겠습니까?");
-
     if (isConfirm) {
-      //supabase에서 데이터 삭제
-      await deleteData("feeds", "feed_id", feedId);
-
-      //Feed 페이지로 이동
+      //supabase 데이터 삭제
+      await deleteData("feeds", "feed_id", feed_id);
+      //feed로 이동
       navigate("/feed");
     }
   };
@@ -73,7 +71,7 @@ const Detail = () => {
         <p>{selectedFeedData?.contents}</p>
         {selectedFeedData?.writer_id === userId && (
           <StDetailButtonWrapper>
-            <Button onClick={() => handleNavigateToEdit()}>EDIT</Button>
+            <Button onClick={handleNavigateToEdit}>EDIT</Button>
             <Button onClick={() => handleDeletePost(feedId)}>DELETE</Button>
           </StDetailButtonWrapper>
         )}
@@ -140,6 +138,7 @@ const StDetailUserWrapper = styled.div`
   }
 `;
 
+//EDIT/DELETE 버튼 wrapper
 const StDetailButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
