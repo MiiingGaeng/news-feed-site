@@ -95,7 +95,7 @@ const Comments = ({ feedId }) => {
     } catch (error) {
       console.log("add comment error => ", error);
       //사용자 알림
-      alert("앗! 댓글을 추가하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+      alert("앗! 댓글을 추가하는데 문제가 발생했습니다. 다시 시도해주세요!");
     }
   };
 
@@ -147,7 +147,7 @@ const Comments = ({ feedId }) => {
     } catch (error) {
       console.log("edit comment error => ", error);
       //사용자 알림
-      alert("앗! 댓글을 수정하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+      alert("앗! 댓글을 수정하는데 문제가 발생했습니다. 다시 시도해주세요!");
     }
   };
 
@@ -172,7 +172,7 @@ const Comments = ({ feedId }) => {
     } catch (error) {
       console.log("delete comment error => ", error);
       //사용자 알림
-      alert("앗! 댓글을 삭제하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+      alert("앗! 댓글을 삭제하는데 문제가 발생했습니다. 다시 시도해주세요!");
     }
   };
 
@@ -181,9 +181,7 @@ const Comments = ({ feedId }) => {
       <StDetailCommentsWrapper>
         <h2>Comments</h2>
         {commentsData.length === 0 ? (
-          <StDetailNoCommentsText>
-            아직 댓글이 없습니다 🥲
-          </StDetailNoCommentsText>
+          <StDetailNoCommentsText>아직 댓글이 없습니다</StDetailNoCommentsText>
         ) : (
           commentsData.map((comment) => {
             return (
