@@ -10,7 +10,7 @@ const Home = () => {
       {/* 화면 전체를 감싸는 컨테이너 */}
       <StHomeContainer>
         {/* Main Title 영역 */}
-        <StHomeTitle>King’s Ear Is</StHomeTitle>
+        <StHomeTitle>Tutor's Ears Are</StHomeTitle>
         {/* 동그란 원 3개를 감싸는 영역 */}
         <StCircleWrapper>
           {/* 개별 동그란 원 스타일링 */}
@@ -59,7 +59,7 @@ const Home = () => {
             익명으로 잡담하고 싶고, 꿀팁 공유하고 싶고, 강의보다 궁금한 거 바로
             댓글 달고 싶고, 강의 타임라인 적고 싶다면
           </p>
-          <p>수강생 커뮤니티 “King’s Ear Is”로 오세요!</p>
+          <p>수강생 커뮤니티 “ TEA ”로 오세요!</p>
           <p>튜터님 귀는 당나귀 귀!!!</p>
         </div>
         <div className="home-button-wrapper">
@@ -213,7 +213,7 @@ const StHomeSubContainer = styled.div`
     gap: 1rem;
     justify-content: center;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
       flex-direction: column;
     }
   }
