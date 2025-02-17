@@ -4,6 +4,7 @@ import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png"
 
 const FeedCard = ({ post, setPosts }) => {
 
@@ -72,7 +73,9 @@ const StFeedCardHeader = styled.div`
 `;
 
 // 프로필 이미지
-const StProfileImage = styled.img`
+const StProfileImage = styled.img.attrs((props) => ({
+  src: props.src || DEFAULT_PROFILE_IMG
+}))`
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -137,14 +140,14 @@ const StDeleteButton = styled.button`
 
 // 삭제 아이콘
 const StTrashIcon = styled(FaRegTrashAlt)`
-  font-size: 24px;
+  font-size: 30px;
   background: white;
   border-radius: 50%;
   padding: 4px;
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 
   ${StDeleteButton}:hover & {
-    color: #ff4d4f;
+    color: #fc090d;
     background: white;
   }
 `;
