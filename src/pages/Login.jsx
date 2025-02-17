@@ -5,15 +5,11 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import supabase from "../supabase/client";
 import { AlertError, AlertSorry, AlertSuccess } from "../common/Alert";
-import { AuthContext } from "../contexts/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  // 나중에 삭제할 임포트
-  const { isLogin, setIsLogin, user, setUser } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -115,12 +111,6 @@ const Login = () => {
           </button>
         </StSNSBtn>
       </StContainer>
-      {/* 로그인 버튼 조건부 렌더링 테스트용 */}
-      {isLogin ? (
-        <button onClick={handleLogout}>🫥Log Out</button>
-      ) : (
-        <button onClick={handleLogin}>😀Log in</button>
-      )}
     </StLoginWrapper>
   );
 };

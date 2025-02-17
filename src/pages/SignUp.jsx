@@ -5,7 +5,6 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import supabase from "../supabase/client";
 import { AlertError, AlertInfo, AlertSorry } from "../common/Alert";
-import { AuthContext } from "../contexts/AuthContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -15,16 +14,13 @@ const SignUp = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const navigate = useNavigate();
 
-  // 나중에 삭제할 임포트
-  const { isLogin, setIsLogin, user, setUser } = useContext(AuthContext);
-
   // 회원가입 로직
   const handleSignup = async (e) => {
     e.preventDefault();
 
     // 비밀번호 일치여부 확인
     if (password !== passwordCheck) {
-      AlertError(`비밀번호가 일치하지 않습니다.`);
+      AlertError("잠깐!", "비밀번호가 일치하지 않습니다.");
       return;
     }
 
@@ -53,29 +49,18 @@ const SignUp = () => {
             AlertError("경고", "보안에 취약한 비밀번호입니다.");
             return;
           default:
-            AlertError(`🚨에러발생🚨 : ${error.code}`);
+            AlertError("Warning", `${error.code}`);
         }
       } else {
-        AlertSuccess("성공!", "KEI 회원이 되신것을 환영합니다.");
+        AlertSuccess("회원가입 완료!", "KEI 회원이 되신것을 환영합니다.");
         // 회원가입 후 홈으로 랜딩
         navigate("/");
       }
     } catch (error) {
-      alert(`⛔️ 회원가입중 오류가 발생했습니다. 다시 시도해주세요!
-      ⛔️${error.massage}`);
+      AlertError(`회원가입중 오류가 발생했습니다. 다시 시도해주세요!
+      ${error.massage}`);
       console.log("⛔️회원가입 오류", error);
     }
-  };
-
-  // login
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  // logout
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsLogin(false);
   };
 
   return (
@@ -136,16 +121,6 @@ const SignUp = () => {
           <button type="submit">Sign Up</button>
         </form>
       </StContainer>
-
-      {/* 테스트용 */}
-      <h3>{isLogin ? "로그인 되었습니다." : "로그인이 필요합니다."}</h3>
-
-      {/* 로그인 버튼 조건부 렌더링 테스트용 */}
-      {isLogin ? (
-        <button onClick={handleLogout}>🫥Log Out</button>
-      ) : (
-        <button onClick={handleLogin}>😀Log in</button>
-      )}
 
       {/* 기존 가입자 => Login 페이지로 이동 */}
       <StGoToLogin>
