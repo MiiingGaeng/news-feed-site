@@ -55,7 +55,7 @@ const FeedCard = ({ post, setPosts }) => {
 
 //-----styled-components-----
 
-// Feed카드
+// Feed 카드
 const StFeedCard = styled.li`
   width: 400px;
   max-width: 400px;
@@ -73,7 +73,7 @@ const StFeedCard = styled.li`
   }
 `;
 
-// 카드 header
+// 카드 Header
 const StFeedCardHeader = styled.div`
   display: flex;
   align-items: center;
