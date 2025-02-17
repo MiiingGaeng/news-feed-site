@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import supabase from "../supabase/client";
 import logo from "../assets/image/logo.png";
+import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
@@ -47,7 +48,9 @@ const Header = () => {
     setUser(null);
     setUserId(null);
 
-    alert("로그아웃 되셨습니다.");
+    // 로그인 성공 메세지 출력
+    AlertSuccess("로그아웃 완료!", "다음에 또 만나요!");
+
     navigate("/")
   };
 
