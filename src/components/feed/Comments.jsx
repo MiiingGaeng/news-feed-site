@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { fetchData } from "../../api/fetchData.js";
 import { insertOrUpdateData } from "../../api/insertOrUpdateData.js";
 import { deleteData } from "../../api/deleteData.js";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext.jsx";
+import { useForm } from "react-hook-form";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -29,39 +32,64 @@ const Comments = ({ feedId }) => {
     fetchComments();
   }, []);
 
-  //-----댓글 추가 기능-----
-  //state
-  //input value
-  const [inputValue, setInputValue] = useState("");
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  //Context로 로그인한 유저의 user_id 값 가져오기
+  const { userId } = useContext(AuthContext);
+
+  //react-hook-form을 사용하여 폼 데이터 관리
+  //금칙어 목록 정의
+  const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"];
+
+  //react-hook-form : ADD
+  const {
+    handleSubmit: handleAddSubmit,
+    register: registerAdd,
+    reset: resetAdd,
+    formState: { errors: addErrors }
+  } = useForm({
+    defaultValues: ""
+  });
+  //react-hook-form : ADD
+  const {
+    handleSubmit: handleEditSubmit,
+    register: registerEdit,
+    setValue: setEditValue
+  } = useForm({
+    defaultValues: ""
+  });
+
+  //금칙어 필터링
+  const checkBannedWords = (text) => {
+    for (let i of BANNED_WORDS) {
+      if (text.includes(i)) {
+        return false;
+      }
+      return true;
+    }
   };
 
+  //-----댓글 추가 기능-----
   //추가 함수
-  const handleAddComment = async (e) => {
-    e.preventDefault();
-
-    //예외처리: 빈칸의 경우 return
-    if (!inputValue.trim()) {
-      alert("댓글을 입력해주세요!");
-      return;
+  const handleAddComment = async (data) => {
+    if (!data) return;
+    //예외처리: 금칙어 사용시 return
+    if (!checkBannedWords(data.comment)) {
+      return alert("댓글에 금칙어가 포함되어 있습니다.");
     }
 
     //새로운 댓글 객체 생성
     const newComment = {
-      comment: inputValue,
+      ...data,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
       //supabase에 추가
       await insertOrUpdateData(newComment, "comments");
-      //input 초기화
-      setInputValue("");
       //사용자 알림
       alert("댓글이 추가 되었습니다!");
+      //input창 비워주기
+      resetAdd();
 
       //댓글 목록을 새롭게 fetch해서 즉시 반영하기
       const commentsData = await fetchData("comments", "users");
@@ -79,35 +107,32 @@ const Comments = ({ feedId }) => {
   //-----댓글 수정 기능-----
   //state
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editInputValue, setEditInputValue] = useState("");
 
   //수정 함수
-  //Edit Button 클릭 이벤트 핸들러
-  // : Edit 버튼 클릭시 해당 댓글의 id값이 넘어가고, 내용이 input 안에 담기는 로직
+  //Edit Button 클릭 이벤트 핸들러: Edit 버튼 클릭시 해당 댓글의 id값 전달
   const handleEditButtonClick = (comment) => {
     setEditingCommentId(comment.comment_id);
-    setEditInputValue(comment.comment);
-  };
-
-  //Edit input 체인지 이벤트 핸들러
-  const handleEditValueChange = (e) => {
-    setEditInputValue(e.target.value);
+    setEditValue("comment_id", comment.comment_id);
+    setEditValue("comment", comment.comment);
   };
 
   //수정 함수
-  const handleEditComment = async (comment_id) => {
+  const handleEditComment = async (data) => {
     //예외처리: 빈칸의 경우 return
-    if (!editInputValue.trim()) {
+    if (!data) {
       alert("수정된 내용을 입력해주세요!");
       return;
     }
+    //예외처리: 금칙어 사용시 return
+    if (!checkBannedWords(data.comment)) {
+      return alert("댓글에 금칙어가 포함되어 있습니다.");
+    }
 
     const editedComment = {
-      comment_id,
-      comment: editInputValue,
+      comment_id: data.comment_id,
+      comment: data.comment,
       feed_id: feedId,
-      //writer_id는 임시 데이터값입니다!!
-      writer_id: "1d4b5722-6a09-4256-9b9d-461903075838",
+      writer_id: userId
     };
 
     try {
@@ -135,16 +160,20 @@ const Comments = ({ feedId }) => {
   //삭제 함수
   const handleDeleteComment = async (comment_id) => {
     try {
-      //supabase에 삭제
-      await deleteData("comments", "comment_id", comment_id);
-      alert("댓글이 삭제 되었습니다!");
+      const isConfirm = window.confirm("정말로 삭제하시겠습니까?");
 
-      //댓글 목록을 새롭게 fetch해서 즉시 반영하기
-      const comments = await fetchData("comments", "users");
-      const newComments = comments.filter(
-        (comment) => comment.feed_id === feedId
-      );
-      setCommentsData(newComments);
+      if (isConfirm) {
+        //supabase에 삭제
+        await deleteData("comments", "comment_id", comment_id);
+        alert("댓글이 삭제 되었습니다!");
+
+        //댓글 목록을 새롭게 fetch해서 즉시 반영하기
+        const comments = await fetchData("comments", "users");
+        const newComments = comments.filter(
+          (comment) => comment.feed_id === feedId
+        );
+        setCommentsData(newComments);
+      }
     } catch (error) {
       console.log("delete comment error => ", error);
       //사용자 알림
@@ -169,48 +198,71 @@ const Comments = ({ feedId }) => {
                 {editingCommentId === comment.comment_id ? (
                   <StCommentEditInput
                     type="text"
-                    value={editInputValue}
-                    onChange={handleEditValueChange}
+                    maxLength="200"
+                    {...registerEdit("comment", {
+                      required: true,
+                      maxLength: {
+                        value: 200,
+                        message: "※ 댓글은 200자를 초과할 수 없습니다"
+                      },
+                      setValueAs: (value) => value.trim()
+                    })}
                     onKeyDown={(e) => {
                       if (e.key === "Enter")
-                        handleEditComment(comment.comment_id);
+                        handleEditSubmit(handleEditComment);
                     }}
                   />
                 ) : (
                   <p>{comment.comment}</p>
                 )}
 
-                <StCommentButtonWrapper>
-                  {editingCommentId === comment.comment_id ? (
+                {comment.writer_id === userId && (
+                  <StCommentButtonWrapper>
+                    {editingCommentId === comment.comment_id ? (
+                      <Button onClick={handleEditSubmit(handleEditComment)}>
+                        SAVE
+                      </Button>
+                    ) : (
+                      <Button onClick={() => handleEditButtonClick(comment)}>
+                        EDIT
+                      </Button>
+                    )}
                     <Button
-                      onClick={() => handleEditComment(comment.comment_id)}
+                      onClick={() => handleDeleteComment(comment.comment_id)}
                     >
-                      SAVE
+                      DELETE
                     </Button>
-                  ) : (
-                    <Button onClick={() => handleEditButtonClick(comment)}>
-                      EDIT
-                    </Button>
-                  )}
-                  <Button
-                    onClick={() => handleDeleteComment(comment.comment_id)}
-                  >
-                    DELETE
-                  </Button>
-                </StCommentButtonWrapper>
+                  </StCommentButtonWrapper>
+                )}
               </StDetailComment>
             );
           })
         )}
       </StDetailCommentsWrapper>
 
-      <StCommentForm onSubmit={handleAddComment}>
+      <StCommentForm onSubmit={handleAddSubmit(handleAddComment)}>
         <StCommentInput
           type="text"
-          placeholder="댓글을 작성해주세요"
-          value={inputValue}
-          onChange={handleInputChange}
+          placeholder="댓글을 작성해주세요! 댓글은 최대 200자 작성이 가능합니다."
+          maxLength="200"
+          //react-hook-form의 register를 통해 폼 값 연결
+          {...registerAdd("comment", {
+            required: true,
+            maxLength: {
+              value: 200,
+              message: "※ 댓글은 200자를 초과할 수 없습니다"
+            },
+            setValueAs: (value) => value.trim()
+          })}
         />
+        {/* 내용 입력시 발생할 수 있는 에러 메시지 */}
+        {addErrors.contents && (
+          <p>
+            {addErrors.comment.type === "required" && "※ 내용은 필수입니다."}
+            {addErrors.comment.type === "maxLength" &&
+              "※ 내용은 최대 500자를 초과할 수 없습니다"}
+          </p>
+        )}
         <Button type="submit">SUBMIT</Button>
       </StCommentForm>
     </>
@@ -261,16 +313,17 @@ const StDetailComment = styled.li`
 
   //유저 닉네임
   h3 {
-    width: 10%;
+    width: 80px;
     font-size: 17px;
     margin-right: 20px;
   }
 
   //댓글 본문
   p {
-    width: 70%;
+    width: 50%;
     font-size: 12px;
     padding: 10px;
+    overflow-wrap: break-word;
   }
 `;
 //댓글 수정 입력창

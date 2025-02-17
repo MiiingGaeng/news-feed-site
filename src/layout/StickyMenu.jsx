@@ -2,8 +2,13 @@ import styled from "styled-components"
 import FeedAddButton from "../components/feed/FeedAddButton"
 import { FaHome, FaUserCircle } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const StickyMenu = () => {
+    // Login 여부 호출
+  const {isLogin} = useContext(AuthContext)
+
   return (
     <StStickyMenu>
       <div className="sticky-menu-wrapper">
@@ -11,11 +16,12 @@ const StickyMenu = () => {
           <StIconWrapper to={'/'}>
             <FaHome size={40} />
           </StIconWrapper>
-          <StIconWrapper to={'/mypage'}>
+          <StIconWrapper to={ isLogin ? '/mypage' : '/login'}>
             <FaUserCircle size={40} />
           </StIconWrapper>
         </StStickyMenuItems>
-        <FeedAddButton/>
+        {/* login 시에만 feed 추가 가능 */}
+        {isLogin && <FeedAddButton/>}
       </div>
     </StStickyMenu>
   )

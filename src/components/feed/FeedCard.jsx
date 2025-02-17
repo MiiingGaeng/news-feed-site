@@ -6,9 +6,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const FeedCard = ({ post, setPosts }) => {
-
-  const { userId } = useContext(AuthContext);
-
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();

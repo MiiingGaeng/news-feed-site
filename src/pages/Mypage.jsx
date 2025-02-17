@@ -1,18 +1,63 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import  supabase  from "../supabase/client";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
 import default_img from "../assets/image/profile_default.png";
 import Button from "../common/Button";
 import Input from "../common/Input";
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  const { setIsLogin, user, setUser } = useContext(AuthContext); //user에 session.user(로그인한 유저정보)가 들어가있음
   const [data, setData] = useState({
     id: "",
     name: "",
     email: "",
     nickname: "",
-    image: "",
+    image: ""
   });
+  // NOTE: 로그인 상태 확인
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
+      if (session) {
+        console.log("session => ", session);
+      } else {
+        alert("로그인 하셔야합니다.");
+        navigate("/login");
+      }
+    };
+
+    getSession();
+  }, []);
+
+  useEffect(() => {
+    //  user가 존재할 때만 실행
+    if (user?.id) {
+      const getUserInfo = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("users") // public.users 테이블에서
+            .select("*")
+            .eq("user_id", user.id) //  이메일이 같은 유저만 가져옴
+            .single(); //  단일 데이터만 가져오기
+
+          if (error) throw error;
+
+          setData(data); //  상태 업데이트
+          console.log("현재 유저 정보:", data); //  콘솔에 출력
+        } catch (error) {
+          console.error("유저 정보 가져오기 오류:", error);
+        }
+      };
+
+      getUserInfo();
+    }
+  }, [user]);
   return (
     <StMyPageWrapper>
       <h1>My Page</h1>
@@ -51,11 +96,11 @@ const MyPage = () => {
         <div></div>
       </StContentsHeader>
       <StContentBoxWrapper>
-        //지금은 기본 UI 이기때문에 예시 데이터로 여러개 만들어둠. 추후 supabase로 데이터 가져와서 map사용할예정정
+        {/* 지금은 기본 UI 이기때문에 예시 데이터로 여러개 만들어둠. 추후
+        supabase로 데이터 가져와서 map사용할예정 */}
         <StContentBox>
           <h2>팀 프로젝트 발제</h2>
-          <p>
-            뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
+          <p>뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
           </p>
         </StContentBox>
         <StContentBox>
