@@ -15,7 +15,7 @@ const MyPage = () => {
     name: "",
     email: "",
     nickname: "",
-    image: "",
+    image: ""
   });
   // NOTE: 로그인 상태 확인
   useEffect(() => {
