@@ -64,7 +64,11 @@ const Detail = () => {
       <CloseButton onClick={() => navigate("/feed")} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
-          <StUserProfileImage src={writerData?.profile_img} />
+          {console.log(writerData)}
+          <StUserProfileImage src={writerData?.profile_img
+            ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${writerData?.profile_img}`
+            : DEFAULT_PROFILE_IMG
+          } />
           <h3>{writerData?.nickname}</h3>
         </StDetailUserWrapper>
 
