@@ -114,7 +114,7 @@ body {
   overflow-x: hidden;
 }
 
-.swal-icon {
+/* .swal-icon {
   border: 1px solid #f00;
   display: flex;
   justify-content: center;
@@ -130,4 +130,4 @@ body {
 
 .swal2-popup {
   padding-top: 24px;
-}
+} */

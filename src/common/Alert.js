@@ -27,14 +27,20 @@ export const AlertSuccess = (title = "Success", text = "") => {
 
 export const AlertError = (title = "Error", text = "") => {
   Swal.fire({
+    title: "Error!",
+    text: "Do you want to continue",
     icon: "error",
-    title,
-    text,
-    customClass: {
-      popup: "swal-custom", // 팝업 스타일링
-      icon: "swal-icon", // 아이콘 스타일링
-    },
+    confirmButtonText: "Cool",
   });
+  // Swal.fire({
+  //   icon: "error",
+  //   title,
+  //   text,
+  // customClass: {
+  //   popup: "swal-custom", // 팝업 스타일링
+  //   icon: "swal-icon", // 아이콘 스타일링
+  // },
+  //   });
 };
 
 /**
