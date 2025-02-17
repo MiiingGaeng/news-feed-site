@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../common/Button";
+import Button from "../components/common/Button";
 import CloseButton from "../components/feed/CloseButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";

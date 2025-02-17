@@ -208,7 +208,7 @@ const StHomeSubContainer = styled.div`
   p {
     margin: 0.5rem 0;
   }
-  .home-button-wrapper{
+  .home-button-wrapper {
     display: flex;
     gap: 1rem;
     justify-content: center;
@@ -218,6 +218,5 @@ const StHomeSubContainer = styled.div`
     }
   }
 `;
-
 
 export default Home;
