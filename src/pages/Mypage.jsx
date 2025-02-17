@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import  supabase  from "../supabase/client";
+import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
 import default_img from "../assets/image/profile_default.png";
-import Button from "../common/Button";
-import Input from "../common/Input";
+import Button from "../components/common/Button";
+import Input from "../components/common/Input";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { setIsLogin, user, setUser } = useContext(AuthContext); //user에 session.user(로그인한 유저정보)가 들어가있음
+  const { user } = useContext(AuthContext); //user에 session.user(로그인한 유저정보)가 들어가있음
   const [data, setData] = useState({
     id: "",
     name: "",
@@ -17,11 +17,13 @@ const MyPage = () => {
     nickname: "",
     image: ""
   });
+  const [mySelfFeed, setMySelfFeed] = useState([]);
   // NOTE: 로그인 상태 확인
   useEffect(() => {
+    //현재 로그인상태 확인하는 로직
     const getSession = async () => {
       const {
-        data: { session },
+        data: { session }
       } = await supabase.auth.getSession();
 
       if (session) {
@@ -43,7 +45,7 @@ const MyPage = () => {
           const { data, error } = await supabase
             .from("users") // public.users 테이블에서
             .select("*")
-            .eq("user_id", user.id) //  이메일이 같은 유저만 가져옴
+            .eq("user_id", user.id) //  id가가 같은 유저만 가져옴
             .single(); //  단일 데이터만 가져오기
 
           if (error) throw error;
@@ -56,11 +58,60 @@ const MyPage = () => {
       };
 
       getUserInfo();
+
+      const getFeedData = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("feeds") // public.feeds 테이블에서
+            .select("*")
+            .eq("writer_id", user.id); //  id이 해당유저와같은 feed만 가져옴
+
+          if (error) throw error;
+
+          setMySelfFeed(data); //  상태 업데이트
+          console.log("현재 유저Feeds 정보:", data); //  콘솔에 출력
+        } catch (error) {
+          console.error("피드 정보 가져오기 오류:", error);
+        }
+      };
+      getFeedData();
     }
   }, [user]);
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+
+    //예외처리: 빈칸의 경우 return
+    if (!data.email.trim() || !data.name.trim() || !data.nickname.trim()) {
+      alert("계정 정보를 제대로 입력해주세요 !");
+      return;
+    }
+
+    const newProfileInfo = {
+      // 우선 지금은 닉네임만 변경가능 하도록함
+      nickname: data.nickname
+    };
+
+    //supabase에 추가
+    try {
+      const { error } = await supabase
+        .from("users")
+        .update(newProfileInfo)
+        .eq("user_id", user.id); // 현재 로그인한 유저의 ID 기준 업데이트
+
+      if (error) throw error;
+
+      //사용자 알림
+      alert("프로필정보가 변경되었습니다!");
+      console.log("프로필 업데이트 성공:", data);
+    } catch (error) {
+      console.error("프로필 업데이트 오류:", error.message);
+      alert("프로필 업데이트에 실패했습니다.");
+    }
+  };
   return (
     <StMyPageWrapper>
-      <h1>My Page</h1>
+      <h1>My Page</h1>{" "}
       <StContainer width="500px" height="300px">
         <StProfileImg src={default_img} alt="사진없음" />
         <Input
@@ -87,30 +138,23 @@ const MyPage = () => {
           onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
           required
         />
-        <Button children="수정하기" />
+        <Button onClick={handleUpdateProfile}>수정하기</Button>
       </StContainer>
-
       <StContentsHeader>
         <div></div>
         <h2>My Contents</h2>
         <div></div>
       </StContentsHeader>
       <StContentBoxWrapper>
-        {/* 지금은 기본 UI 이기때문에 예시 데이터로 여러개 만들어둠. 추후
-        supabase로 데이터 가져와서 map사용할예정 */}
-        <StContentBox>
-          <h2>팀 프로젝트 발제</h2>
-          <p>뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
-          </p>
-        </StContentBox>
-        <StContentBox>
-          <h2>점메추</h2>
-          <p>오늘의 점심 메뉴를 AI가 추천해준다! 이 서비스를 만들어보았다.</p>
-        </StContentBox>
-        <StContentBox>
-          <h2>리액트 9기 화이팅</h2>
-          <p>리액트 9기 동기들과 우리 다같이 성장해보자!</p>
-        </StContentBox>
+        {mySelfFeed.map((feed) => {
+          // 해당 유저의 feed만 모아져있는 mySelfFeed에 담긴 list로 화면에 출력
+          return (
+            <StContentBox key={feed.feed_id}>
+              <h2>{feed.title}</h2>
+              <p>{feed.contents} </p>
+            </StContentBox>
+          );
+        })}
       </StContentBoxWrapper>
     </StMyPageWrapper>
   );
@@ -135,6 +179,7 @@ const StContentBox = styled.div`
   }
 `;
 const StContentBoxWrapper = styled.div`
+  width: 60%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -221,6 +266,7 @@ const StProfileImg = styled.img`
   vertical-align: middle;
   overflow-clip-margin: content-box;
   overflow: clip;
+  margin-bottom: 10px;
 
   /* 프로필 이미지 둥글게 */
   border-radius: 30%;

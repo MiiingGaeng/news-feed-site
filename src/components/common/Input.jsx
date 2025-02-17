@@ -21,7 +21,8 @@ const StInputWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  left:-5px;
+  left: -5px;
+  margin-bottom: 10px;
 `;
 
 const StLabel = styled.label`
@@ -34,7 +35,7 @@ const StLabel = styled.label`
   font-size: 13px;
   transition: all 0.3s;
   margin-right: 10px;
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
