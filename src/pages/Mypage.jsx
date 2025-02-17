@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
 import UserProfileImage from "../components/user/UserProfileImage";
@@ -116,6 +116,10 @@ const MyPage = () => {
       alert("프로필 업데이트에 실패했습니다.");
     }
   };
+
+  const handleNaviageFeed = () => {
+    navigate("../feed");
+  };
   return (
     <StMyPageWrapper>
       <h1>My Page</h1>{" "}
@@ -151,7 +155,10 @@ const MyPage = () => {
           }
           required
         />
-        <Button onClick={handleUpdateProfile}>수정하기</Button>
+        <StButtonWrapper>
+          <Button onClick={handleUpdateProfile}>수정하기</Button>
+          <Button onClick={handleNaviageFeed}>feeds로 이동</Button>
+        </StButtonWrapper>
       </StContainer>
       <StContentsHeader>
         <div></div>
@@ -172,7 +179,7 @@ const MyPage = () => {
     </StMyPageWrapper>
   );
 };
-
+const StButtonWrapper = styled.div``;
 const StContentBox = styled.div`
   background: #e0e0e0;
   padding: 20px;
@@ -225,7 +232,7 @@ const StContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
+  padding: 30px;
   margin-bottom: 20px;
   hr {
     width: 350px;
@@ -261,49 +268,6 @@ const StContainer = styled.div`
     }
   }
 `;
-
-// 스켈레톤 로딩 애니메이션 정의
-const shine = keyframes`
-  0% {
-    background-position: left -40px top 0;
-  }
-  100% {
-    background-position: right 100% top 0;
-  }
-`;
-
-// // 스타일이 적용된 프로필 이미지
-// const StProfileImg = styled.img`
-//   display: inline-block;
-//   max-width: 100%;
-//   vertical-align: middle;
-//   overflow-clip-margin: content-box;
-//   overflow: clip;
-//   margin-bottom: 10px;
-
-//   /* 프로필 이미지 둥글게 */
-//   border-radius: 30%;
-
-//   /* 특정 속성을 가진 이미지 */
-//   width: ${(props) => props.width || "100px"};
-//   height: ${(props) => props.height || "100px"};
-//   aspect-ratio: 1 / 1;
-
-//   /* 스켈레톤 로딩 효과 */
-//   &.skeleton {
-//     background-color: #e2e5e7;
-//     background-image: linear-gradient(
-//       90deg,
-//       rgba(255, 255, 255, 0),
-//       rgba(255, 255, 255, 0.5),
-//       rgba(255, 255, 255, 0)
-//     );
-//     background-size: 40px 100%;
-//     background-repeat: no-repeat;
-//     background-position: left -40px top 0;
-//     animation: ${shine} 1s ease infinite;
-//   }
-// `;
 
 const StContentsHeader = styled.div`
   display: flex;
