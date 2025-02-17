@@ -14,6 +14,7 @@ import {
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
 import BANNED_WORDS from "../../constant/BANNED_WORDS";
+import { AlertCheck, AlertError } from "../common/Alert";
 
 const EditFeedForm = ({ feedId }) => {
   //-----Context-----
@@ -65,13 +66,17 @@ const EditFeedForm = ({ feedId }) => {
   //게시글 수정 함수
   const handleEditFeedSubmit = async (data) => {
     //예외처리: 금칙어
-    if (!checkBANNED_WORDS(data.title)) {
-      alert("제목에 금칙어가 포함되어 있습니다.");
-      return;
+    if (!checkBannedWords(data.title)) {
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
-    if (!checkBANNED_WORDS(data.contents)) {
-      alert("본문에 금칙어가 포함되어 있습니다.");
-      return;
+    if (!checkBannedWords(data.contents)) {
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
 
     const editedFeed = {
@@ -83,19 +88,23 @@ const EditFeedForm = ({ feedId }) => {
 
     try {
       //사용자 확인 요청
-      const isConfirm = window.confirm("수정하시겠습니까?");
+      const isConfirm = await AlertCheck(
+        "수정을 완료하시겠습니까?",
+        "완료하시려면 확인을 눌러주세요!",
+        "확인",
+        "수정 완료",
+        "수정되었습니다."
+      );
       if (isConfirm) {
         //supabase 데이터 업데이트
         await insertOrUpdateData(editedFeed, "feeds", "feed_id");
-        //사용자 알림
-        alert("글이 수정되었습니다!");
         //Detail 페이지로 이동
         navigate(`/detail?feed_id=${feedId}`);
       }
     } catch (error) {
       console.log("edit feed error => ", error);
       //사용자 알림
-      alert("앗! 글을 수정하는데 문제가 발생했습니다🥲 다시 시도해주세요!");
+      AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
   };
 

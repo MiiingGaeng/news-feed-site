@@ -3,22 +3,22 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import supabase from "../supabase/client";
+import logo from "../assets/image/logo.png";
+import { AlertSuccess } from "../components/common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
-  const {isLogin, setIsLogin, setUser, setUserId} = useContext(AuthContext);
+  const { isLogin, setIsLogin, setUser, setUserId } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const toggleMenu = () => setIsMenuOpen(prevState => !prevState); // 메뉴 토글 함수
+  const toggleMenu = () => setIsMenuOpen((prevState) => !prevState); // 메뉴 토글 함수
 
   // login state check
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session },
+        data: { session }
       } = await supabase.auth.getSession();
-      // session check
-      // console.log("✅ session", session);
 
       setIsLogin(session?.user ?? null);
       setUser(session?.user || null);
@@ -27,15 +27,14 @@ const Header = () => {
     getSession();
 
     const {
-      data: {subscription}
+      data: { subscription }
     } = supabase.auth.onAuthStateChange(() => {
       getSession();
-    })
+    });
     return () => {
-      subscription?.unsubscribe()
-    }
+      subscription?.unsubscribe();
+    };
   }, []);
-
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -46,38 +45,41 @@ const Header = () => {
     setUser(null);
     setUserId(null);
 
-    alert("로그아웃 되셨습니다.");
-    navigate("/")
-  };
+    // 로그인 성공 메세지 출력
+    AlertSuccess("로그아웃 완료!", "다음에 또 만나요!");
 
+    navigate("/");
+  };
 
   return (
     <StHeader>
       <StNav>
-        <StLogo to="/">KEI👂</StLogo>
+        <StLogo to="/">
+          <span>TEA</span>
+          <img src={logo} alt="logo" />
+        </StLogo>
         <StMenuToggle onClick={toggleMenu}>
           {isMenuOpen ? "X" : "☰"}
         </StMenuToggle>
         <StNavLink $isOpen={isMenuOpen}>
-          {
-            isLogin ? 
-            <StSubLink to="/"
+          {isLogin ? (
+            <StSubLink
+              to="/"
               onClick={(e) => {
-                e.preventDefault();  // 기본 이동 막기
-                handleLogout();      // 로그아웃 실행
-              }}>
+                e.preventDefault(); // 기본 이동 막기
+                handleLogout(); // 로그아웃 실행
+              }}
+            >
               Logout
             </StSubLink>
-            :
+          ) : (
             <>
               <StSubLink to="/signup" $isJoin>
                 Join
               </StSubLink>
-              <StSubLink to="/login">
-                Login
-              </StSubLink>
+              <StSubLink to="/login">Login</StSubLink>
             </>
-          }
+          )}
         </StNavLink>
       </StNav>
     </StHeader>
@@ -87,7 +89,7 @@ const Header = () => {
 const StHeader = styled.header`
   width: 100%;
   height: 61px;
-  background: #F7F6FF;
+  background: #f7f6ff;
   color: #343434;
   display: flex;
   align-items: center;
@@ -127,6 +129,7 @@ const StNav = styled.nav`
 // Header 로고 영역
 const StLogo = styled(Link)`
   font-size: 40px;
+  line-height: 40px;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -134,6 +137,19 @@ const StLogo = styled(Link)`
   text-decoration: none;
   color: #343434;
   padding: 0 1.2rem;
+  align-content: center;
+  flex-wrap: wrap;
+
+  span {
+    height: 34px;
+    line-height: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    align-self: center;
+  }
+  img {
+    height: 40px;
+  }
 `;
 
 // Header Sub Menu 영역
@@ -147,14 +163,15 @@ const StNavLink = styled.div`
     display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
     flex-direction: column;
     width: 100%;
-    background-color: #F7F6FF;
+    background-color: #f7f6ff;
     padding: 1rem 0;
     position: absolute;
     top: 100%;
     left: 0;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
-    transform: ${({ $isOpen }) => ($isOpen ? "translateY(0)" : "translateY(-100%)")};
+    transform: ${({ $isOpen }) =>
+      $isOpen ? "translateY(0)" : "translateY(-100%)"};
   }
 
   @media (min-width: 769px) {
@@ -177,7 +194,7 @@ const StSubLink = styled(Link)`
 
   @media (max-width: 768px) {
     font-size: 20px;
-    width: 100%;          
+    width: 100%;
     box-sizing: border-box;
     justify-content: center;
     border-radius: 0;
