@@ -11,6 +11,7 @@ import {
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
 import BANNED_WORDS from "../../constant/bannedWords";
+import { AlertError, AlertSuccess } from "../common/Alert";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
@@ -43,10 +44,16 @@ const AddFeedForm = ({ onAddFeed }) => {
   const handleAddFeed = async (data) => {
     if (!data) return;
     if (!checkBannedWords(data.title)) {
-      return alert("제목에 금칙어가 포함되어 있습니다.");
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
     if (!checkBannedWords(data.contents)) {
-      return alert("내용에 금칙어가 포함되어 있습니다.");
+      return AlertError(
+        "금칙어가 포함되어 있습니다",
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+      );
     }
     // feed 데이터를 확장 (writer_id 추가)
     const feedData = {
@@ -63,7 +70,7 @@ const AddFeedForm = ({ onAddFeed }) => {
     await onAddFeed();
 
     // 피드 추가 메시지
-    return alert("새로운 피드가 추가되었습니다.");
+    return AlertSuccess("새로운 게시글이 추가되었습니다.");
   };
 
   return (
