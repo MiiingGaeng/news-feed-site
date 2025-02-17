@@ -1,1 +1,0 @@
-export const SUPABASE_STORAGE_URL = "https://whnqifwtwfhooclnzuoj.supabase.co/storage/v1/object/images/";
