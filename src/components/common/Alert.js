@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
-import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
+// import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
+import alertalt from "../../assets/image/alertalt.png"; // 이미지 경로
 
 /**
  * Success
@@ -14,8 +15,8 @@ export const AlertSuccess = (title = "Success", text = "") => {
     text,
     customClass: {
       popup: "swal-custom", // 팝업 스타일링
-      icon: "swal-icon", // 아이콘 스타일링
-    },
+      icon: "swal-icon" // 아이콘 스타일링
+    }
   });
 };
 
@@ -29,7 +30,7 @@ export const AlertError = (title = "Error", text = "") => {
   Swal.fire({
     icon: "error",
     title,
-    text,
+    text
   });
 };
 
@@ -43,36 +44,44 @@ export const AlertInfo = (title = "Info", text = "") => {
   Swal.fire({
     icon: "info",
     title,
-    text,
+    text
   });
 };
 
 /**
- * 실행 여부 확인
+ * 실행 여부 확인 === confirm
  * @param {string} title -> 실행 여부 확인할 제목
  * @param {string} text -> 경고 내용
  */
 
 export const AlertCheck = (
   title = "Warning",
-  text = "이 작업은 되돌릴 수 없습니다!"
+  text = "이 작업은 되돌릴 수 없습니다!",
+  confirmButtonText = "삭제",
+  confirmedTitle = "Deleted",
+  confirmedText = "삭제되었습니다."
 ) => {
-  Swal.fire({
-    icon: "warning",
-    title,
-    text,
-    showCancelButton: true,
-    confirmButtonColor: "#504ba1",
-    cancelButtonColor: "#CD2E57",
-    confirmButtonText: "삭제",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Deleted",
-        text: "삭제되었습니다.",
-        icon: "success",
-      });
-    }
+  return new Promise((resolve) => {
+    Swal.fire({
+      icon: "warning",
+      title,
+      text,
+      showCancelButton: true,
+      confirmButtonColor: "#504ba1",
+      cancelButtonColor: "#CD2E57",
+      confirmButtonText
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: confirmedTitle,
+          text: confirmedText,
+          icon: "success"
+        });
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
   });
 };
 
@@ -89,6 +98,6 @@ export const AlertSorry = () => {
     imageUrl: alertalt,
     imageWidth: 400,
     imageHeight: 200,
-    imageAlt: "Custom image",
+    imageAlt: "Custom image"
   });
 };

@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
-import { AlertError, AlertSorry, AlertSuccess } from "../common/Alert";
+import {
+  AlertError,
+  AlertSorry,
+  AlertSuccess
+} from "../components/common/Alert";
 import supabase from "../supabase/client";
 
 const Login = () => {
@@ -18,7 +22,7 @@ const Login = () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password
       });
 
       if (error) {
