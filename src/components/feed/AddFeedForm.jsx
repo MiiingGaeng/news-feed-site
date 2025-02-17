@@ -10,15 +10,13 @@ import {
   StFormTitleWrapper
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
+import BANNED_WORDS from "../../constant/bannedWords";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
   title: "",
   contents: ""
 };
-
-// 금칙어 목록을 정의. 추후 슈파베이스 테이블로 관리해도 좋을듯
-const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"];
 
 const AddFeedForm = ({ onAddFeed }) => {
   //-----Context-----
@@ -38,12 +36,7 @@ const AddFeedForm = ({ onAddFeed }) => {
 
   // 금칙어 필터링
   const checkBannedWords = (text) => {
-    for (let i of BANNED_WORDS) {
-      if (text.includes(i)) {
-        return false;
-      }
-      return true;
-    }
+    return BANNED_WORDS.every((word) => !text.includes(word));
   };
 
   // 실제 테이블에 feed 데이터 추가하는 함수

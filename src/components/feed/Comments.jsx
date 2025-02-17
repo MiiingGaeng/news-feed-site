@@ -8,6 +8,7 @@ import { deleteData } from "../../api/deleteData.js";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
+import BANNED_WORDS from "../../constant/bannedWords.js";
 
 const Comments = ({ feedId }) => {
   //-----data fetch-----
@@ -36,9 +37,6 @@ const Comments = ({ feedId }) => {
   const { userId } = useContext(AuthContext);
 
   //react-hook-form을 사용하여 폼 데이터 관리
-  //금칙어 목록 정의
-  const BANNED_WORDS = ["나쁜말1", "나쁜말2", "나쁜말3"];
-
   //react-hook-form : ADD
   const {
     handleSubmit: handleAddSubmit,
@@ -59,18 +57,15 @@ const Comments = ({ feedId }) => {
 
   //금칙어 필터링
   const checkBannedWords = (text) => {
-    for (let i of BANNED_WORDS) {
-      if (text.includes(i)) {
-        return false;
-      }
-      return true;
-    }
+    return BANNED_WORDS.every((word) => !text.includes(word));
   };
 
   //-----댓글 추가 기능-----
   //추가 함수
   const handleAddComment = async (data) => {
     if (!data) return;
+
+    console.log("check 나쁜말", checkBannedWords(data.comment));
     //예외처리: 금칙어 사용시 return
     if (!checkBannedWords(data.comment)) {
       return alert("댓글에 금칙어가 포함되어 있습니다.");
