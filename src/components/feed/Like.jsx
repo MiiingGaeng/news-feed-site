@@ -8,7 +8,7 @@ const Like = ({ feedId }) => {
 
   const [liked, setLiked] = useState(false);
   const [likeId, setLikeId] = useState(null);
-
+  const [likesCount, setLikesCount] = useState(0);
 
   const { user } = useContext(AuthContext);
 
@@ -16,7 +16,7 @@ const Like = ({ feedId }) => {
     if (user) {
       fetchLikeStatus();
     }
-
+    fetchLikesCount();
   }, [user]);
 
   // 사용자가 해당 피드(feed_id)에 좋아요를 눌렀는지 확인
@@ -38,13 +38,24 @@ const Like = ({ feedId }) => {
     }
   };
 
+  // 피드의 총 좋아요 개수 가져오기
+  const fetchLikesCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from("likes")
+        .select("*", { count: "exact", head: true })
+        .eq("feed_id", feedId);
 
-
-
+      if (error) throw error;
+      setLikesCount(count || 0);
+    } catch (error) {
+      console.error("좋아요 개수를 가져오는 중 오류 발생:", error);
+    }
+  };
 
   return (
     <StLikeButton>
-      {liked ? "❤️" : "🤍"}
+      {liked ? "❤️" : "🤍"} {likesCount}
     </StLikeButton>
   )
 }
