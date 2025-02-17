@@ -138,7 +138,7 @@ const MyPage = () => {
           onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
           required
         />
-        <Button children="수정하기" onClick={handleUpdateProfile} />
+        <Button onClick={handleUpdateProfile}>수정하기</Button>
       </StContainer>
       <StContentsHeader>
         <div></div>
