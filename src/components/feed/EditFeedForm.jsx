@@ -13,7 +13,7 @@ import {
   StFormTitleWrapper
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
-import BANNED_WORDS from "../../constant/bannedWords";
+import bannedWords from "../../constant/BANNED_WORDS";
 
 const EditFeedForm = ({ feedId }) => {
   //-----Context-----
@@ -38,8 +38,8 @@ const EditFeedForm = ({ feedId }) => {
   });
 
   //금칙어 필터링을 위한 boolean 값
-  const checkBannedWords = (text) => {
-    return BANNED_WORDS.every((word) => !text.includes(word));
+  const checkbannedWords = (text) => {
+    return bannedWords.every((word) => !text.includes(word));
   };
 
   //-----data fetch-----
@@ -65,11 +65,11 @@ const EditFeedForm = ({ feedId }) => {
   //게시글 수정 함수
   const handleEditFeedSubmit = async (data) => {
     //예외처리: 금칙어
-    if (!checkBannedWords(data.title)) {
+    if (!checkbannedWords(data.title)) {
       alert("제목에 금칙어가 포함되어 있습니다.");
       return;
     }
-    if (!checkBannedWords(data.contents)) {
+    if (!checkbannedWords(data.contents)) {
       alert("본문에 금칙어가 포함되어 있습니다.");
       return;
     }

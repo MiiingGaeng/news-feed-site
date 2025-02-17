@@ -10,7 +10,7 @@ import {
   StFormTitleWrapper
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
-import BANNED_WORDS from "../../constant/bannedWords";
+import bannedWords from "../../constant/BANNED_WORDS";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
@@ -35,17 +35,17 @@ const AddFeedForm = ({ onAddFeed }) => {
   });
 
   // 금칙어 필터링
-  const checkBannedWords = (text) => {
-    return BANNED_WORDS.every((word) => !text.includes(word));
+  const checkbannedWords = (text) => {
+    return bannedWords.every((word) => !text.includes(word));
   };
 
   // 실제 테이블에 feed 데이터 추가하는 함수
   const handleAddFeed = async (data) => {
     if (!data) return;
-    if (!checkBannedWords(data.title)) {
+    if (!checkbannedWords(data.title)) {
       return alert("제목에 금칙어가 포함되어 있습니다.");
     }
-    if (!checkBannedWords(data.contents)) {
+    if (!checkbannedWords(data.contents)) {
       return alert("내용에 금칙어가 포함되어 있습니다.");
     }
     // feed 데이터를 확장 (writer_id 추가)
