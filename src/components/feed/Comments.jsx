@@ -8,7 +8,7 @@ import { deleteData } from "../../api/deleteData.js";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
-import BANNED_WORDS from "../../constant/bannedWords.js";
+import BANNED_WORDS from "../../constant/BANNED_WORDS.js";
 import { AlertCheck, AlertError, AlertSuccess } from "../common/Alert.js";
 
 const Comments = ({ feedId }) => {

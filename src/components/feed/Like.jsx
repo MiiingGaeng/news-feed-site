@@ -3,6 +3,8 @@ import styled from "styled-components";
 import supabase from "../../supabase/client";
 import { fetchData } from "../../api/fetchData";
 import { AuthContext } from "../../contexts/AuthContext";
+import { IoHeartSharp } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
 
 const Like = ({ feedId }) => {
 
@@ -99,22 +101,30 @@ const Like = ({ feedId }) => {
 
   return (
     <StLikeButton onClick={handleToggleLike}>
-      {liked ? "❤️" : "🤍"} {likesCount}
+      {liked ? <IoHeartSharp className="purple-heart" /> : <IoHeartOutline />} {likesCount}
     </StLikeButton>
   )
 }
 
 // 좋아요 버튼 styled-components
 const StLikeButton = styled.button`
+  display: flex;
+  gap: 5px;
   background: none;
+  color: #7738c8;
   border: none;
   font-size: 18px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: #ff4500;
+    color: #7738c8;
+    transform: scale(1.1); /* 버튼 전체 크기 확대 */
   }
-`
+
+  &:hover .purple-heart {
+    transform: scale(1.2); /* 하트 아이콘만 더 크게 확대 */
+  }
+`;
 
 export default Like
