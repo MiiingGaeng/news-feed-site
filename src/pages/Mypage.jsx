@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import  supabase  from "../supabase/client";
+import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled, { keyframes } from "styled-components";
@@ -58,6 +58,37 @@ const MyPage = () => {
       getUserInfo();
     }
   }, [user]);
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+
+    //예외처리: 빈칸의 경우 return
+    if (!data.email.trim() || !data.name.trim() || !data.nickname.trim()) {
+      alert("계정 정보를 제대로 입력해주세요 !");
+      return;
+    }
+
+    const newProfileInfo = {
+      nickname: data.nickname,
+    };
+
+    //supabase에 추가
+    try {
+      const { error } = await supabase
+        .from("users")
+        .update(newProfileInfo)
+        .eq("user_id", user.id); // 현재 로그인한 유저의 ID 기준 업데이트
+
+      if (error) throw error;
+
+      //사용자 알림
+      alert("프로필정보가 변경되었습니다!");
+      console.log("프로필 업데이트 성공:", data);
+    } catch (error) {
+      console.error("프로필 업데이트 오류:", error.message);
+      alert("프로필 업데이트에 실패했습니다.");
+    }
+  };
   return (
     <StMyPageWrapper>
       <h1>My Page</h1>
@@ -87,7 +118,7 @@ const MyPage = () => {
           onChangeFunc={(e) => setData({ ...data, nickname: e.target.value })}
           required
         />
-        <Button children="수정하기" />
+        <Button children="수정하기" onClick={ handleUpdateProfile} />
       </StContainer>
 
       <StContentsHeader>
@@ -100,7 +131,8 @@ const MyPage = () => {
         supabase로 데이터 가져와서 map사용할예정 */}
         <StContentBox>
           <h2>팀 프로젝트 발제</h2>
-          <p>뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
+          <p>
+            뉴스피드 프로젝트, 내가 이번학기에 참여했던 프로젝트를 정리했다.
           </p>
         </StContentBox>
         <StContentBox>
@@ -221,6 +253,7 @@ const StProfileImg = styled.img`
   vertical-align: middle;
   overflow-clip-margin: content-box;
   overflow: clip;
+  margin-bottom: 10px;
 
   /* 프로필 이미지 둥글게 */
   border-radius: 30%;
@@ -262,6 +295,14 @@ const StContentsHeader = styled.div`
     background: #ccc;
     margin: 0 10px;
   }
+`;
+const StForm = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* 입력 필드 간격 유지 */
+  margin-top: 10px;
 `;
 
 export default MyPage;
