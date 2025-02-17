@@ -158,7 +158,6 @@ const StCircle = styled.div`
   }
 
   @media (max-width: 768px) {
-
     .circle-icon-area {
       font-size: 2.5rem;
       transform: scale(1.75);
@@ -206,12 +205,11 @@ const StHomeSubContainer = styled.div`
   p {
     margin: 0.5rem 0;
   }
-  .home-button-wrapper{
+  .home-button-wrapper {
     display: flex;
     gap: 1rem;
     justify-content: center;
   }
 `;
-
 
 export default Home;

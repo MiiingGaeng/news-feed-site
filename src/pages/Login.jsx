@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import UserInput from "../components/user/UserInput";
+import UserAuthButton from "../components/user/UserAuthButton";
+import { AlertError, AlertSorry, AlertSuccess } from "../common/Alert";
 import supabase from "../supabase/client";
 
 const Login = () => {
@@ -13,15 +16,35 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.log("로그인 실패=>", error);
+        // 로그인이 실패하는 경우 안내메세지 출력
+        if (error.message === "Invalid login credentials") {
+          AlertError("로그인 실패", "이메일 또는 비밀번호 오류입니다.");
+          return;
+        }
+      }
 
-      alert(`로그인 성공!`);
-      navigate("/");
+      // 로그인 성공 메세지에 사용자 닉네임 포함
+      if (data?.user) {
+        // 로그인한 사용자 정보 fetch
+        const { data: userInfo, error: userError } =
+          await supabase.auth.getUser();
+
+        if (userError) throw userError;
+
+        // 사용자 닉네임 가져오기
+        const nickname = userInfo.user?.user_metadata?.nickname;
+
+        // 로그인 성공 메세지 출력
+        AlertSuccess("로그인 성공!", `안녕하세요, ${nickname}님!`);
+        navigate("/");
+      }
     } catch (error) {
       alert(error.message);
       console.log("⛔️로그인 오류", error);
@@ -35,14 +58,14 @@ const Login = () => {
         {/* 로그인 폼 */}
         <form onSubmit={handleLogin}>
           <section>
-            <input
+            <UserInput
               type="email"
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
+            <UserInput
               type="password"
               placeholder="비밀번호를 입력해주세요"
               value={password}
@@ -51,9 +74,9 @@ const Login = () => {
             />
           </section>
           <SignInButton>
-            <button type="submit">Login</button>
+            <UserAuthButton type="submit">Login</UserAuthButton>
             <Link to="/signup">
-              <button>Sign Up</button>
+              <UserAuthButton>Sign Up</UserAuthButton>
             </Link>
           </SignInButton>
         </form>
@@ -74,11 +97,11 @@ const Login = () => {
 
         {/* SNS로 로그인 */}
         <StSNSBtn>
-          <button>
+          <button onClick={AlertSorry}>
             <FaGithub />
             Sign up with Github
           </button>
-          <button>
+          <button onClick={AlertSorry}>
             <FcGoogle />
             Sign up with Google
           </button>
@@ -108,8 +131,8 @@ const StLoginWrapper = styled.div`
 
 // form 태그 영역 + Sign Up 버튼 + ID/PW찾기 + SNS 연동 버튼
 const StContainer = styled.div`
-  width: 350px;
-  height: 390px;
+  width: 430px;
+  height: 470px;
   background: #a7a5d0;
   border-radius: 50px;
   display: flex;
@@ -158,7 +181,7 @@ const SignInButton = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  button {
+  /* button {
     width: 260px;
     height: 40px;
     display: flex;
@@ -177,7 +200,7 @@ const SignInButton = styled.div`
       background: #343434;
       color: #fff;
     }
-  }
+  } */
 `;
 
 // ID/PW 찾기
