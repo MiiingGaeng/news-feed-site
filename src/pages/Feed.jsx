@@ -27,6 +27,7 @@ const Feed = () => {
     <>
       <StickyMenu />
       <FeedList posts={feedsData} setPosts={setFeedsData} />
+      {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
           <AddFeedForm onAddFeed={onHandleAddFeed} />
