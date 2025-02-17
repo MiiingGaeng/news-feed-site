@@ -82,7 +82,7 @@ export const AlertCheck = (
  * @param {string} text -> 구현하지 못했어
  */
 
-export const AlertSorry = (title, text) => {
+export const AlertSorry = () => {
   Swal.fire({
     title: "미안해!",
     text: "구현하지 못했어.",
