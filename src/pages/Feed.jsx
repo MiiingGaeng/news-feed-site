@@ -22,26 +22,11 @@ const Feed = () => {
     fetchFeeds();
   }, []);
 
-  const handleLogin = () => {
-    Navigate("/login");
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsLogin(false);
-  };
-
   return (
     <>
       <StickyMenu />
       <FeedList posts={feedsData} setPosts={setFeedsData} />
 
-      {/* 로그인 버튼 조건부 렌더링 테스트용 */}
-      {isLogin ? (
-        <button onClick={handleLogout}>🫥Log Out</button>
-      ) : (
-        <button onClick={handleLogin}>😀Log in</button>
-      )}
       {isModalOpen && <Modal onShowModal={toggleModal}><FeedForm /></Modal>}
       {isModalOpen && (
         <Modal onShowModal={toggleModal}>
