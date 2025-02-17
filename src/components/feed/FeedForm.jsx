@@ -9,11 +9,10 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 
-
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
   title: "",
-  contents: "",
+  contents: ""
 };
 
 // 금칙어 목록을 정의. 추후 슈파베이스 테이블로 관리해도 좋을듯
@@ -25,7 +24,11 @@ const AddFeedForm = ({ userId }) => {
   const { toggleModal } = useContext(FeedContext);
 
   // react-hook-form을 사용하여 폼 데이터 관리
-  const { handleSubmit, register, formState: { errors } } = useForm({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
     defaultValues: INITIAL_ADD_FEED_DATA
   });
 
@@ -39,29 +42,20 @@ const AddFeedForm = ({ userId }) => {
     }
   };
 
-  // // onChange시에 event와 field 객체를 받아, input value 추가
-  // const handleInputChange = (e, field) => {
-  //   const { value } = e.target;
-  //   setAddFeedData((state) => ({
-  //     ...state,
-  //     [field]: value,
-  //   }));
-  // };
-
   // 실제 테이블에 feed 데이터 추가하는 함수
   const handleAddFeed = (data) => {
     if (!data) return;
     if (!checkBannedWords(data.title)) {
-      return alert('제목에 금칙어가 포함되어 있습니다.')
+      return alert("제목에 금칙어가 포함되어 있습니다.");
     }
     if (!checkBannedWords(data.contents)) {
-      return alert('내용에 금칙어가 포함되어 있습니다.')
+      return alert("내용에 금칙어가 포함되어 있습니다.");
     }
     // feed 데이터를 확장 (writer_id 추가)
     const feedData = {
       ...data,
-      writer_id: userId,
-    }
+      writer_id: userId
+    };
 
     // 데이터 삽입 또는 업데이트 함수 호출
     insertOrUpdateData(feedData, "feeds");
@@ -85,13 +79,13 @@ const AddFeedForm = ({ userId }) => {
             required: true,
             minLength: {
               value: 6,
-              message: "※ 제목은 최소 6자 이상이어야 합니다",
+              message: "※ 제목은 최소 6자 이상이어야 합니다"
             },
             maxLength: {
               value: 50,
-              message: "※ 제목은 최대 50자를 초과할 수 없습니다",
+              message: "※ 제목은 최대 50자를 초과할 수 없습니다"
             },
-            setValueAs: (value) => value.trim(), // 입력값 양옆 공백 제거
+            setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
           })}
         />
         {/* 제목 입력시 발생할 수 있는 에러 메시지 */}
@@ -113,8 +107,7 @@ const AddFeedForm = ({ userId }) => {
           placeholder="내용은 최소 6자, 최대 500자를 사용하실 수 있습니다."
           maxLength="500"
           // react-hook-form의 register를 통해 폼 값 연결
-          {
-          ...register("contents", {
+          {...register("contents", {
             required: true,
             minLength: {
               value: 6,
@@ -125,8 +118,7 @@ const AddFeedForm = ({ userId }) => {
               message: "※ 내용은 500자를 초과할 수 없습니다"
             },
             setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
-          })
-          }
+          })}
         />
         {/* 내용 입력시 발생할 수 있는 에러 메시지 */}
         {errors.contents && (
@@ -146,25 +138,21 @@ const AddFeedForm = ({ userId }) => {
 };
 
 //-----editFeedMode 게시글 수정 컴포넌트-----
-const EditFeedForm = ({ feedId }) => {
+const EditFeedForm = ({ feedId, userId }) => {
   //react-hook-form을 사용하여 폼 데이터 관리
   const INITIAL_EDIT_FEED_DATA = {
     title: "",
-    contents: "",
+    contents: ""
   };
 
   const {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
-    defaultValues: INITIAL_EDIT_FEED_DATA,
+    defaultValues: INITIAL_EDIT_FEED_DATA
   });
-
-  // //state
-  // const [editTitle, setEditTitle] = useState("");
-  // const [editContents, setEditContents] = useState("");
 
   //-----data fetch-----
   useEffect(() => {
@@ -199,15 +187,6 @@ const EditFeedForm = ({ feedId }) => {
     }
   };
 
-  //Edit input 체인지 이벤트 핸들러
-  // const handleEditTitleChange = (e) => {
-  //   setEditTitle(e.target.value);
-  // };
-
-  // const handleEditContentChange = (e) => {
-  //   setEditContents(e.target.value);
-  // };
-
   //게시글 수정 함수
   const handleEditFeedSubmit = async (data) => {
     //예외처리: 금칙어
@@ -224,8 +203,7 @@ const EditFeedForm = ({ feedId }) => {
       feed_id: feedId,
       title: data.title,
       contents: data.contents,
-      //writer_id는 임시 데이터값입니다!!!
-      writer_id: "44319787-433a-4f21-b2dc-309ddfc7e21c",
+      writer_id: userId
     };
 
     try {
@@ -247,26 +225,83 @@ const EditFeedForm = ({ feedId }) => {
   };
 
   return (
-    <>
-      {isMode === "addFeedMode" ?
-        <AddFeedForm /> :
-        (
-          <StForm>
-            {/* 타이틀 인풋 영역 */}
-            <StFormTitleWrapper>
-              <h3>Title</h3>
-              <StFormTitleInput type="text" />
-            </StFormTitleWrapper>
-            {/* 본문 인풋 영역 */}
-            <StFormContentsWrapper>
-              <h3>Contents</h3>
-              <StFormContentsInput type="text" />
-            </StFormContentsWrapper>
-            {/* SUBMIT 버튼 영역 */}
-            <Button>SUBMIT</Button>
-          </form>
+    <StForm onSubmit={handleSubmit(handleEditFeedSubmit)}>
+      {/* 타이틀 인풋 영역 */}
+      <StFormTitleWrapper>
+        <h1>Title</h1>
+        <StFormTitleInput
+          type="text"
+          maxLength="50"
+          // onChange={handleEditTitleChange}
+          {...register("title", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 제목은 최소 6자 이상이어야 합니다"
+            },
+            maxLength: {
+              value: 50,
+              message: "※ 제목은 최대 50자를 초과할 수 없습니다"
+            },
+            setValueAs: (value) => value.trim()
+          })}
+        />
+        {errors.title && (
+          <p>
+            {errors.title.type === "required" && "※ 제목은 필수입니다."}
+            {errors.title.type === "minLength" &&
+              "※ 제목은 최소 6자 이상이어야 합니다"}
+            {errors.title.type === "maxLength" &&
+              "※ 제목은 최대 50자를 초과할 수 없습니다"}
+          </p>
+        )}
+      </StFormTitleWrapper>
+      {/* 본문 인풋 영역 */}
+      <StFormContentsWrapper>
+        <h1>Contents</h1>
+        <StFormContentsInput
+          type="text"
+          maxLength="500"
+          // onChange={handleEditContentChange}
+          {...register("contents", {
+            required: true,
+            minLength: {
+              value: 6,
+              message: "※ 본문은 최소 6자 이상이어야 합니다"
+            },
+            maxLength: {
+              value: 500,
+              message: "※ 내용은 500자를 초과할 수 없습니다"
+            },
+            setValueAs: (value) => value.trim()
+          })}
+        />
+        {errors.contents && (
+          <p>
+            {errors.contents.type === "required" && "※ 본문은 필수입니다."}
+            {errors.contents.type === "minLength" &&
+              "※ 본문은 최소 6자 이상이어야 합니다"}
+            {errors.contents.type === "maxLength" &&
+              "※ 본문은 최대 500자를 초과할 수 없습니다"}
+          </p>
+        )}
+      </StFormContentsWrapper>
+      {/* SUBMIT 버튼 영역 */}
+      <Button type="submit">SUBMIT</Button>
+    </StForm>
+  );
+};
 
-      }
+const FeedForm = ({ isMode, feedId }) => {
+  const { userId } = useContext(AuthContext);
+
+  return (
+    <>
+      {isMode === "addFeedMode" ? (
+        <AddFeedForm userId={userId} />
+      ) : (
+        <EditFeedForm feedId={feedId} userId={userId} />
+      )}
     </>
   );
 };

@@ -2,8 +2,13 @@ import styled from "styled-components";
 import Like from "./Like";
 import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const FeedCard = ({ post, setPosts }) => {
+
+  const { userId } = useContext(AuthContext);
+
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();
@@ -29,7 +34,7 @@ const FeedCard = ({ post, setPosts }) => {
         <StContents>{post.contents}</StContents>
       </StFeedCardContent>
 
-      {post.writer_id === post.users.user_id && (
+      {post.writer_id === userId && (
         <StDeleteButton onClick={(e) => handleDeletePost(e, post.feed_id)}>
           <StTrashIcon />
         </StDeleteButton>
