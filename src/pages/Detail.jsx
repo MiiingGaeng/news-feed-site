@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { deleteData } from "../api/deleteData";
 import DEFAULT_PROFILE_IMG from "../assets/image/user_default.png";
+import { AlertCheck } from "../components/common/Alert";
 
 const Detail = () => {
   //-----feed_id / user_id-----
@@ -50,7 +51,10 @@ const Detail = () => {
   //-----해당 게시글 삭제 로직-----
   const handleDeletePost = async (feed_id) => {
     //사용자 확인 여부
-    const isConfirm = window.confirm("정말 삭제하시겠습니까?");
+    const isConfirm = await AlertCheck(
+      "정말로 삭제하시겠습니까?",
+      "이 작업은 되돌릴 수 없습니다!"
+    );
     if (isConfirm) {
       //supabase 데이터 삭제
       await deleteData("feeds", "feed_id", feed_id);
@@ -65,10 +69,15 @@ const Detail = () => {
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
           {console.log(writerData)}
-          <StUserProfileImage src={writerData?.profile_img
-            ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${writerData?.profile_img}`
-            : DEFAULT_PROFILE_IMG
-          } />
+          <StUserProfileImage
+            src={
+              writerData?.profile_img
+                ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${
+                    writerData?.profile_img
+                  }`
+                : DEFAULT_PROFILE_IMG
+            }
+          />
           <h3>{writerData?.nickname}</h3>
         </StDetailUserWrapper>
 
