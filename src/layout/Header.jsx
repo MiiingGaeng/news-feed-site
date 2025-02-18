@@ -8,6 +8,7 @@ import { AlertSuccess } from "../components/common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
+  const [userNickname, setUserNickName] = useState('');
   const { isLogin, setIsLogin, setUser, setUserId } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const Header = () => {
 
       setIsLogin(session?.user ?? null);
       setUser(session?.user || null);
+      setUserNickName(session?.user.user_metadata.nickname || '게스트')
     };
 
     getSession();
@@ -63,15 +65,20 @@ const Header = () => {
         </StMenuToggle>
         <StNavLink $isOpen={isMenuOpen}>
           {isLogin ? (
-            <StSubLink
-              to="/"
-              onClick={(e) => {
-                e.preventDefault(); // 기본 이동 막기
-                handleLogout(); // 로그아웃 실행
-              }}
-            >
-              Logout
-            </StSubLink>
+            <>
+              <div className="home-user-nickname">
+                <span className="nickname-highlight">{userNickname}</span> 의 티타임
+              </div>
+              <StSubLink
+                to="/"
+                onClick={(e) => {
+                  e.preventDefault(); // 기본 이동 막기
+                  handleLogout(); // 로그아웃 실행
+                }}
+              >
+                Logout
+              </StSubLink>
+            </>
           ) : (
             <>
               <StSubLink to="/signup" $isJoin>
@@ -158,6 +165,14 @@ const StNavLink = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+
+  .home-user-nickname {
+    color: #2c3e50;
+    font-weight: 500;
+    .nickname-highlight{
+      color: #7738c8;
+    }
+  }
 
   @media (max-width: 768px) {
     display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
