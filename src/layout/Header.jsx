@@ -18,7 +18,7 @@ const Header = () => {
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session }
+        data: { session },
       } = await supabase.auth.getSession();
 
       setIsLogin(session?.user ?? null);
@@ -29,7 +29,7 @@ const Header = () => {
     getSession();
 
     const {
-      data: { subscription }
+      data: { subscription },
     } = supabase.auth.onAuthStateChange(() => {
       getSession();
     });
