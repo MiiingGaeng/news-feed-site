@@ -39,7 +39,19 @@ TEA(Tutor's Ears Are)는 수강생들을 위한 익명 커뮤니티 플랫폼입
 
 ## 프로젝트 사용 기술💻
 
-![React](https://img.shields.io/badge/-React-61DAFB?&logo=react&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?&logo=javascript&logoColor=white) ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?&logo=css3&logoColor=white) ![sytled-components](https://img.shields.io/badge/-styledcomponents-DB7093?&logo=styledcomponents&logoColor=white) ![vercel](https://img.shields.io/badge/-vercel-000000?&logo=vercel&logoColor=white) ![supabase](https://img.shields.io/badge/-supabase-3FCF8E?&logo=supabase&logoColor=white) ![git](https://img.shields.io/badge/-git-F05032?&logo=git&logoColor=white) ![git](https://img.shields.io/badge/-github-181717?&logo=github&logoColor=white)
+### Environment
+
+![React](https://img.shields.io/badge/-React-61DAFB?&logo=react&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?&logo=javascript&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?&logo=css3&logoColor=white) ![sytled-components](https://img.shields.io/badge/-styledcomponents-DB7093?&logo=styledcomponents&logoColor=white)
+![supabase](https://img.shields.io/badge/-supabase-3FCF8E?&logo=supabase&logoColor=white) ![git](https://img.shields.io/badge/-git-F05032?&logo=git&logoColor=white) ![github](https://img.shields.io/badge/-github-181717?&logo=github&logoColor=white) ![vscode](https://img.shields.io/badge/-Visual_Studio_Code-007ACC?&logo=vscode&logoColor=white)
+
+### Record
+
+![figma](https://img.shields.io/badge/-figma-F24E1E?&logo=figma&logoColor=white) ![notion](https://img.shields.io/badge/-notion-000000?&logo=notion&logoColor=white)
+
+### Deploy
+
+![vercel](https://img.shields.io/badge/-vercel-000000?&logo=vercel&logoColor=white)
+
 <br><br>
 
 ## 프로젝트 기능⚙️
