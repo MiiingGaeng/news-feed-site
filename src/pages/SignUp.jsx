@@ -5,7 +5,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate } from "react-router-dom";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
-import { AlertError, AlertInfo, AlertSorry } from "../common/Alert";
+import {
+  AlertError,
+  AlertInfo,
+  AlertSorry,
+  AlertSuccess,
+} from "../common/Alert";
 import supabase from "../supabase/client";
 
 const SignUp = () => {
@@ -59,7 +64,7 @@ const SignUp = () => {
         setFormData((prev) => ({ ...prev, nickname: "" }));
         return false;
       } else {
-        alert(`사용가능한 닉네임입니다`);
+        AlertSuccess("", "사용가능한 닉네임입니다");
         return true;
       }
     } catch (error) {
