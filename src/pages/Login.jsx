@@ -43,7 +43,7 @@ const Login = () => {
 
         // 로그인 성공 메세지 출력
         AlertSuccess("로그인 성공!", `안녕하세요, ${nickname}님!`);
-        navigate("/");
+        navigate("/feed");
       }
     } catch (error) {
       AlertError(
