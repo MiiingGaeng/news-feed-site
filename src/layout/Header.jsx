@@ -18,7 +18,7 @@ const Header = () => {
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session }
+        data: { session },
       } = await supabase.auth.getSession();
 
       setIsLogin(session?.user ?? null);
@@ -29,7 +29,7 @@ const Header = () => {
     getSession();
 
     const {
-      data: { subscription }
+      data: { subscription },
     } = supabase.auth.onAuthStateChange(() => {
       getSession();
     });
@@ -215,7 +215,8 @@ const StSubLink = styled(Link)`
   display: flex;
   align-items: center;
   border-radius: 50px;
-
+  transition: all 0.3s;
+  
   @media (max-width: 768px) {
     font-size: 20px;
     width: 100%;

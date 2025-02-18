@@ -51,7 +51,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
     <>
       {" "}
       <StContainer width="500px" height="300px">
-        <UserProfileImage userData={userData} />
+        <UserProfileImage userData={userData} setUserData={setUserData}/>
         <Input
           text="이메일"
           type="email"

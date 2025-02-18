@@ -117,7 +117,7 @@ const SignUp = () => {
       }
 
       if (data) {
-        AlertSuccess("회원가입 완료!", "KEI 회원이 되신것을 환영합니다.");
+        AlertSuccess("회원가입 완료!", "TEA 회원이 되신것을 환영합니다.");
         // 회원가입 후 피드페이지로 랜딩
         navigate("/feed");
       }
