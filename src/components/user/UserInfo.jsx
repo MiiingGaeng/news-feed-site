@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import supabase from "../../supabase/client";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -42,7 +42,6 @@ const UserInfo = ({ userData, setUserData, user }) => {
 
       //사용자 알림
       AlertSuccess("", "프로필정보가 변경되었습니다!");
-      console.log("프로필 업데이트 성공:", userData);
     } catch (error) {
       console.error("프로필 업데이트 오류:", error.message);
       AlertError("", "프로필 업데이트에 실패했습니다.");

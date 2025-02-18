@@ -28,7 +28,7 @@ const Like = ({ feedId }) => {
       if (!data) return;
 
       const userLike = data.find(
-        (like) => like.feed_id === feedId && like.user_id === user.id
+        (like) => like.feed_id === feedId && like.user_id === user.id,
       );
 
       if (userLike) {

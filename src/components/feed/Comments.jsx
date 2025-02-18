@@ -23,12 +23,12 @@ const Comments = ({ feedId }) => {
         const comments = await fetchData("comments", "users");
         //해당 게시글의 댓글만 가져오기
         const newComments = comments.filter(
-          (comment) => comment.feed_id === feedId
+          (comment) => comment.feed_id === feedId,
         );
 
         setCommentsData(newComments);
       } catch (error) {
-        console.log("fetching error => ", error);
+        console.error("fetching error => ", error);
       }
     }
 
@@ -75,7 +75,7 @@ const Comments = ({ feedId }) => {
     if (!checkBannedWords(data.comment)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
 
@@ -97,11 +97,11 @@ const Comments = ({ feedId }) => {
       //댓글 목록을 새롭게 fetch해서 즉시 반영하기
       const commentsData = await fetchData("comments", "users");
       const newCommentsData = commentsData.filter(
-        (comment) => comment.feed_id === feedId
+        (comment) => comment.feed_id === feedId,
       );
       setCommentsData(newCommentsData);
     } catch (error) {
-      console.log("add comment error => ", error);
+      console.error("add comment error => ", error);
       //사용자 알림
       AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
@@ -130,7 +130,7 @@ const Comments = ({ feedId }) => {
     if (!checkBannedWords(data.comment)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
 
@@ -152,11 +152,11 @@ const Comments = ({ feedId }) => {
       //댓글 목록을 새롭게 fetch해서 즉시 반영하기
       const commentsData = await fetchData("comments", "users");
       const newCommentsData = commentsData.filter(
-        (comment) => comment.feed_id === feedId
+        (comment) => comment.feed_id === feedId,
       );
       setCommentsData(newCommentsData);
     } catch (error) {
-      console.log("edit comment error => ", error);
+      console.error("edit comment error => ", error);
       //사용자 알림
       AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
@@ -168,7 +168,7 @@ const Comments = ({ feedId }) => {
     try {
       const isConfirm = await AlertCheck(
         "정말로 삭제하시겠습니까?",
-        "이 작업은 되돌릴 수 없습니다!"
+        "이 작업은 되돌릴 수 없습니다!",
       );
 
       if (isConfirm) {
@@ -178,12 +178,12 @@ const Comments = ({ feedId }) => {
         //댓글 목록을 새롭게 fetch해서 즉시 반영하기
         const comments = await fetchData("comments", "users");
         const newComments = comments.filter(
-          (comment) => comment.feed_id === feedId
+          (comment) => comment.feed_id === feedId,
         );
         setCommentsData(newComments);
       }
     } catch (error) {
-      console.log("delete comment error => ", error);
+      console.error("delete comment error => ", error);
       //사용자 알림
       alert("앗! 댓글을 삭제하는데 문제가 발생했습니다. 다시 시도해주세요!");
     }

@@ -15,7 +15,7 @@ const FeedCard = ({ post, setPosts }) => {
     e.preventDefault();
     const isConfirm = await AlertCheck(
       "정말로 삭제하시겠습니까?",
-      "이 작업은 되돌릴 수 없습니다!"
+      "이 작업은 되돌릴 수 없습니다!",
     );
     if (isConfirm) {
       await deleteData("feeds", "feed_id", id);
@@ -67,7 +67,9 @@ const StFeedCard = styled.li`
   border-radius: 12px;
   background: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition:
+    box-shadow 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
 
   &:hover {
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
@@ -139,7 +141,9 @@ const StDeleteButton = styled.button`
   background: white;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.1);
@@ -153,7 +157,9 @@ const StTrashIcon = styled(FaRegTrashAlt)`
   background: white;
   border-radius: 50%;
   padding: 4px;
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
 
   ${StDeleteButton}:hover & {
     color: #fc090d;

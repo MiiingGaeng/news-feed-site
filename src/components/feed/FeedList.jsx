@@ -10,7 +10,10 @@ const FeedList = ({ posts, setPosts }) => {
   };
 
   return (
-    <StyledMasonry breakpointCols={breakpointColumnsObj} className="masonry-grid">
+    <StyledMasonry
+      breakpointCols={breakpointColumnsObj}
+      className="masonry-grid"
+    >
       {posts.map((post) => (
         <div key={post.feed_id} className="masonry-grid_item">
           <Link to={`/detail?feed_id=${post.feed_id}`}>
@@ -34,4 +37,3 @@ const StyledMasonry = styled(Masonry)`
 `;
 
 export default FeedList;
-

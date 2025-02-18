@@ -18,6 +18,6 @@ export const fetchData = async (table1, table2, ascending = true) => {
 
     return data;
   } catch (error) {
-    console.log("fetching error", error);
+    console.error("fetching error", error);
   }
 };

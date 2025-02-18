@@ -53,7 +53,7 @@ const Detail = () => {
     //사용자 확인 여부
     const isConfirm = await AlertCheck(
       "정말로 삭제하시겠습니까?",
-      "이 작업은 되돌릴 수 없습니다!"
+      "이 작업은 되돌릴 수 없습니다!",
     );
     if (isConfirm) {
       //supabase 데이터 삭제
@@ -68,7 +68,6 @@ const Detail = () => {
       <CloseButton onClick={() => navigate("/feed")} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
-          {console.log(writerData)}
           <StUserProfileImage
             src={
               writerData?.profile_img
@@ -138,9 +137,11 @@ const StDetailUserWrapper = styled.div`
 
   h3 {
     display: inline-block;
-    width: 70px;
+    flex: 1;
+    padding-right: 3rem;
     height: 50px;
-    line-height: 50px;
+    line-height: 1;
+    align-content: center;
     font-size: 17px;
   }
 `;
