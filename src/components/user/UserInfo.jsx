@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import supabase from "../../supabase/client";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import UserProfileImage from "../../components/user/UserProfileImage";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const UserInfo = ({ userData, setUserData, user }) => {
   const navigate = useNavigate();
+  const { setUserNickName } = useContext(AuthContext); 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
@@ -34,6 +36,8 @@ const UserInfo = ({ userData, setUserData, user }) => {
         .eq("user_id", user.id); // 현재 로그인한 유저의 ID 기준 업데이트
 
       if (error) throw error;
+
+      setUserNickName(userData.nickname);
 
       //사용자 알림
       alert("프로필정보가 변경되었습니다!");
