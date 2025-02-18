@@ -43,7 +43,7 @@ const SignUp = () => {
   const handleNicknameCheck = async () => {
     // 닉네임이 비어있는지 확인
     if (!formData.nickname.trim()) {
-      alert("닉네임을 입력하세요");
+      AlertInfo("잠깐!", "닉네임을 입력하세요");
       return false;
     }
 
@@ -56,12 +56,12 @@ const SignUp = () => {
 
       if (error && error.code !== "PGRST116") {
         console.error("결과 없음", error.message);
-        alert(`알 수 없는 오류가 발생하였습니다`);
+        AlertError("경고", "알 수 없는 에러가 발생하였습니다");
         return false;
       }
 
       if (data) {
-        alert(`동일한 닉네임이 존재합니다`);
+        AlertInfo("잠깐!", "동일한 닉네임이 존재합니다");
         setFormData((prev) => ({ ...prev, nickname: "" }));
         return false;
       } else {
@@ -70,7 +70,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error("예기치 못한 에러:", error);
-      alert(`알 수 없는 에러가 발생하였습니다`);
+      AlertError("경고", "알 수 없는 에러가 발생하였습니다");
     }
   };
 
