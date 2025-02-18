@@ -8,8 +8,8 @@ import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
-  const [userNickname, setUserNickName] = useState("");
-  const { isLogin, setIsLogin, setUser, setUserId } = useContext(AuthContext);
+  
+  const { isLogin, setIsLogin, setUser, setUserId, userNickname, setUserNickName } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState); // 메뉴 토글 함수
@@ -21,9 +21,15 @@ const Header = () => {
         data: { session },
       } = await supabase.auth.getSession();
 
-      setIsLogin(session?.user ?? null);
-      setUser(session?.user || null);
-      setUserNickName(session?.user.user_metadata.nickname || "게스트");
+      if(session){
+        setIsLogin(session?.user ?? null);
+        setUser(session?.user || null);
+        setUserNickName(session?.user.user_metadata.nickname || "게스트");
+      } else {
+        setIsLogin(null)
+        setUser(null)
+        setUserNickName(null)
+      }
     };
 
     getSession();

@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [userNickname, setUserNickName] = useState(null);
 
   console.log("*isLogin", isLogin);
   console.log("*userID", userId);
@@ -23,16 +24,18 @@ const AuthProvider = ({ children }) => {
         setIsLogin(true);
         setUser(session.user);
         setUserId(session.user.id);
+        setUserNickName(session?.user.user_metadata.nickname || "게스트");
       } else {
         setIsLogin(false);
         setUser(null);
         setUserId(null);
+        setUserNickName(null)
       }
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin, user, setUser, userId, setUserId }}>
+    <AuthContext.Provider value={{ isLogin, setIsLogin, user, setUser, userId, setUserId, userNickname, setUserNickName }}>
       {children}
     </AuthContext.Provider>
   );
