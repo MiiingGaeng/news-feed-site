@@ -8,7 +8,7 @@ import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
-  const [userNickname, setUserNickName] = useState('');
+  const [userNickname, setUserNickName] = useState("");
   const { isLogin, setIsLogin, setUser, setUserId } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -18,18 +18,18 @@ const Header = () => {
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session },
+        data: { session }
       } = await supabase.auth.getSession();
 
       setIsLogin(session?.user ?? null);
       setUser(session?.user || null);
-      setUserNickName(session?.user.user_metadata.nickname || '게스트')
+      setUserNickName(session?.user.user_metadata.nickname || "게스트");
     };
 
     getSession();
 
     const {
-      data: { subscription },
+      data: { subscription }
     } = supabase.auth.onAuthStateChange(() => {
       getSession();
     });
@@ -67,7 +67,8 @@ const Header = () => {
           {isLogin ? (
             <>
               <div className="home-user-nickname">
-                <span className="nickname-highlight">{userNickname}</span> 의 티타임
+                <span className="nickname-highlight">{userNickname}</span> 의
+                티타임
               </div>
               <StSubLink
                 to="/"
@@ -169,7 +170,7 @@ const StNavLink = styled.div`
   .home-user-nickname {
     color: #2c3e50;
     font-weight: 500;
-    .nickname-highlight{
+    .nickname-highlight {
       color: #7738c8;
     }
   }
