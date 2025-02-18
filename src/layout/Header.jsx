@@ -24,7 +24,17 @@ const Header = () => {
       if(session){
         setIsLogin(session?.user ?? null);
         setUser(session?.user || null);
-        setUserNickName(session?.user.user_metadata.nickname || "게스트");
+        const { data: userData, error } = await supabase
+          .from('users')
+          .select('nickname')
+          .eq('user_id', session.user.id)
+          .single();
+
+        if (!error && userData) {
+          setUserNickName(userData.nickname);
+        } else {
+          setUserNickName("게스트");
+        }
       } else {
         setIsLogin(null)
         setUser(null)
