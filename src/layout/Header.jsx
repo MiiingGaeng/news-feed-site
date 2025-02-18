@@ -67,7 +67,7 @@ const Header = () => {
           {isLogin ? (
             <>
               <div className="home-user-nickname">
-                <span className="nickname-highlight">{userNickname}</span> 의 티타임
+                <Link to="/mypage">{userNickname}</Link>의 티타임
               </div>
               <StSubLink
                 to="/"
@@ -169,8 +169,16 @@ const StNavLink = styled.div`
   .home-user-nickname {
     color: #2c3e50;
     font-weight: 500;
-    .nickname-highlight{
+    a{
+      text-decoration: none;
       color: #7738c8;
+      display: inline-block;
+      padding: 0 .25rem;
+
+      &:hover{
+        color: #631bc2;
+        font-weight: 700;
+      }
     }
   }
 
