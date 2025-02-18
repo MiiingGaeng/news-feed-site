@@ -6,6 +6,7 @@ import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import UserProfileImage from "../../components/user/UserProfileImage";
 import { AuthContext } from "../../contexts/AuthContext";
+import { AlertError, AlertInfo, AlertSuccess } from "../../common/Alert";
 
 const UserInfo = ({ userData, setUserData, user }) => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
       !userData.name.trim() ||
       !userData.nickname.trim()
     ) {
-      alert("계정 정보를 제대로 입력해주세요 !");
+      AlertInfo("잠깐!", "계정 정보를 제대로 입력해주세요 !");
       return;
     }
 
@@ -40,10 +41,10 @@ const UserInfo = ({ userData, setUserData, user }) => {
       setUserNickName(userData.nickname);
 
       //사용자 알림
-      alert("프로필정보가 변경되었습니다!");
+      AlertSuccess("", "프로필정보가 변경되었습니다!");
     } catch (error) {
       console.error("프로필 업데이트 오류:", error.message);
-      alert("프로필 업데이트에 실패했습니다.");
+      AlertError("", "프로필 업데이트에 실패했습니다.");
     }
   };
 
