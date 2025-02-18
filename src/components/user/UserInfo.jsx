@@ -51,7 +51,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
     <>
       {" "}
       <StContainer width="500px" height="300px">
-        <UserProfileImage userData={userData} setUserData={setUserData}/>
+        <UserProfileImage userData={userData} setUserData={setUserData} />
         <Input
           text="이메일"
           type="email"
@@ -60,7 +60,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
           onChangeFunc={(e) =>
             setUserData({ ...userData, email: e.target.value })
           }
-          required
+          bool={true}
         />
         <Input
           text="이름"
@@ -70,7 +70,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
           onChangeFunc={(e) =>
             setUserData({ ...userData, name: e.target.value })
           }
-          required
+          bool={true}
         />
         <Input
           text="닉네임"
@@ -80,7 +80,7 @@ const UserInfo = ({ userData, setUserData, user }) => {
           onChangeFunc={(e) =>
             setUserData({ ...userData, nickname: e.target.value })
           }
-          required
+          bool={false}
         />
         <StButtonWrapper>
           <Button onClick={handleUpdateProfile}>수정하기</Button>
