@@ -5,11 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
-import {
-  AlertError,
-  AlertSorry,
-  AlertSuccess,
-} from "../components/common/Alert";
+import { AlertError, AlertSorry, AlertSuccess } from "../common/Alert";
 import supabase from "../supabase/client";
 
 const Login = () => {

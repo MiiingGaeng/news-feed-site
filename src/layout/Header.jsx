@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import supabase from "../supabase/client";
 import logo from "../assets/image/logo.png";
-import { AlertSuccess } from "../components/common/Alert";
+import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
@@ -17,7 +17,7 @@ const Header = () => {
   useEffect(() => {
     const getSession = async () => {
       const {
-        data: { session }
+        data: { session },
       } = await supabase.auth.getSession();
 
       setIsLogin(session?.user ?? null);
@@ -27,7 +27,7 @@ const Header = () => {
     getSession();
 
     const {
-      data: { subscription }
+      data: { subscription },
     } = supabase.auth.onAuthStateChange(() => {
       getSession();
     });

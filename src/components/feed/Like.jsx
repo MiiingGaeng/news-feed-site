@@ -5,7 +5,7 @@ import { fetchData } from "../../api/fetchData";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IoHeartSharp } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
-import { AlertError } from "../common/Alert";
+import { AlertError } from "../../common/Alert";
 
 const Like = ({ feedId }) => {
   const [liked, setLiked] = useState(false);

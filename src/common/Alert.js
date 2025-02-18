@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 // import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
-import alertalt from "../../assets/image/alertalt.png"; // 이미지 경로
+import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
 
 /**
  * Success
@@ -15,8 +15,8 @@ export const AlertSuccess = (title = "Success", text = "") => {
     text,
     customClass: {
       popup: "swal-custom", // 팝업 스타일링
-      icon: "swal-icon" // 아이콘 스타일링
-    }
+      icon: "swal-icon", // 아이콘 스타일링
+    },
   });
 };
 
@@ -30,7 +30,7 @@ export const AlertError = (title = "Error", text = "") => {
   Swal.fire({
     icon: "error",
     title,
-    text
+    text,
   });
 };
 
@@ -44,7 +44,7 @@ export const AlertInfo = (title = "Info", text = "") => {
   Swal.fire({
     icon: "info",
     title,
-    text
+    text,
   });
 };
 
@@ -69,13 +69,13 @@ export const AlertCheck = (
       showCancelButton: true,
       confirmButtonColor: "#504ba1",
       cancelButtonColor: "#CD2E57",
-      confirmButtonText
+      confirmButtonText,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           title: confirmedTitle,
           text: confirmedText,
-          icon: "success"
+          icon: "success",
         });
         resolve(true);
       } else {
@@ -98,6 +98,6 @@ export const AlertSorry = () => {
     imageUrl: alertalt,
     imageWidth: 400,
     imageHeight: 200,
-    imageAlt: "Custom image"
+    imageAlt: "Custom image",
   });
 };
