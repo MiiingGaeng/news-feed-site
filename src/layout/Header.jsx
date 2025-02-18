@@ -191,6 +191,7 @@ const StSubLink = styled(Link)`
   display: flex;
   align-items: center;
   border-radius: 50px;
+  transition: all 0.3s;
 
   @media (max-width: 768px) {
     font-size: 20px;
