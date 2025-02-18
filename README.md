@@ -7,22 +7,34 @@ TEA(Tutor's Ears Are)는 수강생들만을 위한 익명 커뮤니티 플랫폼
 ✅ 학습 정보 공유 – 동기 수강생들의 실용적인 팁과 노하우를 한곳에서!<br>
 ✅ 이슈 토론 – 학습뿐만 아니라 다양한 주제에 대해 깊이 있는 대화가 가능합니다.<br>
 
-[프로젝트 URL 바로가기 💻](not yet)
+[프로젝트 URL 바로가기 💻](https://news-feed-site.vercel.app/)
 <br><br>
 
 ## 프로젝트 미리보기👑
 
 - Home
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/48ef1d6d-95c6-406d-82a6-b0cc6a82d6b4" />
 
 - My Page
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/5430333d-808f-4a36-be82-9ec3d85a0c12" />
 
 - Feed
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/a7ce0e7b-2cc2-4626-a24e-2af416599007" />
 
 - Detail
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6ea2841a-b269-470a-ac03-895804de5fa0" />
 
 - Edit
-
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6a3cd40c-40e7-4ac1-97ee-063079f12fdf" />
 - Alert
+
+|<img width="600" alt="Image" src="https://github.com/user-attachments/assets/54acbb3e-9f52-4cf8-89eb-3f00530be991" />|<img width="600" alt="Image" src="https://github.com/user-attachments/assets/b7c70293-d36c-4f42-be04-25b3c57f87d2" />|
+|---|---|
+
+- Signup / Login
+
+|<img width="492" alt="Image" src="https://github.com/user-attachments/assets/cd9783d7-feba-4ec2-92e5-df79b4fe63af" />|<img width="492" alt="Image" src="https://github.com/user-attachments/assets/0b41d3cd-99e1-4bde-8e77-ac84ba3da8d1" />|
+|---|---|
 
   <br><br>
 
@@ -52,7 +64,9 @@ TEA(Tutor's Ears Are)는 수강생들을 위한 익명 커뮤니티 플랫폼입
 
 ![vercel](https://img.shields.io/badge/-vercel-000000?&logo=vercel&logoColor=white)
 
-<br><br>
+<br>
+
+
 
 ## 프로젝트 기능⚙️
 
@@ -75,10 +89,16 @@ TEA(Tutor's Ears Are)는 수강생들을 위한 익명 커뮤니티 플랫폼입
 | 오영진 | Feed 페이지 담당           | [영진 Github](https://github.com/DnJ0408)       | [영진 티스토리](https://debnjin.tistory.com/)       |
 | 장미경 | Login, SignUp 페이지 담당  | [미경 Github](https://github.com/lyra-j)        | [미경 벨로그](https://velog.io/@ly-ra)              |
 
-## 트러블 슈팅🧑‍💻
+<br />
 
-[TroubleShooting 1 : Detail 페이지와 이벤트 버블링](https://velog.io/@miiing_gaeng/%ED%8F%AC%EC%BC%93%EB%AA%AC-%EB%8F%84%EA%B0%90-%EC%82%AC%EC%9D%B4%ED%8A%B8-TroubleShooting-1-Detail-%ED%8E%98%EC%9D%B4%EC%A7%80%EC%99%80-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%B2%84%EB%B8%94%EB%A7%81)
+---
 
-[TroubleShooting 2 : Detail 페이지와 이벤트 버블링](https://velog.io/@miiing_gaeng/%ED%8F%AC%EC%BC%93%EB%AA%AC-%EB%8F%84%EA%B0%90-%EC%82%AC%EC%9D%B4%ED%8A%B8-TroubleShooting-2-prefix%EC%99%80-Context-API)
+## 트러블 슈팅 & 작업 후기🧑‍💻
 
-[TroubleShooting 3 : Vercel 배포](https://velog.io/@miiing_gaeng/%ED%8F%AC%EC%BC%93%EB%AA%AC-%EB%8F%84%EA%B0%90-%EC%82%AC%EC%9D%B4%ED%8A%B8-TroubleShooting-3-Vercel-%EB%B0%B0%ED%8F%AC)
+[TroubleShooting 1 : API 호출과 상태관리, 그리고 Git 협업의 교훈들](https://velog.io/@sum529/TIL-프로젝트-3일차-API-호출과-상태관리-그리고-깨달음들)
+
+[TroubleShooting 2 : React Hook Form 라이브러리를 사용하여 실전 도입과 충돌해결](https://velog.io/@sum529/TIL-프로젝트-4일차-React-Hook-Form-라이브러리를-사용하여-실전-도입과-트러블-슈팅-기록)
+
+[TroubleShooting 3 : 배포하면서 마주친 예상치 못한 문제들](https://velog.io/@sum529/프로젝트-5일차-배포하면서-마주친-예상치-못한-문제들)
+
+[팀프로젝트 후기 : 협업, 끝날때까지 끝난게 아니다! ](https://debnjin.tistory.com/95)
