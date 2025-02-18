@@ -68,7 +68,6 @@ const Detail = () => {
       <CloseButton onClick={() => navigate("/feed")} />
       <StDetailUserContentsWrapper>
         <StDetailUserWrapper>
-          {console.log(writerData)}
           <StUserProfileImage
             src={
               writerData?.profile_img
@@ -138,9 +137,11 @@ const StDetailUserWrapper = styled.div`
 
   h3 {
     display: inline-block;
-    width: 70px;
+    flex: 1;
+    padding-right: 3rem;
     height: 50px;
-    line-height: 50px;
+    line-height: 1;
+    align-content: center;
     font-size: 17px;
   }
 `;

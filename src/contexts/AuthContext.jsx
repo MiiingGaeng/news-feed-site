@@ -10,15 +10,15 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [userNickname, setUserNickName] = useState(null);
 
-  console.log("*isLogin", isLogin);
-  console.log("*userID", userId);
-  console.log("*user", user);
+  // console.log("*isLogin", isLogin);
+  // console.log("*userID", userId);
+  // console.log("*user", user);
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("✅check", event, session);
+      // console.log("✅check", event, session);
 
       if (session) {
         setIsLogin(true);

@@ -56,7 +56,7 @@ const EditFeedForm = ({ feedId }) => {
           setValue("contents", post.contents);
         }
       } catch (error) {
-        console.log("fetching error => ", error);
+        console.error("fetching error => ", error);
       }
     }
 
@@ -102,7 +102,7 @@ const EditFeedForm = ({ feedId }) => {
         navigate(`/detail?feed_id=${feedId}`);
       }
     } catch (error) {
-      console.log("edit feed error => ", error);
+      console.error("edit feed error => ", error);
       //사용자 알림
       AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }

@@ -22,7 +22,7 @@ const Login = () => {
       });
 
       if (error) {
-        console.log("로그인 실패=>", error);
+        console.error("로그인 실패=>", error);
         // 로그인이 실패하는 경우 안내메세지 출력
         if (error.message === "Invalid login credentials") {
           AlertError("로그인 실패", "이메일 또는 비밀번호 오류입니다.");
@@ -51,7 +51,7 @@ const Login = () => {
         `회원가입 중 오류가 발생했습니다. 다시 시도해주세요!
       ${error.massage}`
       );
-      console.log("⛔️로그인 오류", error);
+      console.error("⛔️로그인 오류", error);
     }
   };
 

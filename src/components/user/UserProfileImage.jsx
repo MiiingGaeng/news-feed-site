@@ -53,9 +53,10 @@ const UserProfileImage = ({ userData }) => {
 
       if (deleteStorageError) {
         console.error("기존 이미지 삭제 실패:", deleteStorageError.message);
-      } else {
-        console.log("기존 이미지 삭제 성공:", userData.profile_img);
-      }
+      } 
+      // else {
+      //   console.log("기존 이미지 삭제 성공:", userData.profile_img);
+      // }
     }
 
     //  새로운 이미지 업로드
@@ -70,8 +71,6 @@ const UserProfileImage = ({ userData }) => {
       return;
     }
 
-    console.log("이미지 업로드 성공:", uploadStorageData);
-
     //  DB 업데이트
     const { error: tableImgUpdateError } = await supabase
       .from("users")
@@ -80,9 +79,10 @@ const UserProfileImage = ({ userData }) => {
 
     if (tableImgUpdateError) {
       console.error("DB 업데이트 실패:", tableImgUpdateError.message);
-    } else {
-      console.log("DB 업데이트 성공:", filePath);
-    }
+    } 
+    // else {
+    //   console.log("DB 업데이트 성공:", filePath);
+    // }
 
     //  UI 업데이트 - 업로드된 이미지 즉시 반영 (캐싱 방지)
     setImageUrl(`${VITE_APP_SUPABASE_STORAGE_URL}${filePath}`);

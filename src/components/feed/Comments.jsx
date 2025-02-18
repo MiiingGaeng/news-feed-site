@@ -28,7 +28,7 @@ const Comments = ({ feedId }) => {
 
         setCommentsData(newComments);
       } catch (error) {
-        console.log("fetching error => ", error);
+        console.error("fetching error => ", error);
       }
     }
 
@@ -101,7 +101,7 @@ const Comments = ({ feedId }) => {
       );
       setCommentsData(newCommentsData);
     } catch (error) {
-      console.log("add comment error => ", error);
+      console.error("add comment error => ", error);
       //사용자 알림
       AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
@@ -156,7 +156,7 @@ const Comments = ({ feedId }) => {
       );
       setCommentsData(newCommentsData);
     } catch (error) {
-      console.log("edit comment error => ", error);
+      console.error("edit comment error => ", error);
       //사용자 알림
       AlertError("앗! 문제 발생", "다시 시도해주세요!");
     }
@@ -183,7 +183,7 @@ const Comments = ({ feedId }) => {
         setCommentsData(newComments);
       }
     } catch (error) {
-      console.log("delete comment error => ", error);
+      console.error("delete comment error => ", error);
       //사용자 알림
       alert("앗! 댓글을 삭제하는데 문제가 발생했습니다. 다시 시도해주세요!");
     }

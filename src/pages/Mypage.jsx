@@ -29,7 +29,7 @@ const MyPage = () => {
       } = await supabase.auth.getSession();
 
       if (session) {
-        console.log("session => ", session);
+        // console.log("session => ", session);
       } else {
         alert("로그인 하셔야합니다.");
         navigate("/login");
@@ -53,7 +53,6 @@ const MyPage = () => {
           if (error) throw error;
 
           setUserData(data); //  상태 업데이트
-          console.log("현재 유저 정보:", data); //  콘솔에 출력
         } catch (error) {
           console.error("유저 정보 가져오기 오류:", error);
         }
@@ -71,7 +70,6 @@ const MyPage = () => {
           if (error) throw error;
 
           setMySelfFeed(data); //  상태 업데이트
-          console.log("현재 유저Feeds 정보:", mySelfFeed); //  콘솔에 출력
         } catch (error) {
           console.error("피드 정보 가져오기 오류:", error);
         }
