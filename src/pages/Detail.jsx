@@ -147,7 +147,7 @@ const StDetailUserWrapper = styled.div`
 
 //user 프로필 이미지
 const StUserProfileImage = styled.img.attrs((props) => ({
-  src: props.src || DEFAULT_PROFILE_IMG
+  src: props.src || DEFAULT_PROFILE_IMG,
 }))`
   width: 50px;
   height: 50px;
