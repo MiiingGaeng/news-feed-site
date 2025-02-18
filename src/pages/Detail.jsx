@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { deleteData } from "../api/deleteData";
 import DEFAULT_PROFILE_IMG from "../assets/image/user_default.png";
-import { AlertCheck } from "../components/common/Alert";
+import { AlertCheck } from "../common/Alert";
 
 const Detail = () => {
   //-----feed_id / user_id-----
@@ -147,7 +147,7 @@ const StDetailUserWrapper = styled.div`
 
 //user 프로필 이미지
 const StUserProfileImage = styled.img.attrs((props) => ({
-  src: props.src || DEFAULT_PROFILE_IMG
+  src: props.src || DEFAULT_PROFILE_IMG,
 }))`
   width: 50px;
   height: 50px;
