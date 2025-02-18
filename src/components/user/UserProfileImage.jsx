@@ -31,7 +31,8 @@ const UserProfileImage = ({ userData }) => {
     };
 
     fetchImageUrl();
-  }, [userData]);
+    setUploading(false);
+  }, [userData, userData?.profile_img, uploading]);
 
   //  프로필 이미지 업로드 + 기존 이미지 삭제 + DB 업데이트
   const handleFileUpload = async (e) => {
@@ -84,9 +85,7 @@ const UserProfileImage = ({ userData }) => {
     }
 
     //  UI 업데이트 - 업로드된 이미지 즉시 반영 (캐싱 방지)
-    setImageUrl(
-      `${VITE_APP_SUPABASE_STORAGE_URL}${filePath}?t=${Date.now()}`
-    );
+    setImageUrl(`${VITE_APP_SUPABASE_STORAGE_URL}${filePath}`);
 
     setUploading(false);
   };
@@ -95,8 +94,7 @@ const UserProfileImage = ({ userData }) => {
     <>
       <StProfileImg
         className={uploading ? "skeleton" : ""}
-        src={uploading ? "/loading_spinner.gif" : imageUrl}
-        alt="프로필 사진"
+        src={imageUrl}
         onClick={handleImageClick}
       />
       <input
@@ -134,7 +132,7 @@ const StProfileImg = styled.img`
 
   /* 🟢 스켈레톤 로딩 */
   &.skeleton {
-    background-color: #e2e5e7;
+    background-color: transparent;
     background-image: linear-gradient(
       90deg,
       rgba(255, 255, 255, 0),
