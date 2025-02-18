@@ -1,6 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-const Input = ({ value, text, width, type, placeholder, onChangeFunc }) => {
+const Input = ({
+  value,
+  text,
+  width,
+  type,
+  placeholder,
+  onChangeFunc,
+  bool,
+}) => {
   return (
     <StInputWrapper>
       <StLabel htmlFor={value}>{text}</StLabel>
@@ -10,7 +18,7 @@ const Input = ({ value, text, width, type, placeholder, onChangeFunc }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChangeFunc}
-        required
+        disabled={bool}
       />
     </StInputWrapper>
   );
