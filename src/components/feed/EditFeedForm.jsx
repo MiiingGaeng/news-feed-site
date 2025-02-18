@@ -10,11 +10,11 @@ import {
   StFormContentsInput,
   StFormContentsWrapper,
   StFormTitleInput,
-  StFormTitleWrapper
+  StFormTitleWrapper,
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
 import BANNED_WORDS from "../../constant/BANNED_WORDS";
-import { AlertCheck, AlertError } from "../common/Alert";
+import { AlertCheck, AlertError } from "../../common/Alert";
 
 const EditFeedForm = ({ feedId }) => {
   //-----Context-----
@@ -26,16 +26,16 @@ const EditFeedForm = ({ feedId }) => {
   //react-hook-form을 사용하여 폼 데이터 관리
   const INITIAL_EDIT_FEED_DATA = {
     title: "",
-    contents: ""
+    contents: "",
   };
 
   const {
     handleSubmit,
     register,
     setValue,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    defaultValues: INITIAL_EDIT_FEED_DATA
+    defaultValues: INITIAL_EDIT_FEED_DATA,
   });
 
   //금칙어 필터링을 위한 boolean 값
@@ -83,7 +83,7 @@ const EditFeedForm = ({ feedId }) => {
       feed_id: feedId,
       title: data.title,
       contents: data.contents,
-      writer_id: userId
+      writer_id: userId,
     };
 
     try {
@@ -121,13 +121,13 @@ const EditFeedForm = ({ feedId }) => {
             required: true,
             minLength: {
               value: 6,
-              message: "※ 제목은 최소 6자 이상이어야 합니다"
+              message: "※ 제목은 최소 6자 이상이어야 합니다",
             },
             maxLength: {
               value: 50,
-              message: "※ 제목은 최대 50자를 초과할 수 없습니다"
+              message: "※ 제목은 최대 50자를 초과할 수 없습니다",
             },
-            setValueAs: (value) => value.trim()
+            setValueAs: (value) => value.trim(),
           })}
         />
         {errors.title && (
@@ -151,13 +151,13 @@ const EditFeedForm = ({ feedId }) => {
             required: true,
             minLength: {
               value: 6,
-              message: "※ 본문은 최소 6자 이상이어야 합니다"
+              message: "※ 본문은 최소 6자 이상이어야 합니다",
             },
             maxLength: {
               value: 500,
-              message: "※ 내용은 500자를 초과할 수 없습니다"
+              message: "※ 내용은 500자를 초과할 수 없습니다",
             },
-            setValueAs: (value) => value.trim()
+            setValueAs: (value) => value.trim(),
           })}
         />
         {errors.contents && (

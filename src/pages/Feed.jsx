@@ -11,7 +11,7 @@ const Feed = () => {
   const { toggleModal, isModalOpen } = useContext(FeedContext);
 
   async function fetchFeeds() {
-    const newFeedsData = await fetchData("feeds", "users");
+    const newFeedsData = await fetchData("feeds", "users", false);
     setFeedsData(newFeedsData);
   }
 

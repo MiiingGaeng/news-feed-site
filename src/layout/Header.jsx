@@ -4,11 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import supabase from "../supabase/client";
 import logo from "../assets/image/logo.png";
-import { AlertSuccess } from "../components/common/Alert";
+import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
-  const [userNickname, setUserNickName] = useState('');
+  const [userNickname, setUserNickName] = useState("");
   const { isLogin, setIsLogin, setUser, setUserId } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Header = () => {
 
       setIsLogin(session?.user ?? null);
       setUser(session?.user || null);
-      setUserNickName(session?.user.user_metadata.nickname || '게스트')
+      setUserNickName(session?.user.user_metadata.nickname || "게스트");
     };
 
     getSession();
@@ -169,6 +169,7 @@ const StNavLink = styled.div`
   .home-user-nickname {
     color: #2c3e50;
     font-weight: 500;
+    
     a{
       text-decoration: none;
       color: #7738c8;

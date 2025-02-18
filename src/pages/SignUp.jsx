@@ -10,7 +10,7 @@ import {
   AlertInfo,
   AlertSorry,
   AlertSuccess,
-} from "../components/common/Alert";
+} from "../common/Alert";
 import supabase from "../supabase/client";
 
 const SignUp = () => {
@@ -65,7 +65,7 @@ const SignUp = () => {
         setFormData((prev) => ({ ...prev, nickname: "" }));
         return false;
       } else {
-        alert(`사용가능한 닉네임입니다`);
+        AlertSuccess("", "사용가능한 닉네임입니다");
         return true;
       }
     } catch (error) {

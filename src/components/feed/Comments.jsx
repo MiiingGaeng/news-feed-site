@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
 import BANNED_WORDS from "../../constant/BANNED_WORDS.js";
-import { AlertCheck, AlertError, AlertSuccess } from "../common/Alert.js";
+import { AlertCheck, AlertError, AlertSuccess } from "../../common/Alert.js";
 import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png";
 
 const Comments = ({ feedId }) => {
@@ -44,17 +44,17 @@ const Comments = ({ feedId }) => {
     handleSubmit: handleAddSubmit,
     register: registerAdd,
     reset: resetAdd,
-    formState: { errors: addErrors }
+    formState: { errors: addErrors },
   } = useForm({
-    defaultValues: ""
+    defaultValues: "",
   });
   //react-hook-form : ADD
   const {
     handleSubmit: handleEditSubmit,
     register: registerEdit,
-    setValue: setEditValue
+    setValue: setEditValue,
   } = useForm({
-    defaultValues: ""
+    defaultValues: "",
   });
 
   //금칙어 필터링
@@ -83,7 +83,7 @@ const Comments = ({ feedId }) => {
     const newComment = {
       ...data,
       feed_id: feedId,
-      writer_id: userId
+      writer_id: userId,
     };
 
     try {
@@ -138,7 +138,7 @@ const Comments = ({ feedId }) => {
       comment_id: data.comment_id,
       comment: data.comment,
       feed_id: feedId,
-      writer_id: userId
+      writer_id: userId,
     };
 
     try {
@@ -199,10 +199,15 @@ const Comments = ({ feedId }) => {
           commentsData.map((comment) => {
             return (
               <StDetailComment key={comment.comment_id}>
-                <StUserProfileImage src={comment.users.profile_img
-                  ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${comment.users.profile_img}`
-                  : DEFAULT_PROFILE_IMG
-                } />
+                <StUserProfileImage
+                  src={
+                    comment.users.profile_img
+                      ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${
+                          comment.users.profile_img
+                        }`
+                      : DEFAULT_PROFILE_IMG
+                  }
+                />
                 <h3>{comment.users.nickname}</h3>
                 {editingCommentId === comment.comment_id ? (
                   <StCommentEditInput
@@ -212,9 +217,9 @@ const Comments = ({ feedId }) => {
                       required: true,
                       maxLength: {
                         value: 200,
-                        message: "※ 댓글은 200자를 초과할 수 없습니다"
+                        message: "※ 댓글은 200자를 초과할 수 없습니다",
                       },
-                      setValueAs: (value) => value.trim()
+                      setValueAs: (value) => value.trim(),
                     })}
                     onKeyDown={(e) => {
                       if (e.key === "Enter")
@@ -259,9 +264,9 @@ const Comments = ({ feedId }) => {
             required: true,
             maxLength: {
               value: 200,
-              message: "※ 댓글은 200자를 초과할 수 없습니다"
+              message: "※ 댓글은 200자를 초과할 수 없습니다",
             },
-            setValueAs: (value) => value.trim()
+            setValueAs: (value) => value.trim(),
           })}
         />
         {/* 내용 입력시 발생할 수 있는 에러 메시지 */}
@@ -329,7 +334,7 @@ const StDetailComment = styled.li`
 
 //user 프로필 이미지
 const StUserProfileImage = styled.img.attrs((props) => ({
-  src: props.src || DEFAULT_PROFILE_IMG
+  src: props.src || DEFAULT_PROFILE_IMG,
 }))`
   width: 50px;
   height: 50px;

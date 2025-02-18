@@ -7,16 +7,16 @@ import {
   StFormContentsInput,
   StFormContentsWrapper,
   StFormTitleInput,
-  StFormTitleWrapper
+  StFormTitleWrapper,
 } from "../../styles/styledComponents";
 import Button from "../common/Button";
 import BANNED_WORDS from "../../constant/BANNED_WORDS";
-import { AlertError, AlertSuccess } from "../common/Alert";
+import { AlertError, AlertSuccess } from "../../common/Alert";
 
 // 초기 피드 데이터를 정의 (title과 contents는 빈 문자열로 설정)
 const INITIAL_ADD_FEED_DATA = {
   title: "",
-  contents: ""
+  contents: "",
 };
 
 const AddFeedForm = ({ onAddFeed }) => {
@@ -30,9 +30,9 @@ const AddFeedForm = ({ onAddFeed }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    defaultValues: INITIAL_ADD_FEED_DATA
+    defaultValues: INITIAL_ADD_FEED_DATA,
   });
 
   // 금칙어 필터링
@@ -58,7 +58,7 @@ const AddFeedForm = ({ onAddFeed }) => {
     // feed 데이터를 확장 (writer_id 추가)
     const feedData = {
       ...data,
-      writer_id: userId
+      writer_id: userId,
     };
 
     // 데이터 삽입 또는 업데이트 함수 호출
@@ -87,13 +87,13 @@ const AddFeedForm = ({ onAddFeed }) => {
             required: true,
             minLength: {
               value: 6,
-              message: "※ 제목은 최소 6자 이상이어야 합니다"
+              message: "※ 제목은 최소 6자 이상이어야 합니다",
             },
             maxLength: {
               value: 50,
-              message: "※ 제목은 최대 50자를 초과할 수 없습니다"
+              message: "※ 제목은 최대 50자를 초과할 수 없습니다",
             },
-            setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
+            setValueAs: (value) => value.trim(), // 입력값 양옆 공백 제거
           })}
         />
         {/* 제목 입력시 발생할 수 있는 에러 메시지 */}
@@ -119,13 +119,13 @@ const AddFeedForm = ({ onAddFeed }) => {
             required: true,
             minLength: {
               value: 6,
-              message: "※ 내용은 최소 6자 이상이어야 합니다"
+              message: "※ 내용은 최소 6자 이상이어야 합니다",
             },
             maxLength: {
               value: 500,
-              message: "※ 내용은 500자를 초과할 수 없습니다"
+              message: "※ 내용은 500자를 초과할 수 없습니다",
             },
-            setValueAs: (value) => value.trim() // 입력값 양옆 공백 제거
+            setValueAs: (value) => value.trim(), // 입력값 양옆 공백 제거
           })}
         />
         {/* 내용 입력시 발생할 수 있는 에러 메시지 */}

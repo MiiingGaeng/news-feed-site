@@ -4,8 +4,8 @@ import { deleteData } from "../../api/deleteData";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { AlertCheck } from "../common/Alert";
-import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png"
+import { AlertCheck } from "../../common/Alert";
+import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png";
 
 const FeedCard = ({ post, setPosts }) => {
   const { userId } = useContext(AuthContext);
@@ -28,9 +28,12 @@ const FeedCard = ({ post, setPosts }) => {
       <StFeedCardHeader>
         <StCardId>
           <StProfileImage
-            src={post.users.profile_img
-              ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${post.users.profile_img}`
-              : DEFAULT_PROFILE_IMG
+            src={
+              post.users.profile_img
+                ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${
+                    post.users.profile_img
+                  }`
+                : DEFAULT_PROFILE_IMG
             }
           />
           {post.users.nickname}
