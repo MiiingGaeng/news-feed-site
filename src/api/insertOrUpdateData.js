@@ -12,7 +12,7 @@ import supabase from "../supabase/client";
 export const insertOrUpdateData = async (
   upsertData,
   tableName,
-  conflictColumn = ""
+  conflictColumn = "",
 ) => {
   if (!upsertData) {
     console.error("upsertData 값은 필수입니다.");

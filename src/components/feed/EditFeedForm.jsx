@@ -69,13 +69,13 @@ const EditFeedForm = ({ feedId }) => {
     if (!checkBannedWords(data.title)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
     if (!checkBannedWords(data.contents)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
 
@@ -93,7 +93,7 @@ const EditFeedForm = ({ feedId }) => {
         "완료하시려면 확인을 눌러주세요!",
         "확인",
         "수정 완료",
-        "수정되었습니다."
+        "수정되었습니다.",
       );
       if (isConfirm) {
         //supabase 데이터 업데이트

@@ -46,13 +46,13 @@ const AddFeedForm = ({ onAddFeed }) => {
     if (!checkBannedWords(data.title)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
     if (!checkBannedWords(data.contents)) {
       return AlertError(
         "금칙어가 포함되어 있습니다",
-        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!"
+        "쾌적한 커뮤니티를 위해 나쁜말은 삼가해주세요!",
       );
     }
     // feed 데이터를 확장 (writer_id 추가)

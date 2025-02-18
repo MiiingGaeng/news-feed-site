@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import supabase from "../../supabase/client";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const UserInfo = ({ userData, setUserData, user }) => {
   const navigate = useNavigate();
-  const { setUserNickName } = useContext(AuthContext); 
+  const { setUserNickName } = useContext(AuthContext);
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 

@@ -26,8 +26,8 @@ const StTransparentButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
-    *{
-      color: #FFF;
+    * {
+      color: #fff;
     }
   }
 
@@ -35,7 +35,7 @@ const StTransparentButton = styled.button`
     transform: scale(0.95);
   }
 
-  *{
-    color: #FFFFFF80;
+  * {
+    color: #ffffff80;
   }
 `;

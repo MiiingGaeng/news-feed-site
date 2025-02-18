@@ -1,20 +1,20 @@
-import { useNavigate } from "react-router-dom"
-import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const NavigationButton = ({children, to}) => {
+const NavigationButton = ({ children, to }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(to)  // 버튼 클릭 시 'to'로 이동
-  }
+    navigate(to); // 버튼 클릭 시 'to'로 이동
+  };
   return (
     <StNavigationButton onClick={handleClick}>{children}</StNavigationButton>
-  )
-}
+  );
+};
 
 const StNavigationButton = styled.button`
   line-height: 46px;
   min-width: 150px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 50px;
   color: #000;
   text-align: center;
@@ -29,6 +29,6 @@ const StNavigationButton = styled.button`
   &:hover {
     background: #eee;
   }
-`
+`;
 
-export default NavigationButton
+export default NavigationButton;

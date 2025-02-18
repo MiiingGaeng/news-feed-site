@@ -8,8 +8,15 @@ import { AlertSuccess } from "../common/Alert";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 열고 닫는 상태
-  
-  const { isLogin, setIsLogin, setUser, setUserId, userNickname, setUserNickName } = useContext(AuthContext);
+
+  const {
+    isLogin,
+    setIsLogin,
+    setUser,
+    setUserId,
+    userNickname,
+    setUserNickName,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState); // 메뉴 토글 함수
@@ -21,13 +28,13 @@ const Header = () => {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if(session){
+      if (session) {
         setIsLogin(session?.user ?? null);
         setUser(session?.user || null);
         const { data: userData, error } = await supabase
-          .from('users')
-          .select('nickname')
-          .eq('user_id', session.user.id)
+          .from("users")
+          .select("nickname")
+          .eq("user_id", session.user.id)
           .single();
 
         if (!error && userData) {
@@ -36,9 +43,9 @@ const Header = () => {
           setUserNickName("게스트");
         }
       } else {
-        setIsLogin(null)
-        setUser(null)
-        setUserNickName(null)
+        setIsLogin(null);
+        setUser(null);
+        setUserNickName(null);
       }
     };
 
@@ -185,14 +192,14 @@ const StNavLink = styled.div`
   .home-user-nickname {
     color: #2c3e50;
     font-weight: 500;
-    
-    a{
+
+    a {
       text-decoration: none;
       color: #7738c8;
       display: inline-block;
-      padding: 0 .25rem;
+      padding: 0 0.25rem;
 
-      &:hover{
+      &:hover {
         color: #631bc2;
         font-weight: 700;
       }
@@ -232,7 +239,7 @@ const StSubLink = styled(Link)`
   align-items: center;
   border-radius: 50px;
   transition: all 0.3s;
-  
+
   @media (max-width: 768px) {
     font-size: 20px;
     width: 100%;

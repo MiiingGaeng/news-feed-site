@@ -29,13 +29,24 @@ const AuthProvider = ({ children }) => {
         setIsLogin(false);
         setUser(null);
         setUserId(null);
-        setUserNickName(null)
+        setUserNickName(null);
       }
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin, user, setUser, userId, setUserId, userNickname, setUserNickName }}>
+    <AuthContext.Provider
+      value={{
+        isLogin,
+        setIsLogin,
+        user,
+        setUser,
+        userId,
+        setUserId,
+        userNickname,
+        setUserNickName,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -53,7 +53,7 @@ const Detail = () => {
     //사용자 확인 여부
     const isConfirm = await AlertCheck(
       "정말로 삭제하시겠습니까?",
-      "이 작업은 되돌릴 수 없습니다!"
+      "이 작업은 되돌릴 수 없습니다!",
     );
     if (isConfirm) {
       //supabase 데이터 삭제

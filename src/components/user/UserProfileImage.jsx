@@ -53,7 +53,7 @@ const UserProfileImage = ({ userData }) => {
 
       if (deleteStorageError) {
         console.error("기존 이미지 삭제 실패:", deleteStorageError.message);
-      } 
+      }
       // else {
       //   console.log("기존 이미지 삭제 성공:", userData.profile_img);
       // }
@@ -79,7 +79,7 @@ const UserProfileImage = ({ userData }) => {
 
     if (tableImgUpdateError) {
       console.error("DB 업데이트 실패:", tableImgUpdateError.message);
-    } 
+    }
     // else {
     //   console.log("DB 업데이트 성공:", filePath);
     // }

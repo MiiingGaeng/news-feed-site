@@ -59,7 +59,7 @@ export const AlertCheck = (
   text = "이 작업은 되돌릴 수 없습니다!",
   confirmButtonText = "삭제",
   confirmedTitle = "Deleted",
-  confirmedText = "삭제되었습니다."
+  confirmedText = "삭제되었습니다.",
 ) => {
   return new Promise((resolve) => {
     Swal.fire({
