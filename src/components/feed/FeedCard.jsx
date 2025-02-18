@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { AlertCheck } from "../../common/Alert";
+import DEFAULT_PROFILE_IMG from "../../assets/image/user_default.png";
 
 const FeedCard = ({ post, setPosts }) => {
   const { userId } = useContext(AuthContext);
@@ -12,9 +13,8 @@ const FeedCard = ({ post, setPosts }) => {
   // 게시글 삭제 함수
   const handleDeletePost = async (e, id) => {
     e.preventDefault();
-
-    const isConfirm = AlertCheck(
-      "정말 삭제하시겠습니까?",
+    const isConfirm = await AlertCheck(
+      "정말로 삭제하시겠습니까?",
       "이 작업은 되돌릴 수 없습니다!"
     );
     if (isConfirm) {
@@ -27,7 +27,15 @@ const FeedCard = ({ post, setPosts }) => {
     <StFeedCard>
       <StFeedCardHeader>
         <StCardId>
-          <StProfileImage src={post.users.profile_img} />
+          <StProfileImage
+            src={
+              post.users.profile_img
+                ? `${import.meta.env.VITE_APP_SUPABASE_STORAGE_URL}${
+                    post.users.profile_img
+                  }`
+                : DEFAULT_PROFILE_IMG
+            }
+          />
           {post.users.nickname}
         </StCardId>
         <Like feedId={post.feed_id} user={post.users} />
@@ -49,12 +57,12 @@ const FeedCard = ({ post, setPosts }) => {
 
 //-----styled-components-----
 
-// Feed카드
+// Feed 카드
 const StFeedCard = styled.li`
   width: 400px;
-  max-width: 600px;
+  max-width: 400px;
   height: 100%;
-  max-height: 800px;
+  max-height: 600px;
   padding: 16px;
   border-radius: 12px;
   background: white;
@@ -67,7 +75,7 @@ const StFeedCard = styled.li`
   }
 `;
 
-// 카드 header
+// 카드 Header
 const StFeedCardHeader = styled.div`
   display: flex;
   align-items: center;
@@ -141,14 +149,14 @@ const StDeleteButton = styled.button`
 
 // 삭제 아이콘
 const StTrashIcon = styled(FaRegTrashAlt)`
-  font-size: 24px;
+  font-size: 30px;
   background: white;
   border-radius: 50%;
   padding: 4px;
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 
   ${StDeleteButton}:hover & {
-    color: #ff4d4f;
+    color: #fc090d;
     background: white;
   }
 `;

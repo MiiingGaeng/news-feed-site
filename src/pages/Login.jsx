@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
@@ -78,9 +78,17 @@ const Login = () => {
             />
           </section>
           <SignInButton>
-            <UserAuthButton type="submit">Login</UserAuthButton>
+            <UserAuthButton
+              $buttonWidth="260px"
+              $buttonHeight="40px"
+              type="submit"
+            >
+              Login
+            </UserAuthButton>
             <Link to="/signup">
-              <UserAuthButton>Sign Up</UserAuthButton>
+              <UserAuthButton $buttonWidth="260px" $buttonHeight="40px">
+                Sign Up
+              </UserAuthButton>
             </Link>
           </SignInButton>
         </form>
@@ -88,7 +96,7 @@ const Login = () => {
         <hr />
 
         {/* 아이디/비밀번호 찾기 */}
-        <StFindPassword>
+        {/* <StFindPassword>
           <p>비밀번호를 잊으셨나요?</p>
           <Link to="/findidpw">
             <button>Finding ID</button>
@@ -97,7 +105,7 @@ const Login = () => {
           <Link to="/findidpw">
             <button>Finding PW</button>
           </Link>
-        </StFindPassword>
+        </StFindPassword> */}
 
         {/* SNS로 로그인 */}
         <StSNSBtn>

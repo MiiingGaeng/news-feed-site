@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserInput from "../components/user/UserInput";
 import UserAuthButton from "../components/user/UserAuthButton";
 import {
@@ -14,6 +14,7 @@ import {
 import supabase from "../supabase/client";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -86,7 +87,7 @@ const SignUp = () => {
 
     // supabase를 통해 회원가입
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -99,7 +100,7 @@ const SignUp = () => {
 
       // 회원가입 에러코드별 예외처리
       if (error) {
-        switch (error.code) {
+        switch (error.message) {
           case "email_exists":
             AlertInfo("잠깐!", "이미 존재하는 이메일입니다.");
             return;
@@ -110,16 +111,19 @@ const SignUp = () => {
             AlertError("경고", "보안에 취약한 비밀번호입니다.");
             return;
           default:
-            AlertError("Error", `${error.code}`);
+            AlertError("Error", `${error.message}`);
+            return;
         }
-      } else {
+      }
+
+      if (data) {
         AlertSuccess("회원가입 완료!", "KEI 회원이 되신것을 환영합니다.");
-        // 회원가입 후 홈으로 랜딩
-        Navigate("/");
+        // 회원가입 후 피드페이지로 랜딩
+        navigate("/feed");
       }
     } catch (error) {
       AlertError(`회원가입 중 오류가 발생했습니다. 다시 시도해주세요!
-      ${error.massage}`);
+      ${error.message}`);
       console.log("⛔️회원가입 오류", error);
     }
   };
@@ -186,15 +190,23 @@ const SignUp = () => {
             onChange={handleInputChange}
             required
           />
-          {/* 닉네임 중복 확인 버튼 */}
-          {!!isNicknameChecked ? (
-            <span>사용 가능</span>
-          ) : (
-            <UserAuthButton type="button" onClick={handleNicknameCheck}>
-              중복 확인
-            </UserAuthButton>
-          )}
-          <UserAuthButton type="submit">Sign Up</UserAuthButton>
+
+          <UserAuthButton
+            $buttonWidth="260px"
+            $buttonHeight="40px"
+            type="button"
+            onClick={handleNicknameCheck}
+          >
+            중복 확인
+          </UserAuthButton>
+
+          <UserAuthButton
+            $buttonWidth="260px"
+            $buttonHeight="40px"
+            type="submit"
+          >
+            Sign Up
+          </UserAuthButton>
         </form>
       </StContainer>
 

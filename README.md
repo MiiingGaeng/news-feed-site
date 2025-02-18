@@ -1,6 +1,6 @@
-# KEI👂
+# TEA👂
 
-KEI(King's Ear Is)는 수강생들만을 위한 익명 커뮤니티 플랫폼입니다.
+TEA(Tutor's Ears Are)는 수강생들만을 위한 익명 커뮤니티 플랫폼입니다.
 누구나 자유롭게 학습 꿀팁을 공유하고, 고민이나 다양한 이슈에 대해 소통할 수 있는 공간을 제공합니다.
 
 ✅ 익명 소통 – 닉네임으로 자유롭게 의견을 나눌 수 있어요.<br>
@@ -30,7 +30,7 @@ KEI(King's Ear Is)는 수강생들만을 위한 익명 커뮤니티 플랫폼입
 
 **📆 프로젝트 기간 : 2025.02.12 ~ 2025.02.18**
 
-KEI(King's Ear Is)는 수강생들을 위한 익명 커뮤니티 플랫폼입니다. 학습 꿀팁을 공유하고, 다양한 고민이나 이슈에 대해 자유롭게 소통할 수 있는 공간을 제공합니다. 익명으로 편하게 의견을 나누며, 실용적인 정보와 경험을 공유할 수 있어 수강생들에게 유익한 환경을 제공합니다. 함께 배우고 성장하는 KEI에서 새로운 소통을 경험해보세요.
+TEA(Tutor's Ears Are)는 수강생들을 위한 익명 커뮤니티 플랫폼입니다. 학습 꿀팁을 공유하고, 다양한 고민이나 이슈에 대해 자유롭게 소통할 수 있는 공간을 제공합니다. 익명으로 편하게 의견을 나누며, 실용적인 정보와 경험을 공유할 수 있어 수강생들에게 유익한 환경을 제공합니다. 함께 배우고 성장하는 TEA에서 새로운 소통을 경험해보세요.
 
 비회원은 피드에서 게시글을 열람할 수 있으며, 회원가입을 하면 게시글 작성, 수정, 삭제가 가능합니다. 또한 댓글을 통해 자유롭게 의견을 나눌 수 있으며, 좋아요 기능을 활용해 공감할 수도 있습니다. 마이페이지에서는 내가 작성한 게시글을 한눈에 확인할 수 있어 관리가 편리합니다. 게시글과 댓글에는 금칙어 필터링 기능이 적용되어 있어 건전한 커뮤니티 환경을 유지할 수 있습니다.
 
@@ -39,7 +39,19 @@ KEI(King's Ear Is)는 수강생들을 위한 익명 커뮤니티 플랫폼입니
 
 ## 프로젝트 사용 기술💻
 
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+### Environment
+
+![React](https://img.shields.io/badge/-React-61DAFB?&logo=react&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?&logo=javascript&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?&logo=css3&logoColor=white) ![sytled-components](https://img.shields.io/badge/-styledcomponents-DB7093?&logo=styledcomponents&logoColor=white)
+![supabase](https://img.shields.io/badge/-supabase-3FCF8E?&logo=supabase&logoColor=white) ![git](https://img.shields.io/badge/-git-F05032?&logo=git&logoColor=white) ![github](https://img.shields.io/badge/-github-181717?&logo=github&logoColor=white) ![vscode](https://img.shields.io/badge/-Visual_Studio_Code-007ACC?&logo=vscode&logoColor=white)
+
+### Record
+
+![figma](https://img.shields.io/badge/-figma-F24E1E?&logo=figma&logoColor=white) ![notion](https://img.shields.io/badge/-notion-000000?&logo=notion&logoColor=white)
+
+### Deploy
+
+![vercel](https://img.shields.io/badge/-vercel-000000?&logo=vercel&logoColor=white)
+
 <br><br>
 
 ## 프로젝트 기능⚙️

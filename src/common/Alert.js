@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+// import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
 import alertalt from "../assets/image/alertalt.png"; // 이미지 경로
 
 /**
@@ -48,14 +49,17 @@ export const AlertInfo = (title = "Info", text = "") => {
 };
 
 /**
- * 실행 여부 확인
+ * 실행 여부 확인 === confirm
  * @param {string} title -> 실행 여부 확인할 제목
  * @param {string} text -> 경고 내용
  */
 
 export const AlertCheck = (
   title = "Warning",
-  text = "이 작업은 되돌릴 수 없습니다!"
+  text = "이 작업은 되돌릴 수 없습니다!",
+  confirmButtonText = "삭제",
+  confirmedTitle = "Deleted",
+  confirmedText = "삭제되었습니다."
 ) => {
   return new Promise((resolve) => {
     Swal.fire({
@@ -65,12 +69,12 @@ export const AlertCheck = (
       showCancelButton: true,
       confirmButtonColor: "#504ba1",
       cancelButtonColor: "#CD2E57",
-      confirmButtonText: "삭제",
+      confirmButtonText,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "Deleted",
-          text: "삭제되었습니다.",
+          title: confirmedTitle,
+          text: confirmedText,
           icon: "success",
         });
         resolve(true);
