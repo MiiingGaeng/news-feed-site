@@ -21,11 +21,11 @@ TEA(Tutor's Ears Are)는 수강생들만을 위한 익명 커뮤니티 플랫폼
 - Feed
 <img width="800" alt="Image" src="https://github.com/user-attachments/assets/a7ce0e7b-2cc2-4626-a24e-2af416599007" />
 
-- Detail / Edit
+- Detail
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6ea2841a-b269-470a-ac03-895804de5fa0" />
 
-|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6ea2841a-b269-470a-ac03-895804de5fa0" />|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6a3cd40c-40e7-4ac1-97ee-063079f12fdf" />|
-|---|---|
-
+- Edit
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/6a3cd40c-40e7-4ac1-97ee-063079f12fdf" />
 - Alert
 
 |<img width="600" alt="Image" src="https://github.com/user-attachments/assets/54acbb3e-9f52-4cf8-89eb-3f00530be991" />|<img width="600" alt="Image" src="https://github.com/user-attachments/assets/b7c70293-d36c-4f42-be04-25b3c57f87d2" />|
